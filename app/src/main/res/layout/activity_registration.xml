@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical"
+    android:background="@color/colorPrimary"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="Go back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Register Yourself"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="40sp"/>
+    </LinearLayout>
+
+<!--    <RelativeLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="vertical"-->
+<!--            android:layout_centerInParent="true">-->
+
+<!--            -->
+
+<!--        </LinearLayout>-->
+
+<!--    </RelativeLayout>-->
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/card_view">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/centerLinearLayout"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="eg: John Martix"
+                    android:layout_marginTop="10dp"
+                    android:importantForAutofill="no"
+                    android:textColor="@color/black"
+                    android:inputType="textPersonName"
+                    android:background="@drawable/edit_text">
+                </EditText>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Full Name"
+                    android:layout_marginLeft="12dp"
+                    android:paddingRight="2dp"
+                    android:paddingLeft="2dp"
+                    android:background="@color/white"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="eg: 2D, Naschye Lanes"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="textPostalAddress"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Address"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="eg: 8 May 2000"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="date"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Date Of Birth"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp">
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:gravity="center">
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Male"
+                    android:textColor="@color/colorPrimary"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Female"
+                    android:textColor="@color/colorPrimary"/>
+                <RadioButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rather not say"
+                    android:textColor="@color/colorPrimary"/>
+            </RadioGroup>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ex: Student"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Profession / Study"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout><RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ex: 1234567890"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contact Number"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+            <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ex: 1234567890"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="phone"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Alternate Contact Number"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout><RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ex: abc@feelthenote.com"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="textEmailAddress"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout><RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:hint="ex: Freind"
+                android:textColor="@color/black"
+                android:layout_marginTop="10dp"
+                android:importantForAutofill="no"
+                android:inputType="text"
+                android:background="@drawable/edit_text">
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reference"
+                android:layout_marginLeft="12dp"
+                android:paddingRight="2dp"
+                android:paddingLeft="2dp"
+                android:background="@color/white"
+                android:textColor="@color/colorPrimary"
+                android:visibility="visible"/>
+
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:hint="ex: abc12xyz79@"
+                    android:textColor="@color/black"
+                    android:inputType="textPassword"
+                    android:layout_marginTop="10dp"
+                    android:importantForAutofill="no"
+                    android:background="@drawable/edit_text"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Password"
+                    android:layout_marginLeft="12dp"
+                    android:paddingRight="2dp"
+                    android:paddingLeft="2dp"
+                    android:background="@color/white"
+                    android:textColor="@color/colorPrimary"
+                    android:visibility="visible"/>
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:weightSum="2">
+
+                <CheckBox
+                    android:layout_width="60pt"
+                    android:layout_height="11pt"
+                    android:id="@+id/rememberMe"
+                    android:text="Remember me"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:layout_weight="1"
+                    android:textStyle="bold|italic"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sign up"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
