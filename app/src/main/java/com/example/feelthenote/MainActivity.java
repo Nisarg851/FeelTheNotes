@@ -3,9 +3,15 @@ package com.example.feelthenote;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toolbar;
+
+import com.github.islamkhsh.CardSliderViewPager;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,5 +31,13 @@ public class MainActivity extends AppCompatActivity {
 //            startActivity(lauchActivity);
 //        });
 
+        ArrayList<Course> courses = new ArrayList<Course>();
+        // add items to arraylist
+        courses.add(new Course(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
+        courses.add(new Course(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
+        courses.add(new Course(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
+
+        CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
+        cardSliderViewPager.setAdapter(new CourseCarousel(courses));
     }
 }

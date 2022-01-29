@@ -18,6 +18,15 @@
 <!--        android:layout_gravity="start"-->
 <!--        android:visibility="invisible"/>-->
 
+<!--    <com.google.android.material.navigation.NavigationView-->
+<!--        android:id="@+id/notificationMenu"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_gravity="end"-->
+<!--        app:menu="@menu/dashboard_navigation_menu"-->
+<!--        app:headerLayout="@layout/dashboard_navigation_header"-->
+<!--        android:visibility="invisible"/>-->
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -207,360 +216,381 @@
 
                     </com.google.android.material.card.MaterialCardView>
 
-                    <LinearLayout
+<!--                    <LinearLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:weightSum="4"-->
+<!--                        android:layout_gravity="center_horizontal"-->
+<!--                        android:orientation="vertical"-->
+<!--                        android:layout_marginTop="40dp">-->
+
+<!--                        <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="match_parent"-->
+<!--                            android:layout_marginBottom="10dp"-->
+<!--                            app:strokeColor="#3F51B5"-->
+<!--                            app:strokeWidth="3dp"-->
+<!--                            app:cardCornerRadius="30dp"-->
+<!--                            app:cardBackgroundColor="#90C4ED"-->
+<!--                            android:layout_weight="1">-->
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:orientation="horizontal"-->
+<!--                                android:padding="5dp"-->
+<!--                                android:weightSum="2">-->
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:layout_marginLeft="25dp"-->
+<!--                                    android:text="Total Alloted Sessions  :"-->
+<!--                                    android:textColor="@color/black"-->
+<!--                                    android:textSize="23sp"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_weight="1.5"-->
+<!--                                    android:layout_marginStart="25dp" />-->
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:layout_marginRight="25dp"-->
+<!--                                    android:text="12"-->
+<!--                                    android:textColor="@color/colorBlack"-->
+<!--                                    android:textSize="23sp"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:gravity="center"-->
+<!--                                    android:layout_weight="0.5"-->
+<!--                                    android:layout_marginEnd="25dp" />-->
+<!--                            </LinearLayout>-->
+<!--                        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:weightSum="2"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginRight="5dp"-->
+<!--                                app:strokeColor="#0C877B"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#78FFF3"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="2"-->
+<!--                                        android:textColor="@color/black"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Attended"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginLeft="5dp"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:strokeColor="#217024"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#73F165"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="2"-->
+<!--                                        android:textColor="@color/black"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Pending"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:weightSum="2"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginRight="5dp"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:strokeColor="#5E5E5E"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#FFEB3B"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="2"-->
+<!--                                        android:textColor="@color/black"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Available"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginLeft="5dp"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:strokeColor="#980000"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#FF7A70"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="2"-->
+<!--                                        android:textColor="@color/black"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Expired"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+<!--                        </LinearLayout>-->
+
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_weight="1"-->
+<!--                            android:weightSum="2"-->
+<!--                            android:orientation="horizontal">-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginRight="5dp"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:strokeColor="#633B00"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#FFC673"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="2"-->
+<!--                                        android:textColor="@color/black"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Days Left"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+
+<!--                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="match_parent"-->
+<!--                                android:layout_marginTop="10dp"-->
+<!--                                android:layout_marginBottom="10dp"-->
+<!--                                android:layout_marginLeft="5dp"-->
+<!--                                app:strokeWidth="3dp"-->
+<!--                                app:strokeColor="#393939"-->
+<!--                                app:cardCornerRadius="30dp"-->
+<!--                                android:layout_weight="1">-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="match_parent"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:padding="5dp"-->
+<!--                                    android:background="#8F8F8F"-->
+<!--                                    android:weightSum="2">-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="match_parent"-->
+<!--                                        android:layout_marginLeft="10dp"-->
+<!--                                        android:text="0"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:textStyle="bold"-->
+<!--                                        android:gravity="center"-->
+<!--                                        android:layout_weight="0.5"/>-->
+<!--                                    <TextView-->
+<!--                                        android:layout_width="wrap_content"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        android:layout_marginLeft="2dp"-->
+<!--                                        android:text=" Extra Hrs"-->
+<!--                                        android:textColor="@color/colorBlack"-->
+<!--                                        android:textSize="23dp"-->
+<!--                                        android:gravity="start"-->
+<!--                                        android:layout_weight="1.5"/>-->
+<!--                                </LinearLayout>-->
+
+<!--                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>-->
+<!--                        </LinearLayout>-->
+<!--                    </LinearLayout>-->
+
+                    <com.github.islamkhsh.CardSliderViewPager
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:weightSum="4"
-                        android:layout_gravity="center_horizontal"
-                        android:orientation="vertical"
-                        android:layout_marginTop="40dp">
-
-                        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginBottom="10dp"
-                            app:strokeColor="#3F51B5"
-                            app:strokeWidth="3dp"
-                            app:cardCornerRadius="30dp"
-                            app:cardBackgroundColor="#90C4ED"
-                            android:layout_weight="1">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                android:padding="5dp"
-                                android:weightSum="2">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="match_parent"
-                                    android:layout_marginLeft="25dp"
-                                    android:text="Total Alloted Sessions  :"
-                                    android:textColor="@color/black"
-                                    android:textSize="23sp"
-                                    android:gravity="center"
-                                    android:layout_weight="1.5"
-                                    android:layout_marginStart="25dp" />
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginRight="25dp"
-                                    android:text="12"
-                                    android:textColor="@color/colorBlack"
-                                    android:textSize="23sp"
-                                    android:textStyle="bold"
-                                    android:gravity="center"
-                                    android:layout_weight="0.5"
-                                    android:layout_marginEnd="25dp" />
-                            </LinearLayout>
-                        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginRight="5dp"
-                                app:strokeColor="#0C877B"
-                                app:strokeWidth="3dp"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#78FFF3"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="2"
-                                        android:textColor="@color/black"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Attended"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="5dp"
-                                app:strokeWidth="3dp"
-                                app:strokeColor="#217024"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#73F165"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="2"
-                                        android:textColor="@color/black"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Pending"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginRight="5dp"
-                                app:strokeWidth="3dp"
-                                app:strokeColor="#5E5E5E"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#FFEB3B"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="2"
-                                        android:textColor="@color/black"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Available"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="5dp"
-                                app:strokeWidth="3dp"
-                                app:strokeColor="#980000"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#FF7A70"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="2"
-                                        android:textColor="@color/black"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Expired"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:weightSum="2"
-                            android:orientation="horizontal">
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginRight="5dp"
-                                app:strokeWidth="3dp"
-                                app:strokeColor="#633B00"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#FFC673"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="2"
-                                        android:textColor="@color/black"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Days Left"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-
-                            <com.google.android.material.circularreveal.cardview.CircularRevealCardView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:layout_marginTop="10dp"
-                                android:layout_marginBottom="10dp"
-                                android:layout_marginLeft="5dp"
-                                app:strokeWidth="3dp"
-                                app:strokeColor="#393939"
-                                app:cardCornerRadius="30dp"
-                                android:layout_weight="1">
-
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
-                                    android:orientation="horizontal"
-                                    android:padding="5dp"
-                                    android:background="#8F8F8F"
-                                    android:weightSum="2">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="match_parent"
-                                        android:layout_marginLeft="10dp"
-                                        android:text="0"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:textStyle="bold"
-                                        android:gravity="center"
-                                        android:layout_weight="0.5"/>
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:layout_marginLeft="2dp"
-                                        android:text=" Extra Hrs"
-                                        android:textColor="@color/colorBlack"
-                                        android:textSize="23dp"
-                                        android:gravity="start"
-                                        android:layout_weight="1.5"/>
-                                </LinearLayout>
-
-                            </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
-                        </LinearLayout>
-                    </LinearLayout>
-
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/course1"
+                        android:id="@+id/viewPager"
+                        android:layout_marginTop="10dp"
+                        app:cardSlider_smallScaleFactor="0.9"
+                        app:cardSlider_otherPagesWidth="24dp"
+                        app:cardSlider_pageMargin="12dp"
+                        app:cardSlider_indicator="@id/indicator"
+                        app:auto_slide_time="3"/>
+                    <RelativeLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:cardCornerRadius="15dp"
-                        app:strokeColor="@color/black"
-                        app:strokeWidth="1dp"
-                        android:layout_marginTop="20dp"
-                        android:layout_gravity="center_horizontal">
+                        android:gravity="center">
+                        <com.github.islamkhsh.CardSliderIndicator
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAlignment="center"
+                            android:id="@+id/indicator"
+                            app:indicatorsToShow="20"/>
+                    </RelativeLayout>
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/course1"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        app:cardCornerRadius="15dp"-->
+<!--                        app:strokeColor="@color/black"-->
+<!--                        app:strokeWidth="1dp"-->
+<!--                        android:layout_marginTop="20dp"-->
+<!--                        android:layout_gravity="center_horizontal">-->
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="150dp"
-                            android:background="@drawable/agtr"
-                            android:orientation="vertical">
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Acoustic Guitar - AGTR"
-                                android:textSize="25dp"
-                                android:textStyle="bold"
-                                android:textColor="@color/colorWhite"
-                                android:paddingTop="10dp"
-                                android:paddingLeft="20dp"/>
+<!--                        <LinearLayout-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="150dp"-->
+<!--                            android:background="@drawable/agtr"-->
+<!--                            android:orientation="vertical">-->
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Acoustic Guitar - AGTR"-->
+<!--                                android:textSize="25dp"-->
+<!--                                android:textStyle="bold"-->
+<!--                                android:textColor="@color/colorWhite"-->
+<!--                                android:paddingTop="10dp"-->
+<!--                                android:paddingLeft="20dp"/>-->
 
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Shubham Acharya"
-                                android:textSize="20dp"
-                                android:textColor="@color/colorWhite"
-                                android:paddingLeft="19dp" />
+<!--                            <TextView-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:text="Shubham Acharya"-->
+<!--                                android:textSize="20dp"-->
+<!--                                android:textColor="@color/colorWhite"-->
+<!--                                android:paddingLeft="19dp" />-->
 
-                        </LinearLayout>
+<!--                        </LinearLayout>-->
 
-                    </androidx.cardview.widget.CardView>
+<!--                    </androidx.cardview.widget.CardView>-->
 
                     <androidx.cardview.widget.CardView
                         android:id="@+id/course2"
@@ -580,7 +610,7 @@
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Acoustic Guitar - AGTR"
+                                android:text="ADs"
                                 android:textSize="25dp"
                                 android:textStyle="bold"
                                 android:textColor="@color/colorWhite"

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.feelthenote"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -34,6 +34,7 @@ dependencies {
     implementation 'com.google.android.material:material:1.5.0'
     implementation "androidx.cardview:cardview:1.0.0"
     implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation 'com.github.IslamKhSh:CardSlider:1.0.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
