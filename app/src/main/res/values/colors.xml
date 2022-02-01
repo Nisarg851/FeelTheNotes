@@ -20,4 +20,6 @@
 
     <!--    Component color-set-->
     <color name="colorEditText">#3F0E68FF</color>
+
+    <color name="colortext">#000000</color>
 </resources>

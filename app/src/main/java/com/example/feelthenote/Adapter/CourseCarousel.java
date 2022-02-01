@@ -1,4 +1,4 @@
-package com.example.feelthenote;
+package com.example.feelthenote.Adapter;
 
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -10,11 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.feelthenote.Model.Course;
+import com.example.feelthenote.R;
 import com.github.islamkhsh.CardSliderAdapter;
 
 import java.util.ArrayList;
 
-public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
+public class CourseCarousel extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
     private final ArrayList<Course> courses;
 
     public CourseCarousel(ArrayList<Course> courses){

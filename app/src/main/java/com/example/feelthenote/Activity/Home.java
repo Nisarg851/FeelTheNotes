@@ -1,8 +1,10 @@
-package com.example.feelthenote;
+package com.example.feelthenote.Activity;
+
+import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.os.Bundle;
+import com.example.feelthenote.R;
 
 public class Home extends AppCompatActivity {
 

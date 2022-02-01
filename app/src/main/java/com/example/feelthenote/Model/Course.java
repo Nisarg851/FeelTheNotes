@@ -1,4 +1,4 @@
-package com.example.feelthenote;
+package com.example.feelthenote.Model;
 
 import android.graphics.drawable.Drawable;
 
@@ -21,6 +21,8 @@ public class Course {
         this.instructor = instructor;
         this.courseImage = courseImage;
     }
+
+
 
     public int getTotalAllotedSessions() {
         return totalAllotedSessions;

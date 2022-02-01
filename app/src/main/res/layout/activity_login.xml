@@ -2,9 +2,10 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/llRootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity"
+    tools:context=".Activity.MainActivity"
     android:orientation="vertical"
     android:background="@color/colorPrimary"
     android:weightSum="4">
@@ -69,6 +70,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/etMobileNumber"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="ex: 1234567890"
@@ -97,6 +99,7 @@
                 android:layout_height="wrap_content">
 
                 <EditText
+                    android:id="@+id/etPassword"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:hint="ex: abc12xyz79@"
@@ -120,10 +123,10 @@
             </RelativeLayout>
 
             <CheckBox
+                android:id="@+id/cbRememberMe"
                 android:layout_width="60pt"
                 android:layout_height="11pt"
                 android:layout_marginTop="15dp"
-                android:id="@+id/rememberMe"
                 android:text="Remember me"
                 android:textSize="15sp"
                 android:textColor="@color/black"
@@ -146,6 +149,7 @@
                     android:layout_weight="1"/>
 
                 <Button
+                    android:id="@+id/btnSignIn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign in"
