@@ -1,5 +1,7 @@
 package com.example.feelthenote.Activity;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
@@ -10,9 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.MyApplication;
@@ -26,6 +27,7 @@ import com.example.feelthenote.Retrofit.ApiInterface;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class Login extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, View.OnClickListener{
 

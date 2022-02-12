@@ -9,24 +9,6 @@
     tools:openDrawer="start"
     android:id="@+id/dashboardDrawer">
 
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/navigationMenu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        app:menu="@menu/dashboard_navigation_menu"-->
-<!--        app:headerLayout="@layout/dashboard_navigation_header"-->
-<!--        android:layout_gravity="start"-->
-<!--        android:visibility="invisible"/>-->
-
-<!--    <com.google.android.material.navigation.NavigationView-->
-<!--        android:id="@+id/notificationMenu"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_gravity="end"-->
-<!--        app:menu="@menu/dashboard_navigation_menu"-->
-<!--        app:headerLayout="@layout/dashboard_navigation_header"-->
-<!--        android:visibility="invisible"/>-->
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

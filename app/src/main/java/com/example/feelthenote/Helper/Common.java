@@ -2,8 +2,10 @@ package com.example.feelthenote.Helper;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.feelthenote.R;
 import com.google.android.material.snackbar.Snackbar;

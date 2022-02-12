@@ -1,5 +1,6 @@
 package com.example.feelthenote.Network;
 
+import com.example.feelthenote.Model.LoginUserDatum;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 

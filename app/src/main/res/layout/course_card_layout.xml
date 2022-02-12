@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cvCourse"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    app:strokeColor="@color/black"
+    app:strokeWidth="1dp"
+    android:layout_marginBottom="5dp"
+    android:layout_gravity="center_horizontal">
+
+    <LinearLayout
+        android:id="@+id/llCourseContainer"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:background="@drawable/agtr"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tvCourseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ADs"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Shubham Acharya"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite"
+            android:paddingLeft="19dp" />
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -16,7 +16,7 @@ import com.github.islamkhsh.CardSliderAdapter;
 
 import java.util.ArrayList;
 
-public class CourseCarousel extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
+public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
     private final ArrayList<Course> courses;
 
     public CourseCarousel(ArrayList<Course> courses){

@@ -15,19 +15,19 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FeelTheNote"
         android:usesCleartextTraffic="true">
-
-        <activity android:name=".Activity.SessionData"></activity>
-        <activity android:name=".Activity.Calender" />
-        <activity android:name=".Activity.Home" />
-        <activity android:name=".Dashboard" />
-        <activity android:name=".Activity.Registration" />
-        <activity android:name=".Activity.Login">
+        <activity android:name=".Activity.CourseDetailsActivity"></activity>
+        <activity android:name=".Activity.MyCoursesActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Activity.SessionDataActivity" />
+        <activity android:name=".Activity.CalenderActivity" />
+        <activity android:name=".Activity.HomeActivity" />
+        <activity android:name=".Dashboard" />
+        <activity android:name=".Activity.RegistrationActivity" />
+        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.MainActivity" />
     </application>
 

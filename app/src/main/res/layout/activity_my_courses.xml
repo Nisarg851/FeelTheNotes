@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.RegistrationActivity"
+    android:orientation="vertical"
+    android:id="@+id/llRootLayout"
+    android:background="@color/colorPrimary"
+    android:weightSum="4">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/ivBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/back_button"
+            android:layout_marginTop="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:contentDescription="Go back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="My Courses"
+            android:layout_gravity="center"
+            android:textColor="@color/white"
+            android:textSize="35sp"/>
+    </LinearLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/card_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Enrolled Courses"
+                android:layout_marginTop="30dp"
+                android:textSize="25dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvEnrolledCourses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_gravity="center_horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Explore More Courses"
+                android:layout_marginTop="30dp"
+                android:textSize="25dp"
+                android:layout_marginLeft="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvExploreCourses"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="5dp"
+                android:layout_gravity="center_horizontal"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+
+            <!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/course5"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:cardCornerRadius="15dp"-->
+<!--                app:strokeColor="@color/black"-->
+<!--                app:strokeWidth="1dp"-->
+<!--                android:layout_marginTop="20dp"-->
+<!--                android:layout_marginRight="20dp"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:layout_gravity="center_horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="150dp"-->
+<!--                    android:background="@drawable/agtr"-->
+<!--                    android:orientation="vertical">-->
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="ADs"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:paddingLeft="20dp"/>-->
+
+<!--                    <TextView-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Shubham Acharya"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:paddingLeft="19dp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</LinearLayout>
