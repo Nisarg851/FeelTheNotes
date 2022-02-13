@@ -20,35 +20,35 @@ public class CourseData {
     @Expose
     private List<CourseOtherPackages> table3 = null;
 
-    public List<CourseDetails> getTable() {
+    public List<CourseDetails> getCourseDetails() {
         return table;
     }
 
-    public void setTable(List<CourseDetails> table) {
+    public void setCourseDetails(List<CourseDetails> table) {
         this.table = table;
     }
 
-    public List<CourseFacultyDetails> getTable1() {
+    public List<CourseFacultyDetails> getCourseFacultyDetails() {
         return table1;
     }
 
-    public void setTable1(List<CourseFacultyDetails> table1) {
+    public void setCourseFacultyDetails(List<CourseFacultyDetails> table1) {
         this.table1 = table1;
     }
 
-    public List<CourseLatestPackages> getTable2() {
+    public List<CourseLatestPackages> getCourseLatestPackages() {
         return table2;
     }
 
-    public void setTable2(List<CourseLatestPackages> table2) {
+    public void setCourseLatestPackages(List<CourseLatestPackages> table2) {
         this.table2 = table2;
     }
 
-    public List<CourseOtherPackages> getTable3() {
+    public List<CourseOtherPackages> getCourseOtherPackages() {
         return table3;
     }
 
-    public void setTable3(List<CourseOtherPackages> table3) {
+    public void setCourseOtherPackages(List<CourseOtherPackages> table3) {
         this.table3 = table3;
     }
 }
