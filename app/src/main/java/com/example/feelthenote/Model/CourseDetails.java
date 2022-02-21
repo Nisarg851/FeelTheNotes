@@ -18,7 +18,7 @@ public class CourseDetails {
     private String detail;
     @SerializedName("Cover_Image")
     @Expose
-    private Object coverImage;
+    private String coverImage;
     @SerializedName("Background")
     @Expose
     private Object background;
@@ -58,11 +58,11 @@ public class CourseDetails {
         this.detail = detail;
     }
 
-    public Object getCoverImage() {
+    public String getCoverImage() {
         return coverImage;
     }
 
-    public void setCoverImage(Object coverImage) {
+    public void setCoverImage(String coverImage) {
         this.coverImage = coverImage;
     }
 

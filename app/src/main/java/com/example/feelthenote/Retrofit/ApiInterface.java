@@ -8,6 +8,8 @@ import com.example.feelthenote.Network.GetCoursesRequest;
 import com.example.feelthenote.Network.GetCoursesResponse;
 import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
+import com.example.feelthenote.Network.UploadImageRequest;
+import com.example.feelthenote.Network.UploadImageResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -26,4 +28,7 @@ public interface ApiInterface {
 
     @POST("api/FeelTheNote/GetCourseDetails")
     Call<CourseDetailsResponse> getCourseDetail(@Body CourseDetailsRequest courseDetailsRequest);
+
+    @POST("api/FeelTheNote/AddImage")
+    Call<UploadImageResponse> uploadImage(@Body UploadImageRequest uploadImageRequest);
 }

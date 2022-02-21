@@ -10,45 +10,45 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.feelthenote.Model.Course;
+import com.example.feelthenote.Model.CourseCarouselItem;
 import com.example.feelthenote.R;
 import com.github.islamkhsh.CardSliderAdapter;
 
 import java.util.ArrayList;
 
 public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
-    private final ArrayList<Course> courses;
+    private final ArrayList<CourseCarouselItem> cours;
 
-    public CourseCarousel(ArrayList<Course> courses){
-        this.courses = courses;
+    public CourseCarousel(ArrayList<CourseCarouselItem> cours){
+        this.cours = cours;
     }
 
     @Override
     public int getItemCount(){
-        return courses.size();
+        return cours.size();
     }
 
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_carousel_item_layout, parent, false);
         return new CourseViewHolder(view);
     }
 
     @Override
     public void bindVH(@NonNull CourseViewHolder courseViewHolder, int position) {
-        Course course = courses.get(position);
-        int totalAllotedSessions = course.getTotalAllotedSessions(),
-                attended = course.getAttended(),
-                pending = course.getPending(),
-                available = course.getAvailable(),
-                expired = course.getExpired(),
-                daysLeft = course.getDaysLeft(),
-                extraHrs = course.getExtraHrs();
-        String courseName = course.getCourseName(),
-                courseCode = course.getCourseCode();
-        String instructor = course.getInstructor();
-        Drawable courseImage = course.getCourseImage();
+        CourseCarouselItem courseCarouselItem = cours.get(position);
+        int totalAllotedSessions = courseCarouselItem.getTotalAllotedSessions(),
+                attended = courseCarouselItem.getAttended(),
+                pending = courseCarouselItem.getPending(),
+                available = courseCarouselItem.getAvailable(),
+                expired = courseCarouselItem.getExpired(),
+                daysLeft = courseCarouselItem.getDaysLeft(),
+                extraHrs = courseCarouselItem.getExtraHrs();
+        String courseName = courseCarouselItem.getCourseName(),
+                courseCode = courseCarouselItem.getCourseCode();
+        String instructor = courseCarouselItem.getInstructor();
+        Drawable courseImage = courseCarouselItem.getCourseImage();
         courseViewHolder.bindViewAndData(totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs, courseName+" - "+courseCode, instructor, courseImage);
     }
 

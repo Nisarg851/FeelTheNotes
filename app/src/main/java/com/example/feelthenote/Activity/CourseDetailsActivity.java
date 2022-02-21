@@ -1,29 +1,47 @@
 package com.example.feelthenote.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.appcompat.widget.Toolbar;
+import androidx.coordinatorlayout.widget.CoordinatorLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.feelthenote.Adapter.FacultyCarousel;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseData;
 import com.example.feelthenote.Model.CourseDetails;
 import com.example.feelthenote.Model.CourseFacultyDetails;
 import com.example.feelthenote.Model.CourseLatestPackages;
 import com.example.feelthenote.Model.CourseOtherPackages;
-import com.example.feelthenote.Model.GetMyCoursesDatum;
 import com.example.feelthenote.Network.CourseDetailsResponse;
 import com.example.feelthenote.Network.CourseDetailsRequest;
-import com.example.feelthenote.Network.GetCoursesResponse;
 import com.example.feelthenote.R;
 import com.example.feelthenote.Receiver.ConnectivityReceiver;
+import com.example.feelthenote.RecyclerViewAdapter.ExploreCoursesAdapter;
+import com.example.feelthenote.RecyclerViewAdapter.LatestPackageAdapter;
 import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
+import com.github.islamkhsh.CardSliderViewPager;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.util.List;
 
@@ -31,24 +49,118 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class CourseDetailsActivity extends AppCompatActivity {
+public class CourseDetailsActivity extends AppCompatActivity implements View.OnClickListener{
+    private AppBarLayout appBarLayout;
+    private CollapsingToolbarLayout collapsingToolbarLayout;
 
-    ProgressDialog pg;
+    private LinearLayout llCourseContainer;
+    private CoordinatorLayout llRootLayout;
+    private TextView tvShowMoreAbout, tvShowMoreDetails;
 
-    ConstraintLayout clRootLayout;
-    TextView tempView;
+    private RelativeLayout rlAboutCourse, rlCourseDetail;
+    private boolean aboutCourseExpanded = false, courseDetailExpanded = false;
+
+    private ImageView ivCourseCoverImage;
+    private RecyclerView rvLatestPackage;
+
+    private ProgressDialog pg;
+
+    private  String courseName="Course Name";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_course_detail);
+
         Intent recievedIntent = getIntent();
         String course_ID = recievedIntent.getStringExtra("Course_ID");
-        clRootLayout = findViewById(R.id.clRootLayout);
-        tempView = findViewById(R.id.textView5);
-        tempView.setText(course_ID);
-        pg = Common.showProgressDialog(CourseDetailsActivity.this);
+
+        initializeControls();
+        initializeAppBarAndToolBarConfigs();
         getCourseDetails(course_ID);
+    }
+
+    private void initializeControls(){
+        llRootLayout = findViewById(R.id.llRootLayout);
+        appBarLayout = findViewById(R.id.appbarLayout);
+        collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
+        llCourseContainer = findViewById(R.id.llCourseContainer);
+        pg = Common.showProgressDialog(CourseDetailsActivity.this);
+
+        tvShowMoreAbout = findViewById(R.id.tvShowMoreAbout);
+        tvShowMoreDetails = findViewById(R.id.tvShowMoreDetails);
+
+        rlAboutCourse = findViewById(R.id.rlAboutCourse);
+        rlCourseDetail = findViewById(R.id.rlCourseDetail);
+
+        ivCourseCoverImage = findViewById(R.id.ivCourseCoverImage);
+
+        rvLatestPackage = findViewById(R.id.rvLatestPackage);
+
+        tvShowMoreAbout.setOnClickListener(this);
+        tvShowMoreDetails.setOnClickListener(this);
+    }
+
+    private void initializeAppBarAndToolBarConfigs(){
+
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.back_button);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+
+        appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            boolean isShow = false;
+            int scrollRange = -1;
+
+            @Override
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                if (scrollRange == -1) {
+                    scrollRange = appBarLayout.getTotalScrollRange();
+                }
+                if (scrollRange + verticalOffset == 0) {
+                    //userDetailsSummaryContainer.setVisibility(View.INVISIBLE);
+                    collapsingToolbarLayout.setTitle(courseName);
+                    //collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.MyCollapsingTitleTextAppearance);
+                    isShow = true;
+                } else if (isShow) {
+                    //userDetailsSummaryContainer.setVisibility(View.VISIBLE);
+                    collapsingToolbarLayout.setTitle(" ");
+                    isShow = false;
+                }
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View view) {
+        Log.i("Expand", "onClick: "+aboutCourseExpanded+" "+courseDetailExpanded);
+        switch (view.getId()){
+            case R.id.tvShowMoreAbout:
+                aboutCourseExpanded = !aboutCourseExpanded;
+                if(aboutCourseExpanded)
+                    rlAboutCourse.getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                else
+                    rlAboutCourse.getLayoutParams().height = (int) convertPixelsToDp(100, this.getApplicationContext());
+                rlAboutCourse.requestLayout();
+                break;
+            case R.id.tvShowMoreDetails:
+                courseDetailExpanded = !courseDetailExpanded;
+                if(courseDetailExpanded)
+                    rlCourseDetail.getLayoutParams().height = RelativeLayout.LayoutParams.WRAP_CONTENT;
+                else
+                    rlCourseDetail.getLayoutParams().height = (int) convertPixelsToDp(100, this.getApplicationContext());
+                rlCourseDetail.requestLayout();
+                break;
+        }
+    }
+
+    public float convertPixelsToDp(float px, Context context){
+        return px * ((float) context.getResources().getDisplayMetrics().densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     private void getCourseDetails(String course_ID){
@@ -78,19 +190,38 @@ public class CourseDetailsActivity extends AppCompatActivity {
                     try {
                         if(response.isSuccessful()){
                             pg.dismiss();
-                            Common.showSnack_Dark(clRootLayout, "Success..!!");
+                            Common.showSnack_Dark(llRootLayout, "Success..!!");
                             CourseData courseData = response.body().getCourseData();
-                            List<CourseDetails> courseDetails = courseData.getCourseDetails();
+                            CourseDetails courseDetails = courseData.getCourseDetails().get(0);
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
                             List<CourseOtherPackages> courseOtherPackages = courseData.getCourseOtherPackages();
+
+                            String CourseID = courseDetails.getCourseID();
+                            String CourseName = courseDetails.getCourseName();
+                            courseName = CourseName;
+                            ivCourseCoverImage.setImageDrawable(bitmap2Drawable(StringToBitMap(courseDetails.getCoverImage())));
+
+                            //Faculty Carousel
+                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
+                            cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
+
+                            // Latest Package Recycler
+                            LatestPackageAdapter latestPackageAdapter = new LatestPackageAdapter(CourseDetailsActivity.this,courseLatestPackages);
+                            latestPackageAdapter.SetOnItemClickListener(new ExploreCoursesAdapter.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(View view, int position) {
+                                    // View Details Dialog
+                                }
+                            });
+                            rvLatestPackage.setAdapter(latestPackageAdapter);
                         } else {
                             pg.dismiss();
-                            Common.showSnack_Dark(clRootLayout, response.errorBody().string());
+                            Common.showSnack_Dark(llRootLayout, response.errorBody().string());
                         }
                     }catch (Exception ex) {
                         pg.dismiss();
-                        Common.showSnack_Dark(clRootLayout, ex.getMessage());
+                        Common.showSnack_Dark(llRootLayout, ex.getMessage());
                     }
                 }
 
@@ -113,4 +244,24 @@ public class CourseDetailsActivity extends AppCompatActivity {
             });
         }
     }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public static Drawable bitmap2Drawable(Bitmap bitmap) {
+        @SuppressWarnings("deprecation")
+        BitmapDrawable bd = new BitmapDrawable(bitmap);
+        Drawable d = (Drawable) bd;
+        return d;
+    }
+
 }

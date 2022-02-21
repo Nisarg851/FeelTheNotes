@@ -1,19 +1,282 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/clRootLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.CourseDetailsActivity">
+    tools:context=".Activity.RegistrationActivity"
+    android:orientation="vertical"
+    android:id="@+id/llRootLayout"
+    android:background="#ffffff"
+    android:weightSum="4">
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="169dp"
-        android:layout_height="139dp"
-        android:text="TextView"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="20dp">-->
+<!--        <ImageView-->
+<!--            android:id="@+id/ivBack"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:src="@drawable/back_button"-->
+<!--            android:layout_marginTop="5dp"-->
+<!--            android:layout_marginLeft="10dp"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:contentDescription="Go back" />-->
+<!--        <TextView-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="10dp"-->
+<!--            android:text="Course Detail"-->
+<!--            android:layout_gravity="center"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="35sp"/>-->
+<!--    </LinearLayout>-->
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <com.google.android.material.appbar.CollapsingToolbarLayout
+        android:id="@+id/collapsingToolbarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:contentScrim="@color/colorPrimary"
+        app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+
+        <ImageView
+            android:id="@+id/ivCourseCoverImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_image"
+            app:layout_collapseMode="parallax" />
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Dark"
+            android:backgroundTint="@color/colorPrimary"/>
+
+    </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="visible"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="2dp">
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/cvCourse"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent"-->
+<!--                app:cardCornerRadius="36dp"-->
+<!--                app:strokeColor="@color/black"-->
+<!--                app:strokeWidth="1dp"-->
+<!--                android:layout_gravity="center_horizontal">-->
+
+<!--                <LinearLayout-->
+<!--                    android:id="@+id/llCourseContainer"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="150dp"-->
+<!--                    android:orientation="vertical">-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCourseName"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Course Name"-->
+<!--                        android:textSize="25dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:paddingTop="10dp"-->
+<!--                        android:paddingLeft="20dp"/>-->
+
+<!--                    <TextView-->
+<!--                        android:id="@+id/tvCourseId"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:text="Course ID"-->
+<!--                        android:textSize="20dp"-->
+<!--                        android:textColor="@color/colorWhite"-->
+<!--                        android:paddingLeft="19dp" />-->
+
+<!--                </LinearLayout>-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+
+                <RelativeLayout
+                    android:id="@+id/rlAboutCourse"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvAbout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="About Course"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"
+                        android:paddingLeft="20dp"/>
+
+                    <TextView
+                        android:id="@+id/tvAboutDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="19dp"
+                        android:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Availab"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20dp"
+                        android:layout_marginTop="40dp" />
+
+                    <TextView
+                        android:id="@+id/tvShowMoreAbout"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/showmore_button"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlCourseDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:padding="5dp"
+                    android:layout_marginTop="10dp">
+
+                    <TextView
+                        android:id="@+id/tvDetail"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Details"
+                        android:textSize="25dp"
+                        android:textStyle="bold"
+                        android:textColor="@color/colorBlack"
+                        android:paddingLeft="20dp"/>
+
+                    <TextView
+                        android:id="@+id/tvDetailDescription"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="19dp"
+                        android:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Available"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="20dp"
+                        android:layout_marginTop="40dp"/>
+
+                    <TextView
+                        android:id="@+id/tvShowMoreDetails"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginTop="100dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginRight="10dp"
+                        android:background="@drawable/showmore_button"/>
+
+                </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvFaculty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Instructor"
+                    android:textSize="25dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorBlack"
+                    android:paddingLeft="20dp"/>
+
+                <com.github.islamkhsh.CardSliderViewPager
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/viewPager"
+                    android:layout_marginTop="10dp"
+                    app:cardSlider_smallScaleFactor="0.9"
+                    app:cardSlider_otherPagesWidth="0dp"
+                    app:cardSlider_pageMargin="12dp"
+                    app:cardSlider_indicator="@id/indicator"
+                    app:auto_slide_time="10"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
+                    <com.github.islamkhsh.CardSliderIndicator
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAlignment="center"
+                        android:id="@+id/indicator"
+                        app:indicatorsToShow="20"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Latest Package"
+                android:textSize="25dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:paddingLeft="20dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvLatestPackage"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="Subscribe"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:layout_margin="12dp"
+                android:padding="10dp"
+                app:cornerRadius="10dp"
+                android:backgroundTint="#3D93BA"/>
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.example.feelthenote.Helper.Common;
@@ -37,6 +38,7 @@ public class MyCoursesActivity extends AppCompatActivity {
     private ExploreCoursesAdapter exploreCoursesAdapter;
     private MyCoursesAdapter myCoursesAdapter;
 
+    Button redirectToUploadImage;
     //Recycler View
 //    ArrayList<GetMyCoursesDatum> courses;
 
@@ -44,6 +46,14 @@ public class MyCoursesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
+
+        // Tempo code
+        redirectToUploadImage = findViewById(R.id.uploadImage);
+        redirectToUploadImage.setOnClickListener(view -> {
+            Intent uploadImage = new Intent(MyCoursesActivity.this, UploadImageActivity.class);
+            startActivity(uploadImage);
+        });
+
         initializeControls();
     }
 

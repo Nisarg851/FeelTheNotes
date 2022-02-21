@@ -2,19 +2,12 @@ package com.example.feelthenote.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.example.feelthenote.Model.Course;
-import com.example.feelthenote.Adapter.CourseCarousel;
 import com.example.feelthenote.R;
 import com.github.islamkhsh.CardSliderViewPager;
-
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 

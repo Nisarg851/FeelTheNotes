@@ -22,7 +22,7 @@
             android:id="@+id/tvCourseName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ADs"
+            android:text="Course Name"
             android:textSize="25dp"
             android:textStyle="bold"
             android:textColor="@color/colorWhite"
@@ -30,12 +30,22 @@
             android:paddingLeft="20dp"/>
 
         <TextView
+            android:id="@+id/tvCourseId"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Shubham Acharya"
+            android:text="Course ID"
             android:textSize="20dp"
             android:textColor="@color/colorWhite"
             android:paddingLeft="19dp" />
+
+        <TextView
+            android:id="@+id/tvSubscription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Active"
+            android:textSize="20dp"
+            android:textColor="@color/colorWhite"
+            android:textAlignment="viewEnd" />
 
     </LinearLayout>
 

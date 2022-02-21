@@ -12,7 +12,7 @@ public class GetExploreCoursesDatum {
     private String courseName;
     @SerializedName("Card_Image")
     @Expose
-    private Object cardImage;
+    private String cardImage;
 
     public String getCourseID() {
         return courseID;
@@ -30,11 +30,11 @@ public class GetExploreCoursesDatum {
         this.courseName = courseName;
     }
 
-    public Object getCardImage() {
+    public String getCardImage() {
         return cardImage;
     }
 
-    public void setCardImage(Object cardImage) {
+    public void setCardImage(String cardImage) {
         this.cardImage = cardImage;
     }
 }

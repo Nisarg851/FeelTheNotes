@@ -1,9 +1,15 @@
 package com.example.feelthenote.RecyclerViewAdapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -36,6 +42,27 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         GetExploreCoursesDatum course = Courses.get(position);
         holder.courseName.setText(course.getCourseName());
+        holder.courseID.setText(course.getCourseID());
+        holder.courseContainer.setBackground(bitmap2Drawable(StringToBitMap(course.getCardImage())));
+    }
+
+    public Bitmap StringToBitMap(String encodedString){
+        try{
+            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        }
+        catch(Exception e){
+            e.getMessage();
+            return null;
+        }
+    }
+
+    public static Drawable bitmap2Drawable(Bitmap bitmap) {
+        @SuppressWarnings("deprecation")
+        BitmapDrawable bd = new BitmapDrawable(bitmap);
+        Drawable d = (Drawable) bd;
+        return d;
     }
 
     @Override
@@ -45,11 +72,14 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CardView cvCourse;
-        TextView courseName;
+        TextView courseName, courseID;
+        LinearLayout courseContainer;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cvCourse = itemView.findViewById(R.id.cvCourse);
             courseName = itemView.findViewById(R.id.tvCourseName);
+            courseID = itemView.findViewById(R.id.tvCourseId);
+            courseContainer = itemView.findViewById(R.id.llCourseContainer);
             cvCourse.setOnClickListener(this);
         }
 

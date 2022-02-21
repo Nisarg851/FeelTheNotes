@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardCornerRadius="20dp"
+    app:cardBackgroundColor="#00000000">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/llRootLayout">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivFacultyImage"
+            android:layout_width="100dp"
+            android:layout_height="80dp"
+            android:src="@drawable/teacher_m"
+            android:layout_weight="0.5"
+            android:layout_gravity="center_vertical"
+            app:civ_border_width="2dp"
+            android:layout_margin="10dp"/>
+
+
+        <LinearLayout
+            android:id="@+id/llFacultyInfoContainer"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:weightSum="2"
+            android:layout_gravity="center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tvFacultyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Faculty Name"
+                android:textColor="@color/colorBlack"
+                android:textSize="23dp"
+                android:gravity="bottom"/>
+
+            <TextView
+                android:id="@+id/tvFacultyAbout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Faculty Details"
+                android:textColor="@color/colorBlack"
+                android:textSize="15dp"
+                android:gravity="top"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>

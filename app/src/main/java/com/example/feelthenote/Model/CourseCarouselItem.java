@@ -2,13 +2,13 @@ package com.example.feelthenote.Model;
 
 import android.graphics.drawable.Drawable;
 
-public class Course {
-    int totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs;
-    String courseName, courseCode;
-    String instructor;
-    Drawable courseImage;
+public class CourseCarouselItem {
+    private int totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs;
+    private String courseName, courseCode;
+    private String instructor;
+    private Drawable courseImage;
 
-    public Course(int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String courseCode, String instructor, Drawable courseImage) {
+    public CourseCarouselItem(int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String courseCode, String instructor, Drawable courseImage) {
         this.totalAllotedSessions = totalAllotedSessions;
         this.attended = attended;
         this.pending = pending;

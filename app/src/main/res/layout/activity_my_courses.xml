@@ -88,44 +88,11 @@
                 android:layout_gravity="center_horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-            <!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/course5"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                app:cardCornerRadius="15dp"-->
-<!--                app:strokeColor="@color/black"-->
-<!--                app:strokeWidth="1dp"-->
-<!--                android:layout_marginTop="20dp"-->
-<!--                android:layout_marginRight="20dp"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:layout_gravity="center_horizontal">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="150dp"-->
-<!--                    android:background="@drawable/agtr"-->
-<!--                    android:orientation="vertical">-->
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="ADs"-->
-<!--                        android:textSize="25dp"-->
-<!--                        android:textStyle="bold"-->
-<!--                        android:textColor="@color/colorWhite"-->
-<!--                        android:paddingTop="10dp"-->
-<!--                        android:paddingLeft="20dp"/>-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="Shubham Acharya"-->
-<!--                        android:textSize="20dp"-->
-<!--                        android:textColor="@color/colorWhite"-->
-<!--                        android:paddingLeft="19dp" />-->
-
-<!--                </LinearLayout>-->
-
-<!--            </androidx.cardview.widget.CardView>-->
+            <Button
+                android:id="@+id/uploadImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload Image"/>
 
         </LinearLayout>
 
