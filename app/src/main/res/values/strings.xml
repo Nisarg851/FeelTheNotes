@@ -4,4 +4,12 @@
     <string name="NetworkErrorMsg">Check Your Internet Connection..!!</string>
     <string name="NetworkErrorTitle">Network Error</string>
     <string name="NetworkErrorBtnTxt">Try Again</string>
+
+    <string-array name="Batch_list">
+        <item>Batch 1</item>
+        <item>Batch 2</item>
+        <item>Batch 3</item>
+        <item>Batch 4</item>
+        <item>Batch 5</item>
+    </string-array>
 </resources>

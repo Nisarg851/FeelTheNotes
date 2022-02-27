@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -19,12 +20,14 @@ import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.feelthenote.Adapter.FacultyCarousel;
+import com.example.feelthenote.Dialogs.PackageSubscriptionDialog;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseData;
 import com.example.feelthenote.Model.CourseDetails;
@@ -63,6 +66,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
     private ImageView ivCourseCoverImage;
     private RecyclerView rvLatestPackage;
 
+    private Button btnSubscribe;
+
     private ProgressDialog pg;
 
     private  String courseName="Course Name";
@@ -97,8 +102,11 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
         rvLatestPackage = findViewById(R.id.rvLatestPackage);
 
+        btnSubscribe = findViewById(R.id.btnSubscribe);
+
         tvShowMoreAbout.setOnClickListener(this);
         tvShowMoreDetails.setOnClickListener(this);
+        btnSubscribe.setOnClickListener(this);
     }
 
     private void initializeAppBarAndToolBarConfigs(){
@@ -136,6 +144,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         });
     }
 
+    @SuppressLint("ResourceType")
     @Override
     public void onClick(View view) {
         Log.i("Expand", "onClick: "+aboutCourseExpanded+" "+courseDetailExpanded);
@@ -155,6 +164,20 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                 else
                     rlCourseDetail.getLayoutParams().height = (int) convertPixelsToDp(100, this.getApplicationContext());
                 rlCourseDetail.requestLayout();
+                break;
+            case R.id.btnSubscribe:
+//                AlertDialog.Builder builder = new AlertDialog.Builder(CourseDetailsActivity.this, R.layout.package_subscription_dialog_layout);
+//                builder.setTitle("Subscribe");
+//                builder.setPositiveButton(R.id.tvSubscriptionButton, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) { }});
+//                builder.setNegativeButton(R.id.tvCancleButton, new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) { }});
+                PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog();
+
+                packageSubscriptionDialog.show(getSupportFragmentManager(), "Subscription Dialog Poped");
+//                builder.show();
                 break;
         }
     }
