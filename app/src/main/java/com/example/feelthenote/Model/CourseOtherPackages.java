@@ -22,12 +22,12 @@ public class CourseOtherPackages {
     @SerializedName("Fee")
     @Expose
     private Integer fee;
-    @SerializedName("Discount_Offer")
+    @SerializedName("Discount")
     @Expose
-    private Integer discountOffer;
-    @SerializedName("Total_Payable")
+    private Integer discount;
+    @SerializedName("Discount_Type")
     @Expose
-    private Integer totalPayable;
+    private String discountType;
 
     public String getPackageID() {
         return packageID;
@@ -77,19 +77,19 @@ public class CourseOtherPackages {
         this.fee = fee;
     }
 
-    public Integer getDiscountOffer() {
-        return discountOffer;
+    public Integer getDiscount() {
+        return discount;
     }
 
-    public void setDiscountOffer(Integer discountOffer) {
-        this.discountOffer = discountOffer;
+    public void setDiscount(Integer discount) {
+        this.discount = discount;
     }
 
-    public Integer getTotalPayable() {
-        return totalPayable;
+    public String getDiscountType() {
+        return discountType;
     }
 
-    public void setTotalPayable(Integer totalPayable) {
-        this.totalPayable = totalPayable;
+    public void setDiscountType(String discountType) {
+        this.discountType = discountType;
     }
 }

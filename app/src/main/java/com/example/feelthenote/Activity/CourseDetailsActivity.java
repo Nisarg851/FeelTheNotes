@@ -72,6 +72,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
     private  String courseName="Course Name";
 
+    private List<CourseOtherPackages> diaglogList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +168,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                 rlCourseDetail.requestLayout();
                 break;
             case R.id.btnSubscribe:
-                PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog();
+                PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog(diaglogList);
                 packageSubscriptionDialog.show(getSupportFragmentManager(), "Subscription Dialog Poped");
                 break;
         }
@@ -209,6 +211,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
                             List<CourseOtherPackages> courseOtherPackages = courseData.getCourseOtherPackages();
+
+                            diaglogList = courseOtherPackages;
 
                             String CourseID = courseDetails.getCourseID();
                             String CourseName = courseDetails.getCourseName();
