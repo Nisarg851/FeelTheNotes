@@ -166,18 +166,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                 rlCourseDetail.requestLayout();
                 break;
             case R.id.btnSubscribe:
-//                AlertDialog.Builder builder = new AlertDialog.Builder(CourseDetailsActivity.this, R.layout.package_subscription_dialog_layout);
-//                builder.setTitle("Subscribe");
-//                builder.setPositiveButton(R.id.tvSubscriptionButton, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) { }});
-//                builder.setNegativeButton(R.id.tvCancleButton, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) { }});
                 PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog();
-
                 packageSubscriptionDialog.show(getSupportFragmentManager(), "Subscription Dialog Poped");
-//                builder.show();
                 break;
         }
     }
@@ -213,7 +203,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                     try {
                         if(response.isSuccessful()){
                             pg.dismiss();
-                            Common.showSnack_Dark(llRootLayout, "Success..!!");
+//                            Common.showSnack_Dark(llRootLayout, "Success..!!");
                             CourseData courseData = response.body().getCourseData();
                             CourseDetails courseDetails = courseData.getCourseDetails().get(0);
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();

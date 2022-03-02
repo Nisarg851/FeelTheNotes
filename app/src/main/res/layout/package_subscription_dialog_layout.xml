@@ -4,9 +4,31 @@
         android:layout_height="match_parent"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:background="@drawable/temp_card2"
-    android:backgroundTint="#5000ff00">
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="5000"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.804"
+        app:layout_constraintStart_toEndOf="@+id/textView8"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="Fee: 6000"
+        android:textSize="20dp"
+        android:textStyle="normal"
+        app:layout_constraintStart_toStartOf="@+id/etPromoCode"
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView5"
@@ -20,31 +42,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <RadioGroup
+    <ToggleButton
         android:id="@+id/rgPackageMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center"
+        android:textOn="Online"
+        android:textOff="Offline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" >
-
-        <RadioButton
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Online"
-            android:textSize="20dp"/>
-
-        <RadioButton
-            android:layout_margin="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="offline"
-            android:textSize="20dp"/>
-
-    </RadioGroup>
+        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spBatchSpinner"
@@ -63,45 +69,104 @@
             android:layout_height="match_parent"
             android:padding="16dp"
             android:inputType="none"
-            android:text="Batch 1"
             android:textSize="16sp"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <LinearLayout
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/spPackages"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp"
-        android:gravity="center"
+        android:layout_margin="10dp"
+        android:hint="Select Package"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spBatchSpinner">
+
+        <AutoCompleteTextView
+            android:id="@+id/sptvPackageItems"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="16dp"
+            android:inputType="none"
+            android:textSize="16sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <EditText
+        android:id="@+id/etPromoCode"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="12dp"
+        android:hint="Enter Promo Code"
+        app:layout_constraintStart_toStartOf="@+id/spPackages"
+        app:layout_constraintTop_toBottomOf="@+id/spPackages" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/tvCheckPromocode"
+        android:layout_width="89dp"
+        android:layout_height="34dp"
+        android:text="Check Promocode"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:backgroundTint="#00ff00"
+        app:layout_constraintBottom_toBottomOf="@+id/etPromoCode"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.865"
+        app:layout_constraintStart_toEndOf="@+id/etPromoCode"
+        app:layout_constraintTop_toTopOf="@+id/etPromoCode" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="24dp"
+        android:text="Discount Applied"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/etPromoCode"
+        app:layout_constraintTop_toBottomOf="@+id/etPromoCode" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="33dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tvSubscriptionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            app:backgroundTint="#00ff00"
             android:padding="5dp"
             android:text="Subscribe"
             android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            app:backgroundTint="#00ff00" />
 
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tvCancleButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:backgroundTint="#ff0000"
             android:layout_margin="10dp"
             android:padding="5dp"
             android:text="Cancle"
             android:textColor="@color/black"
-            android:textSize="16dp"/>
+            android:textSize="16dp"
+            app:backgroundTint="#ff0000" />
 
     </LinearLayout>
 

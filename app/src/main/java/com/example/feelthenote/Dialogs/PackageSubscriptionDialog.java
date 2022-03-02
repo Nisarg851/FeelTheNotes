@@ -31,6 +31,12 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         AutoCompleteTextView sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
         sptvBatchItems.setAdapter(batchArrayAdapter);
 
+        String[] packageList = getResources().getStringArray(R.array.Package_list);
+        ArrayAdapter packageArrayAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, packageList);
+
+        AutoCompleteTextView sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
+        sptvPackageItems.setAdapter(packageArrayAdapter);
+
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
         return builder.create();

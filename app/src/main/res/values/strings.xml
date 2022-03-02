@@ -6,10 +6,15 @@
     <string name="NetworkErrorBtnTxt">Try Again</string>
 
     <string-array name="Batch_list">
-        <item>Batch 1</item>
-        <item>Batch 2</item>
-        <item>Batch 3</item>
-        <item>Batch 4</item>
-        <item>Batch 5</item>
+        <item>One to One</item>
+        <item>Batch of 5</item>
     </string-array>
+
+    <string-array name="Package_list">
+        <item>One Month</item>
+        <item>Three Months</item>
+        <item>Six Months</item>
+        <item>One Year</item>
+    </string-array>
+
 </resources>
