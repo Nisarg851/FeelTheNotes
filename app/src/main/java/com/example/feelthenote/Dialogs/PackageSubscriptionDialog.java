@@ -3,11 +3,9 @@ package com.example.feelthenote.Dialogs;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,22 +21,24 @@ import com.example.feelthenote.Model.CourseOtherPackages;
 import com.example.feelthenote.R;
 
 import java.util.ArrayList;
-import java.util.BitSet;
 import java.util.HashMap;
 import java.util.List;
 
 public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
-    ArrayList<CourseOtherPackages> courseOtherPackages = new ArrayList<CourseOtherPackages>();
+    private ArrayList<CourseOtherPackages> courseOtherPackages = new ArrayList<CourseOtherPackages>();
+    private int listLength = 0;
 
-    BitSet batchSet = new BitSet(255);
+    private ArrayList<String> batches = new ArrayList();
+    private ArrayList<String> packages = new ArrayList<>();
 
-    HashMap<String,ArrayList<String>> modePackages = new HashMap<>();
-    HashMap<String[],ArrayList<String[]>> batchPackages = new HashMap<>();
+    private HashMap<String, Boolean> batchValueExists = new HashMap<>();
+    private HashMap<String, Boolean> packValueExists = new HashMap<>();
 
     public PackageSubscriptionDialog(List<CourseOtherPackages> courseOtherPackages){
         if(courseOtherPackages!=null){
             this.courseOtherPackages.addAll(courseOtherPackages);
+            listLength = courseOtherPackages.size();
         }
     }
 
@@ -49,83 +49,82 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         LayoutInflater layoutInflater = getActivity().getLayoutInflater();
         View view = layoutInflater.inflate(R.layout.package_subscription_dialog_layout, null);
 
-        initiateDataSets();
-
         initiateListeners(view);
 
-        String[] batchList = getResources().getStringArray(R.array.Batch_list);
+//        String[] batchList = getResources().getStringArray(R.array.Batch_list);
 //        ArrayAdapter batchArrayAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, batchList);
 //
 //        AutoCompleteTextView sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
 //        sptvBatchItems.setAdapter(batchArrayAdapter);
 
-        String[] packageList = getResources().getStringArray(R.array.Package_list);
-        ArrayAdapter packageArrayAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, packageList);
-
-        AutoCompleteTextView sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
-        sptvPackageItems.setAdapter(packageArrayAdapter);
+//        String[] packageList = getResources().getStringArray(R.array.Package_list);
+//        ArrayAdapter packageArrayAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, packageList);
+//
+//        AutoCompleteTextView sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
+//        sptvPackageItems.setAdapter(packageArrayAdapter);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setView(view);
         return builder.create();
     }
 
-    private void initiateDataSets(){
-        int rowSize = courseOtherPackages.size();
-        for(int row=0; row<rowSize; row++){
-            CourseOtherPackages courseOtherPackage = courseOtherPackages.get(row);
-            String mode = courseOtherPackage.getMode();
-            int batch = courseOtherPackage.getBatchStrength();
-            String batchStrength = String.valueOf(batch);
-            String duration = courseOtherPackage.getDuration().toString();
-            String session = courseOtherPackage.getSessions().toString();
-            String fee = courseOtherPackage.getFee().toString();
-            String packageId = courseOtherPackage.getPackageID();
-            String discount = courseOtherPackage.getDiscount().toString();
-            String discountType = courseOtherPackage.getDiscountType();
-
-            if(modePackages.get(mode)==null){
-                modePackages.put(mode, new ArrayList<String>(){{add(batchStrength);}});
-                batchSet.set(batch,1);
-            }else if(!batchSet.get(batch)){
-                modePackages.get(mode).add(batchStrength);
-//                modeBatchList.add(batchStrength);
-//                modePackages.put(mode, modeBatchList);
-            }
-
-            if(batchPackages.get(batchStrength)==null){
-                batchPackages.put(new String[]{mode,batchStrength}, new ArrayList<String[]>(){{add(new String[]{duration, session, fee, packageId, discount, discountType});}});
-            }else{
-                batchPackages.get(batchStrength).add(new String[]{duration, session, fee, packageId, discount, discountType});
-//                batchRow.add(new String[]{duration, session, fee, packageId, discount, discountType});
-//                batchPackages.put(new String[]{mode,batchStrength}, batchRow);
-            }
-        }
-    }
-
     private void initiateListeners(View view){
         ToggleButton rgPackageMode = view.findViewById(R.id.rgPackageMode);
 
         AutoCompleteTextView sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
+        AutoCompleteTextView sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
+
 //        String[] batchList = getResources().getStringArray(R.array.Batch_list);
 //        ArrayAdapter batchArrayAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, batchList);
 //        sptvBatchItems.setAdapter(batchArrayAdapter);
 
         rgPackageMode.setOnClickListener(viewItem -> {
             String teachMode = rgPackageMode.getText().toString();
-            Log.e("Mode", "Mode Selected: "+ teachMode);
-            ArrayList<String> batches = modePackages.get(teachMode);
+            Log.e("Dbox", "Mode Selected: "+teachMode);
+            batches.clear();
+            batchValueExists.clear();
+            Log.e("Dbox", "listlength: "+listLength);
+            for (int row=0; row<listLength; row++){
+                String mode = courseOtherPackages.get(row).getMode();
+                Log.e("Dbox", "mode==teachMode "+mode+" "+teachMode+" "+(mode.equals(teachMode)));
+                String packBatch = courseOtherPackages.get(row).getBatchStrength().toString();
+                if(mode.equals(teachMode) && batchValueExists.get(packBatch)==null){
+                    batches.add(packBatch);
+                    batchValueExists.put(packBatch, true);
+                }
+            }
             ArrayAdapter batchSpinnerAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, batches);
+            Log.e("Dbox", "batchSpinnerAdapter: "+batches.toString());
             sptvBatchItems.setAdapter(batchSpinnerAdapter);
+            // Make batch spinner visible
         });
 
         sptvBatchItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View itemView, int i, long l) {
+                packages.clear();
+                packValueExists.clear();
+                String teachMode = rgPackageMode.getText().toString();
                 TextView selectedItem = (TextView) itemView;
                 String selectedBatch = selectedItem.getText().toString();
-                selectedBatch = selectedBatch=="1" ? "One on One" : "Batch of "+selectedBatch;
-                Log.e("BatchSpinner", "onItemClick: "+selectedBatch);
+                Log.e("Dbox", "listlength: "+listLength);
+                for(int row=0; row<listLength; row++){
+                    CourseOtherPackages pack = courseOtherPackages.get(row);
+                    Log.e("Dbox", "For loop: "+pack.getBatchStrength().toString()+" "+selectedBatch);
+                    String packBatch = pack.getBatchStrength().toString();
+                    String packID = pack.getPackageID();
+                    String mode = pack.getMode();
+                    if(packBatch.equals(selectedBatch) && mode.equals(teachMode)  && packValueExists.get(packID)==null){
+                        String duration = pack.getDuration().toString();
+                        String session = pack.getSessions().toString();
+                        String fees = pack.getFee().toString();
+                        packages.add(session+" Sesssion in "+duration+" Days");
+                        packValueExists.put(packID, true);
+                    }
+                }
+                ArrayAdapter packageSpinnerAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, packages);
+                sptvPackageItems.setAdapter(packageSpinnerAdapter);
+                Log.e("Dbox", "onItemClick: sptvPackageItems "+packages.toString());
             }
         });
     }
