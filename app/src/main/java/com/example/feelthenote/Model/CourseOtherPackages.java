@@ -12,7 +12,7 @@ public class CourseOtherPackages {
     private String mode;
     @SerializedName("Batch_Strength")
     @Expose
-    private Integer batchStrength;
+    private String batchStrength;
     @SerializedName("Duration")
     @Expose
     private Integer duration;
@@ -45,11 +45,11 @@ public class CourseOtherPackages {
         this.mode = mode;
     }
 
-    public Integer getBatchStrength() {
+    public String getBatchStrength() {
         return batchStrength;
     }
 
-    public void setBatchStrength(Integer batchStrength) {
+    public void setBatchStrength(String batchStrength) {
         this.batchStrength = batchStrength;
     }
 

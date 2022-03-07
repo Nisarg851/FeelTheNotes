@@ -2,33 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:padding="10dp"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
-
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="5000"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.804"
-        app:layout_constraintStart_toEndOf="@+id/textView8"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="24dp"
-        android:text="Fee: 6000"
-        android:textSize="20dp"
-        android:textStyle="normal"
-        app:layout_constraintStart_toStartOf="@+id/etPromoCode"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <TextView
         android:id="@+id/textView5"
@@ -46,6 +23,7 @@
         android:id="@+id/rgPackageMode"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"
         android:textOn="Online"
         android:textOff="Offline"
         app:layout_constraintEnd_toEndOf="parent"
@@ -59,6 +37,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Select Batch"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgPackageMode">
@@ -80,6 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:hint="Select Package"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spBatchSpinner">
@@ -94,79 +74,115 @@
 
     </com.google.android.material.textfield.TextInputLayout>
 
-    <EditText
-        android:id="@+id/etPromoCode"
-        android:layout_width="250dp"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="12dp"
-        android:hint="Enter Promo Code"
-        app:layout_constraintStart_toStartOf="@+id/spPackages"
-        app:layout_constraintTop_toBottomOf="@+id/spPackages" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/tvCheckPromocode"
-        android:layout_width="89dp"
-        android:layout_height="34dp"
-        android:text="Check Promocode"
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:backgroundTint="#00ff00"
-        app:layout_constraintBottom_toBottomOf="@+id/etPromoCode"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.865"
-        app:layout_constraintStart_toEndOf="@+id/etPromoCode"
-        app:layout_constraintTop_toTopOf="@+id/etPromoCode" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="24dp"
-        android:text="Discount Applied"
-        android:textSize="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/etPromoCode"
-        app:layout_constraintTop_toBottomOf="@+id/etPromoCode" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/llOtherSubmitValue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="33dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:padding="10dp"
+        android:layout_margin="10dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintHorizontal_chainStyle="spread"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView8">
+        android:orientation="vertical"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/spPackages">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2">
+
+            <EditText
+                android:id="@+id/etPromoCode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:layout_margin="10dp"
+                android:layout_marginTop="12dp"
+                android:hint="Enter Promo Code"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spPackages" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/tvCheckPromocode"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5"
+                android:text="Check"
+                android:textColor="@color/black"
+                android:textSize="12sp"
+                android:layout_gravity="center_vertical"
+                app:backgroundTint="#00ff00"
+                app:layout_constraintBottom_toBottomOf="@+id/etPromoCode"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.865"
+                app:layout_constraintStart_toEndOf="@+id/etPromoCode"
+                app:layout_constraintTop_toTopOf="@+id/etPromoCode" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvDiscountApplied"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text=""
+            android:textSize="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/etPromoCode"
+            app:layout_constraintTop_toBottomOf="@+id/etPromoCode" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginVertical="5dp"
+            android:weightSum="3">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Fees: "
+                android:textSize="20dp"
+                android:textAlignment="viewEnd"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/etPromoCode"
+                app:layout_constraintTop_toBottomOf="@+id/tvDiscountApplied" />
+
+            <TextView
+                android:id="@+id/tvFeesOriginal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20dp"
+                android:paddingRight="10dp"
+                android:textAlignment="viewStart"
+                android:textStyle="normal"
+                app:layout_constraintStart_toStartOf="@+id/etPromoCode"
+                app:layout_constraintTop_toBottomOf="@+id/tvDiscountApplied" />
+
+            <TextView
+                android:id="@+id/tvFeesToPay"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text=""
+                android:textSize="20dp"
+                android:textAlignment="viewStart"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.804"
+                app:layout_constraintStart_toEndOf="@+id/tvFeesOriginal"
+                app:layout_constraintTop_toBottomOf="@+id/tvDiscountApplied" />
+
+        </LinearLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/tvSubscriptionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:padding="5dp"
+            android:layout_gravity="center"
             android:text="Subscribe"
             android:textColor="@color/black"
             android:textSize="16sp"
             app:backgroundTint="#00ff00" />
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/tvCancleButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:padding="5dp"
-            android:text="Cancle"
-            android:textColor="@color/black"
-            android:textSize="16dp"
-            app:backgroundTint="#ff0000" />
 
     </LinearLayout>
 
