@@ -3,6 +3,8 @@ package com.example.feelthenote.Dialogs;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,25 +13,38 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseOtherPackages;
+import com.example.feelthenote.Network.PromoCodeRequest;
+import com.example.feelthenote.Network.PromoCodeResponse;
 import com.example.feelthenote.R;
+import com.example.feelthenote.Receiver.ConnectivityReceiver;
+import com.example.feelthenote.Retrofit.ApiClient;
+import com.example.feelthenote.Retrofit.ApiInterface;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class PackageSubscriptionDialog extends AppCompatDialogFragment {
+
+    ProgressDialog pg;
 
     private CourseOtherPackages selectedPackage = null;
 
@@ -43,8 +58,11 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     private ToggleButton rgPackageMode;
     private TextInputLayout spBatchSpinner, spPackages;
     private AutoCompleteTextView sptvBatchItems, sptvPackageItems;
+    private EditText etPromoCode;
     private LinearLayout llOtherSubmitValue;
     private TextView tvDiscountApplied, tvFeesOriginal, tvFeesToPay;
+
+    private Button btnCheckPromocode;
 
     public PackageSubscriptionDialog(List<CourseOtherPackages> courseOtherPackages){
         if(courseOtherPackages!=null){
@@ -68,6 +86,9 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     }
 
     private void initiateControls(View view){
+
+        pg = Common.showProgressDialog(this.getActivity());
+
         rgPackageMode = view.findViewById(R.id.rgPackageMode);
         sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
         sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
@@ -76,6 +97,10 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         spPackages = view.findViewById(R.id.spPackages);
 
         llOtherSubmitValue = view.findViewById(R.id.llOtherSubmitValue);
+
+        etPromoCode = view.findViewById(R.id.etPromoCode);
+
+        btnCheckPromocode = view.findViewById(R.id.btnCheckPromocode);
 
         tvDiscountApplied = view.findViewById(R.id.tvDiscountApplied);
         tvFeesOriginal = view.findViewById(R.id.tvFeesOriginal);
@@ -143,26 +168,99 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                 discount = selectedPackage.getDiscount();
                 fees = selectedPackage.getFee();
 
-                float finalFees = 0;
-                if(discount==0){
-                    tvFeesOriginal.setVisibility(View.GONE);
-                    tvDiscountApplied.setVisibility(View.GONE);
-                    tvFeesToPay.setText(fees);
-                }else{
-                    tvDiscountApplied.setVisibility(View.VISIBLE);
-                    tvFeesOriginal.setVisibility(View.VISIBLE);
-                    String discountApplied = "Discount Applied: "+(discountType.equals("Flat") ? "Flat "+discount+" Rs." : discount+" %");
-                    tvDiscountApplied.setText(discountApplied);
-                    tvFeesOriginal.setPaintFlags(tvFeesOriginal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    tvFeesOriginal.setText(fees);
-                    if(discountType.equals("Flat")){
-                        finalFees = fees - discount;
-                    }else{
-                        finalFees = fees - (fees/100)*discount;
-                    }
-                    tvFeesToPay.setText(String.valueOf(finalFees));
-                }
+                calculateDiscount(fees, discount, discountType);
             }
         });
+
+        btnCheckPromocode.setOnClickListener(view -> {
+            String promoCode = etPromoCode.getText().toString();
+            String packageId = selectedPackage.getPackageID();
+            checkPromoCode(promoCode, packageId);
+        });
+    }
+
+    private void calculateDiscount(int fees, int discount, String discountType){
+        int finalFees = 0;
+        if(discount==0){
+            tvFeesOriginal.setVisibility(View.GONE);
+            tvDiscountApplied.setVisibility(View.GONE);
+            tvFeesToPay.setText(""+fees);
+        }else{
+            tvDiscountApplied.setVisibility(View.VISIBLE);
+            tvFeesOriginal.setVisibility(View.VISIBLE);
+            String discountApplied = "Discount Applied: "+(discountType.equals("Flat") ? "Flat "+discount+" Rs." : discount+" %");
+            tvDiscountApplied.setText(discountApplied);
+            tvFeesOriginal.setPaintFlags(tvFeesOriginal.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+            tvFeesOriginal.setText(""+fees);
+            if(discountType.equals("Flat")){
+                finalFees = fees - discount;
+            }else{
+                finalFees = Math.round(fees - (fees/100)*discount);
+            }
+            tvFeesToPay.setText(String.valueOf(finalFees));
+        }
+    }
+
+    private void checkPromoCode(String promoCode, String packageID){
+        pg.show();
+        Context context = this.getActivity().getApplicationContext();
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected) {
+            Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show();
+        }else {
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+            Call<PromoCodeResponse> promoCodeCall = apiInterface.getPromoDiscount(new PromoCodeRequest(promoCode,packageID));
+
+            promoCodeCall.enqueue(new Callback<PromoCodeResponse>() {
+                @Override
+                public void onResponse(Call<PromoCodeResponse> call, Response<PromoCodeResponse> response) {
+                    pg.dismiss();
+                    try{
+                        if (response.isSuccessful()) {
+                            if(response.body().getStatusCode()==1){
+                                if(response.body().getStatus()==null){
+                                    pg.dismiss();
+                                    Toast.makeText(context, "Promocode INCORRECT", Toast.LENGTH_LONG).show();
+                                } else if(response.body().getStatus().equals("ACTIVE")) {
+                                    pg.dismiss();
+
+                                    int discount = response.body().getDiscount();
+                                    String discountType = response.body().getDiscountType();
+
+                                    calculateDiscount(fees, discount, discountType);
+
+                                    Toast.makeText(context, "Promocode Applied", Toast.LENGTH_LONG).show();
+                                } else if(response.body().getStatus().equals("INACTIVE")){
+                                    Toast.makeText(context, "Promocode INACTIVE", Toast.LENGTH_LONG).show();
+                                } else if(response.body().getStatus().equals("EXPIRED")){
+                                    pg.dismiss();
+                                    Toast.makeText(context, "Promocode EXPIRED", Toast.LENGTH_LONG).show();
+                                }else {
+                                    pg.dismiss();
+                                    Toast.makeText(context, "Unexpected Error", Toast.LENGTH_LONG).show();
+                                }
+                            }else{
+                                pg.dismiss();
+                                Toast.makeText(context,"Network Error", Toast.LENGTH_LONG).show();
+                            }
+                        } else {
+                            pg.dismiss();
+                            Toast.makeText(context,response.errorBody().string(), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (Exception ex) {
+                        pg.dismiss();
+                        Toast.makeText(context,ex.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<PromoCodeResponse> call, Throwable t) {
+                    pg.dismiss();
+                    t.printStackTrace();
+                    Toast.makeText(context,R.string.NetworkErrorMsg, Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 }
