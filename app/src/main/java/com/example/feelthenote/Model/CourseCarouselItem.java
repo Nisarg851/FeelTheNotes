@@ -6,9 +6,9 @@ public class CourseCarouselItem {
     private int totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs;
     private String courseName, courseCode;
     private String instructor;
-    private Drawable courseImage;
+    private String courseImage;
 
-    public CourseCarouselItem(int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String courseCode, String instructor, Drawable courseImage) {
+    public CourseCarouselItem(int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String courseCode, String instructor, String courseImage) {
         this.totalAllotedSessions = totalAllotedSessions;
         this.attended = attended;
         this.pending = pending;
@@ -104,11 +104,11 @@ public class CourseCarouselItem {
         this.instructor = instructor;
     }
 
-    public Drawable getCourseImage() {
+    public String getCourseImage() {
         return courseImage;
     }
 
-    public void setCourseImage(Drawable courseImage) {
+    public void setCourseImage(String courseImage) {
         this.courseImage = courseImage;
     }
 }

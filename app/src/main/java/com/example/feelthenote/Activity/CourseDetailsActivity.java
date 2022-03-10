@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -26,9 +27,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.GlideBuilder;
+import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.feelthenote.Adapter.FacultyCarousel;
 import com.example.feelthenote.Dialogs.PackageSubscriptionDialog;
 import com.example.feelthenote.Helper.Common;
+import com.example.feelthenote.Helper.LimitCacheSizeGlide;
 import com.example.feelthenote.Model.CourseData;
 import com.example.feelthenote.Model.CourseDetails;
 import com.example.feelthenote.Model.CourseFacultyDetails;
@@ -53,6 +60,10 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class CourseDetailsActivity extends AppCompatActivity implements View.OnClickListener{
+    private Context context = null;
+
+    private String BASE_URL = "http://ftn.locuslogs.com/images/cover/";
+
     private AppBarLayout appBarLayout;
     private CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -88,6 +99,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     private void initializeControls(){
+        context = getApplicationContext();
         llRootLayout = findViewById(R.id.llRootLayout);
         appBarLayout = findViewById(R.id.appbarLayout);
         collapsingToolbarLayout = findViewById(R.id.collapsingToolbarLayout);
@@ -216,8 +228,25 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
                             String CourseID = courseDetails.getCourseID();
                             String CourseName = courseDetails.getCourseName();
+                            String courseCoverImageDateTime = courseDetails.getCoverImageDateTime();
+
                             courseName = CourseName;
-                            ivCourseCoverImage.setImageDrawable(bitmap2Drawable(StringToBitMap(courseDetails.getCoverImage())));
+
+                            Log.i("CourseCoverImage", "Signature: "+CourseID+courseCoverImageDateTime);
+
+                            ObjectKey coverImageObjectKey = new ObjectKey(CourseID+courseCoverImageDateTime);
+
+                            String imageURL = BASE_URL + CourseID + courseCoverImageDateTime .replace(':','_')+ ".jpg";
+
+                            Log.e("imageurl", "url: "+imageURL);
+                            Glide.with(context)
+                                    .load(imageURL)
+                                    .signature(coverImageObjectKey)
+                                    .transition(DrawableTransitionOptions.withCrossFade(700))
+                                    .into(ivCourseCoverImage);
+//                           ivCourseCoverImage.setImageDrawable(bitmap2Drawable(StringToBitMap(courseDetails.getCoverImage())));
+
+                            Log.e("CourseCoverImage", "onResponse: "+coverImageObjectKey.toString());
 
                             //Faculty Carousel
                             CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
@@ -262,23 +291,23 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }
-        catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    }
-
-    public static Drawable bitmap2Drawable(Bitmap bitmap) {
-        @SuppressWarnings("deprecation")
-        BitmapDrawable bd = new BitmapDrawable(bitmap);
-        Drawable d = (Drawable) bd;
-        return d;
-    }
+//    public Bitmap StringToBitMap(String encodedString){
+//        try{
+//            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
+//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+//            return bitmap;
+//        }
+//        catch(Exception e){
+//            e.getMessage();
+//            return null;
+//        }
+//    }
+//
+//    public static Drawable bitmap2Drawable(Bitmap bitmap) {
+//        @SuppressWarnings("deprecation")
+//        BitmapDrawable bd = new BitmapDrawable(bitmap);
+//        Drawable d = (Drawable) bd;
+//        return d;
+//    }
 
 }

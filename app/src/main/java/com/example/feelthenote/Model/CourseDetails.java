@@ -16,12 +16,12 @@ public class CourseDetails {
     @SerializedName("Detail")
     @Expose
     private String detail;
-    @SerializedName("Cover_Image")
-    @Expose
-    private String coverImage;
     @SerializedName("Background")
     @Expose
     private Object background;
+    @SerializedName("Cover_Image_Update")
+    @Expose
+    private String coverImageDateTime;
     @SerializedName("Student_Mapping_ID")
     @Expose
     private Integer studentMappingID;
@@ -58,12 +58,12 @@ public class CourseDetails {
         this.detail = detail;
     }
 
-    public String getCoverImage() {
-        return coverImage;
+    public String getCoverImageDateTime() {
+        return coverImageDateTime;
     }
 
-    public void setCoverImage(String coverImage) {
-        this.coverImage = coverImage;
+    public void setCoverImageDateTime(String coverImageDateTime) {
+        this.coverImageDateTime = coverImageDateTime;
     }
 
     public Object getBackground() {

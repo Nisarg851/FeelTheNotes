@@ -15,7 +15,6 @@
         android:id="@+id/llCourseContainer"
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="@drawable/agtr"
         android:orientation="vertical">
 
         <TextView
@@ -38,14 +37,27 @@
             android:textColor="@color/colorWhite"
             android:paddingLeft="19dp" />
 
-        <TextView
-            android:id="@+id/tvSubscription"
-            android:layout_width="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/cvSubscription"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Active"
-            android:textSize="20dp"
-            android:textColor="@color/colorWhite"
-            android:textAlignment="viewEnd" />
+            android:layout_gravity="bottom"
+            app:contentPadding="5dp"
+            app:cardCornerRadius="8dp"
+            android:layout_margin="10dp"
+            app:strokeColor="@color/Active"
+            app:strokeWidth="1dp"
+            app:cardBackgroundColor="@color/colorPrimary">
+
+            <TextView
+                android:id="@+id/tvSubscription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Active"
+                android:textColor="@color/colorWhite"
+                android:textSize="16dp" />
+
+        </com.google.android.material.card.MaterialCardView>
 
     </LinearLayout>
 

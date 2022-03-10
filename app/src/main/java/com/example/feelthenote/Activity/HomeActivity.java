@@ -24,9 +24,9 @@ public class HomeActivity extends AppCompatActivity {
 
         ArrayList<CourseCarouselItem> course = new ArrayList<CourseCarouselItem>();
         // add items to arraylist
-        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
-        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
-        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", new BitmapDrawable(getResources(),new BitmapFactory().decodeResource(getResources(), R.drawable.agtr))));
+        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
+        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
+        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
 
         cardSliderViewPager = findViewById(R.id.viewPager);
         cardSliderViewPager.setAdapter(new CourseCarousel(course));

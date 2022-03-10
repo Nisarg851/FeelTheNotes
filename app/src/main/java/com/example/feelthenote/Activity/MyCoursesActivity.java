@@ -38,7 +38,6 @@ public class MyCoursesActivity extends AppCompatActivity {
     private ExploreCoursesAdapter exploreCoursesAdapter;
     private MyCoursesAdapter myCoursesAdapter;
 
-    Button redirectToUploadImage;
     //Recycler View
 //    ArrayList<GetMyCoursesDatum> courses;
 
@@ -46,13 +45,6 @@ public class MyCoursesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_courses);
-
-        // Tempo code
-        redirectToUploadImage = findViewById(R.id.uploadImage);
-        redirectToUploadImage.setOnClickListener(view -> {
-            Intent uploadImage = new Intent(MyCoursesActivity.this, UploadImageActivity.class);
-            startActivity(uploadImage);
-        });
 
         initializeControls();
     }

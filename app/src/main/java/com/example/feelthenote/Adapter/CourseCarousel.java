@@ -1,5 +1,6 @@
 package com.example.feelthenote.Adapter;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,8 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.feelthenote.Model.CourseCarouselItem;
 import com.example.feelthenote.R;
 import com.github.islamkhsh.CardSliderAdapter;
@@ -17,6 +23,7 @@ import com.github.islamkhsh.CardSliderAdapter;
 import java.util.ArrayList;
 
 public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
+    private Context context = null;
     private final ArrayList<CourseCarouselItem> cours;
 
     public CourseCarousel(ArrayList<CourseCarouselItem> cours){
@@ -31,6 +38,7 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
     @NonNull
     @Override
     public CourseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_carousel_item_layout, parent, false);
         return new CourseViewHolder(view);
     }
@@ -45,11 +53,14 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
                 expired = courseCarouselItem.getExpired(),
                 daysLeft = courseCarouselItem.getDaysLeft(),
                 extraHrs = courseCarouselItem.getExtraHrs();
+
         String courseName = courseCarouselItem.getCourseName(),
                 courseCode = courseCarouselItem.getCourseCode();
         String instructor = courseCarouselItem.getInstructor();
-        Drawable courseImage = courseCarouselItem.getCourseImage();
-        courseViewHolder.bindViewAndData(totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs, courseName+" - "+courseCode, instructor, courseImage);
+
+//        Drawable courseImage = courseCarouselItem.getCourseImage();
+        String courseImageURL = "http://ftn.locuslogs.com/images/card/agtr.jpg";
+        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs, courseName+" - "+courseCode, instructor, courseImageURL);
     }
 
     static class CourseViewHolder extends RecyclerView.ViewHolder {
@@ -72,7 +83,7 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
             courseCardBackgroundImage = view.findViewById(R.id.courseCard);
         }
 
-        void bindViewAndData(int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String instructor, Drawable courseImage){
+        void bindViewAndData(Context context, int totalAllotedSessions, int attended, int pending, int available, int expired, int daysLeft, int extraHrs, String courseName, String instructor, String courseImageURL){
             totalAllotedSessionsText.setText(String.valueOf(totalAllotedSessions));
             attendedText.setText(String.valueOf(attended));
             pendingText.setText(String.valueOf(pending));
@@ -82,7 +93,21 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
             extraHrsText.setText(String.valueOf(extraHrs));
             courseText.setText(String.valueOf(courseName));
             instructorText.setText(String.valueOf(instructor));
-            courseCardBackgroundImage.setBackground(courseImage);
+//            courseCardBackgroundImage.setBackground(courseImage);
+            Glide.with(context)
+                    .load(courseImageURL)
+                    .transition(DrawableTransitionOptions.withCrossFade(700))
+                    .into(new CustomTarget<Drawable>() {
+                        @Override
+                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                            courseCardBackgroundImage.setBackground(resource);
+                        }
+
+                        @Override
+                        public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                        }
+                    });
         }
     }
 }

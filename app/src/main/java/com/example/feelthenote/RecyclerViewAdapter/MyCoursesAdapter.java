@@ -1,5 +1,6 @@
 package com.example.feelthenote.RecyclerViewAdapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,15 +14,26 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.feelthenote.Model.GetMyCoursesDatum;
 import com.example.feelthenote.R;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.MyCoursesViewHolder>{
+    private Context context = null;
+
+    private String BASE_URL = "http://ftn.locuslogs.com/images/card/";
+
     private List<GetMyCoursesDatum> Courses;
     OnItemClickListener onItemClickListener;
 
@@ -32,47 +44,39 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.MyCo
     @NonNull
     @Override
     public MyCoursesViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_card_layout, parent, false);
         return new MyCoursesViewHolder(view);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull MyCoursesViewHolder holder, int position) {
         GetMyCoursesDatum course = Courses.get(position);
         holder.courseName.setText(course.getCourseName());
         holder.courseID.setText(course.getCourseID());
-        holder.courseContainer.setBackground(bitmap2Drawable(StringToBitMap(course.getCardImage())));
-    }
 
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }
-        catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    }
-//    public static Drawable bytes2Drawable(byte[] b) {
-//        Bitmap bitmap = bytes2Bitmap(b);
-//        return bitmap2Drawable(bitmap);
-//    }
-//
-//    public static Bitmap bytes2Bitmap(byte[] b) {
-//        if (b.length != 0) {
-//            return BitmapFactory.decodeByteArray(b, 0, b.length);
-//        }
-//
-//        return null;
-//    }
-//
-    public static Drawable bitmap2Drawable(Bitmap bitmap) {
-        @SuppressWarnings("deprecation")
-        BitmapDrawable bd = new BitmapDrawable(bitmap);
-        Drawable d = (Drawable) bd;
-        return d;
+        int color = course.getSubscription().equals("Active") ? R.color.Active : R.color.InActive;
+
+        holder.courseSubscriptionStatus.setText(course.getSubscription());
+        holder.cvSubscription.setStrokeColor(ContextCompat.getColor(context, color));
+
+        String imageURL = BASE_URL + course.getCourseID() + course.getCardImage() .replace(':','_')+ ".jpg";
+
+        Glide.with(context)
+                .load(imageURL)
+                .transition(DrawableTransitionOptions.withCrossFade(300))
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable courseContainerBackgroundImage, @Nullable Transition<? super Drawable> transition) {
+                        holder.courseContainer.setBackground(courseContainerBackgroundImage);
+                    }
+
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
     }
 
     @Override
@@ -81,15 +85,19 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.MyCo
     }
 
     class MyCoursesViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
-        TextView courseName, courseID;
+        TextView courseName, courseID, courseSubscriptionStatus;
         LinearLayout courseContainer;
         CardView cvCourse;
+        MaterialCardView cvSubscription;
         public MyCoursesViewHolder(@NonNull View itemView) {
             super(itemView);
             cvCourse = itemView.findViewById(R.id.cvCourse);
             courseName = itemView.findViewById(R.id.tvCourseName);
             courseID = itemView.findViewById(R.id.tvCourseId);
             courseContainer = itemView.findViewById(R.id.llCourseContainer);
+            courseSubscriptionStatus = itemView.findViewById(R.id.tvSubscription);
+            cvSubscription = itemView.findViewById(R.id.cvSubscription);
+
             cvCourse.setOnClickListener(this);
         }
         @Override

@@ -18,8 +18,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FeelTheNote"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.UploadImageActivity">
-        </activity>
         <activity android:name=".Activity.CourseDetailsActivity" />
         <activity android:name=".Activity.MyCoursesActivity">
             <intent-filter>
@@ -34,6 +32,10 @@
         <activity android:name=".Activity.RegistrationActivity" />
         <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.MainActivity" />
+
+        <meta-data
+            android:name="com.example.feelthenote.Helper.LimitCacheSizeGlide"
+            android:value="GlideModule" />
     </application>
 
 </manifest>

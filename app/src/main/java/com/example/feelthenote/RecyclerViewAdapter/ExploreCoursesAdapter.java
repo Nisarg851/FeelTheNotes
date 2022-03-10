@@ -1,11 +1,7 @@
 package com.example.feelthenote.RecyclerViewAdapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
-import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,16 +9,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.bumptech.glide.request.target.CustomTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.example.feelthenote.Model.GetExploreCoursesDatum;
 import com.example.feelthenote.R;
+import com.google.android.material.card.MaterialCardView;
 
 import java.util.List;
 
 public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAdapter.ViewHolder>{
     Context context;
+
+    private String BASE_URL = "http://ftn.locuslogs.com/images/card/";
+
     private List<GetExploreCoursesDatum> Courses;
     OnItemClickListener onItemClickListener;
 
@@ -43,26 +48,24 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
         GetExploreCoursesDatum course = Courses.get(position);
         holder.courseName.setText(course.getCourseName());
         holder.courseID.setText(course.getCourseID());
-        holder.courseContainer.setBackground(bitmap2Drawable(StringToBitMap(course.getCardImage())));
-    }
+        holder.cvSubscription.setVisibility(View.GONE);
+        String imageURL = BASE_URL + course.getCourseID() + course.getCardImage() .replace(':','_')+ ".jpg";
 
-    public Bitmap StringToBitMap(String encodedString){
-        try{
-            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        }
-        catch(Exception e){
-            e.getMessage();
-            return null;
-        }
-    }
+//        holder.courseContainer.setBackground(bitmap2Drawable(StringToBitMap(course.getCardImage())));
+        Glide.with(context)
+                .load(imageURL)
+                .transition(DrawableTransitionOptions.withCrossFade(700))
+                .into(new CustomTarget<Drawable>() {
+                    @Override
+                    public void onResourceReady(@NonNull Drawable backgroundImage, @Nullable Transition<? super Drawable> transition) {
+                        holder.courseContainer.setBackground(backgroundImage);
+                    }
 
-    public static Drawable bitmap2Drawable(Bitmap bitmap) {
-        @SuppressWarnings("deprecation")
-        BitmapDrawable bd = new BitmapDrawable(bitmap);
-        Drawable d = (Drawable) bd;
-        return d;
+                    @Override
+                    public void onLoadCleared(@Nullable Drawable placeholder) {
+
+                    }
+                });
     }
 
     @Override
@@ -72,14 +75,18 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CardView cvCourse;
-        TextView courseName, courseID;
+        TextView courseName, courseID, courseSubscriptionStatus;
         LinearLayout courseContainer;
+        MaterialCardView cvSubscription;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             cvCourse = itemView.findViewById(R.id.cvCourse);
             courseName = itemView.findViewById(R.id.tvCourseName);
             courseID = itemView.findViewById(R.id.tvCourseId);
             courseContainer = itemView.findViewById(R.id.llCourseContainer);
+            courseSubscriptionStatus = itemView.findViewById(R.id.tvSubscription);
+            cvSubscription = itemView.findViewById(R.id.cvSubscription);
             cvCourse.setOnClickListener(this);
         }
 

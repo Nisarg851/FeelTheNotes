@@ -88,12 +88,6 @@
                 android:layout_gravity="center_horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-            <Button
-                android:id="@+id/uploadImage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Upload Image"/>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
