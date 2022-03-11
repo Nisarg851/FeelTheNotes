@@ -1,5 +1,7 @@
 package com.example.feelthenote.Retrofit;
 
+import com.example.feelthenote.Network.AddFeeDetailRequest;
+import com.example.feelthenote.Network.AddFeeDetailResponse;
 import com.example.feelthenote.Network.AddStudentRequest;
 import com.example.feelthenote.Network.AddStudentResponse;
 import com.example.feelthenote.Network.CourseDetailsResponse;
@@ -10,12 +12,9 @@ import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
 import com.example.feelthenote.Network.PromoCodeRequest;
 import com.example.feelthenote.Network.PromoCodeResponse;
-import com.example.feelthenote.Network.UploadImageRequest;
-import com.example.feelthenote.Network.UploadImageResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiInterface {
@@ -32,9 +31,9 @@ public interface ApiInterface {
     @POST("api/FeelTheNote/GetCourseDetails")
     Call<CourseDetailsResponse> getCourseDetail(@Body CourseDetailsRequest courseDetailsRequest);
 
-    @POST("api/FeelTheNote/AddImage")
-    Call<UploadImageResponse> uploadImage(@Body UploadImageRequest uploadImageRequest);
-
-    @POST("api/feelthenote/CheckPromoCode")
+    @POST("api/FeelTheNote/CheckPromoCode")
     Call<PromoCodeResponse> getPromoDiscount(@Body PromoCodeRequest promoCodeRequest);
+
+    @POST("api/FeelTheNote/AddFeeDetail")
+    Call<AddFeeDetailResponse> addFeeDetail(@Body AddFeeDetailRequest addFeeDetailRequest);
 }

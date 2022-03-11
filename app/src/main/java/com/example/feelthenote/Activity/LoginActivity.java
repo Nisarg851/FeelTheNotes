@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.feelthenote.Helper.Common;
+import com.example.feelthenote.Model.LoginUserDatum;
 import com.example.feelthenote.MyApplication;
 import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
@@ -128,6 +130,19 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                             if(response.body().getStatusCode() == 1) {
                                 pg.dismiss();
                                 Common.showSnack_Dark(llRootLayout,"Success..!!");
+
+                                LoginUserDatum loginUserDatum = response.body().getData().get(0);
+
+                                int userID = loginUserDatum.getUserID();
+                                String password = loginUserDatum.getPassword();
+//                                String userType = loginUserDatum.getUserType();
+
+                                SharedPreferences loginSharedPreference = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+                                SharedPreferences.Editor sharedPreferenceEditor = loginSharedPreference.edit();
+                                sharedPreferenceEditor.putInt("UserId", userID);
+                                sharedPreferenceEditor.putString("Password", password);
+                                sharedPreferenceEditor.commit();
+
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
                                 startActivity(i);
                                 finish();

@@ -5,6 +5,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,8 +27,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.feelthenote.Activity.HomeActivity;
+import com.example.feelthenote.Activity.LoginActivity;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseOtherPackages;
+import com.example.feelthenote.Network.AddFeeDetailRequest;
+import com.example.feelthenote.Network.AddFeeDetailResponse;
+import com.example.feelthenote.Network.LoginRequest;
+import com.example.feelthenote.Network.LoginResponse;
 import com.example.feelthenote.Network.PromoCodeRequest;
 import com.example.feelthenote.Network.PromoCodeResponse;
 import com.example.feelthenote.R;
@@ -34,6 +43,7 @@ import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -44,10 +54,15 @@ import retrofit2.Response;
 
 public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
+    Context context;
+
     ProgressDialog pg;
 
     private CourseOtherPackages selectedPackage = null;
 
+    private String courseID, promoCodeValidated = null;
+    private BigInteger studentMappingID;
+    private Integer studentID = null;
     private ArrayList<CourseOtherPackages> courseOtherPackages = new ArrayList<CourseOtherPackages>();
 
     private List<String> batches = new ArrayList();
@@ -62,11 +77,14 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     private LinearLayout llOtherSubmitValue;
     private TextView tvDiscountApplied, tvFeesOriginal, tvFeesToPay;
 
-    private Button btnCheckPromocode;
+    private Button btnCheckPromocode, btnAddFeeDetails;
 
-    public PackageSubscriptionDialog(List<CourseOtherPackages> courseOtherPackages){
+    public PackageSubscriptionDialog(Integer Student_ID,String courseID, BigInteger studentMappingID,List<CourseOtherPackages> courseOtherPackages){
         if(courseOtherPackages!=null){
+            this.courseID = courseID;
+            this.studentMappingID = studentMappingID;
             this.courseOtherPackages.addAll(courseOtherPackages);
+            this.studentID = Student_ID;
         }
     }
 
@@ -105,6 +123,8 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         tvDiscountApplied = view.findViewById(R.id.tvDiscountApplied);
         tvFeesOriginal = view.findViewById(R.id.tvFeesOriginal);
         tvFeesToPay = view.findViewById(R.id.tvFeesToPay);
+
+        btnAddFeeDetails = view.findViewById(R.id.btnAddFeeDetails);
     }
 
     @SuppressLint("NewApi")
@@ -177,6 +197,59 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             String packageId = selectedPackage.getPackageID();
             checkPromoCode(promoCode, packageId);
         });
+
+        btnAddFeeDetails.setOnClickListener(view -> {
+
+        });
+    }
+
+    private void addFeeDetail(){
+        boolean isConnected = ConnectivityReceiver.isConnected();
+        if (!isConnected) {
+            Toast.makeText(context, "Network Error", Toast.LENGTH_LONG).show();
+
+        }else {
+            int Student_ID = studentID;
+            String Course_ID = this.courseID;
+            String Package_ID = selectedPackage.getPackageID();
+            String Promo_Code = promoCodeValidated;
+            String Start_Date = "";
+            BigInteger Student_Mapping_ID = this.studentMappingID;
+
+            ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
+
+            Call<AddFeeDetailResponse> addFeeDetailResponseCall = apiInterface.addFeeDetail(new AddFeeDetailRequest(Student_ID, Course_ID, Package_ID, Promo_Code, Start_Date, Student_Mapping_ID));
+
+            addFeeDetailResponseCall.enqueue(new Callback<AddFeeDetailResponse>() {
+
+                @Override
+                public void onResponse(Call<AddFeeDetailResponse> call, Response<AddFeeDetailResponse> response) {
+                    try{
+                        if (response.isSuccessful()) {
+                            if(response.body().getStatusCode() == 1) {
+                                pg.dismiss();
+                                Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                            } else {
+                                pg.dismiss();
+                                Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            pg.dismiss();
+                            Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
+                        }
+                    } catch (Exception ex) {
+                        pg.dismiss();
+                        Toast.makeText(context, "An Unexpected Error Occured", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<AddFeeDetailResponse> call, Throwable t) {
+                    pg.dismiss();
+                    Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void calculateDiscount(int fees, int discount, String discountType){
@@ -203,7 +276,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
     private void checkPromoCode(String promoCode, String packageID){
         pg.show();
-        Context context = this.getActivity().getApplicationContext();
+        context = this.getActivity().getApplicationContext();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show();
@@ -224,7 +297,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                                     Toast.makeText(context, "Promocode INCORRECT", Toast.LENGTH_LONG).show();
                                 } else if(response.body().getStatus().equals("ACTIVE")) {
                                     pg.dismiss();
-
+                                    promoCodeValidated = etPromoCode.getText().toString();
                                     int discount = response.body().getDiscount();
                                     String discountType = response.body().getDiscountType();
 

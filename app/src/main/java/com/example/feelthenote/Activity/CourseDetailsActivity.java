@@ -53,6 +53,7 @@ import com.github.islamkhsh.CardSliderViewPager;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import retrofit2.Call;
@@ -84,6 +85,10 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
     private  String courseName="Course Name";
 
     private List<CourseOtherPackages> diaglogList;
+
+    Integer Student_ID = null;
+    private String Course_ID;
+    private BigInteger Student_Mapping_ID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,6 +122,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         rvLatestPackage = findViewById(R.id.rvLatestPackage);
 
         btnSubscribe = findViewById(R.id.btnSubscribe);
+
+        Student_ID = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE).getInt("UserID", -1);
 
         tvShowMoreAbout.setOnClickListener(this);
         tvShowMoreDetails.setOnClickListener(this);
@@ -180,7 +187,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                 rlCourseDetail.requestLayout();
                 break;
             case R.id.btnSubscribe:
-                PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog(diaglogList);
+                PackageSubscriptionDialog packageSubscriptionDialog = new PackageSubscriptionDialog(Student_ID,Course_ID, Student_Mapping_ID, diaglogList);
                 packageSubscriptionDialog.show(getSupportFragmentManager(), "Subscription Dialog Poped");
                 break;
         }
@@ -223,6 +230,9 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
                             List<CourseOtherPackages> courseOtherPackages = courseData.getCourseOtherPackages();
+
+                            Course_ID = courseDetails.getCourseID();
+                            Student_Mapping_ID = new BigInteger(courseDetails.getStudentMappingID().toString());
 
                             diaglogList = courseOtherPackages;
 

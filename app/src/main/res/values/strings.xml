@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">FeelTheNote</string>
 
+<!--    Share Preferences-->
+    <string name="LoginSharedPreference">LoginSharedPreference</string>
+
+<!--    Error messages-->
     <string name="NetworkErrorMsg">Check Your Internet Connection..!!</string>
     <string name="NetworkErrorTitle">Network Error</string>
     <string name="NetworkErrorBtnTxt">Try Again</string>

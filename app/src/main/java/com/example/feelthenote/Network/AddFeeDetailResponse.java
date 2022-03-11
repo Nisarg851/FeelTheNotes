@@ -3,7 +3,7 @@ package com.example.feelthenote.Network;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class UploadImageResponse {
+public class AddFeeDetailResponse {
     @SerializedName("Status_Code")
     @Expose
     private Integer statusCode;
