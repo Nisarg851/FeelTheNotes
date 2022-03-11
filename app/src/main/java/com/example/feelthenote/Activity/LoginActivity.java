@@ -135,12 +135,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
                                 int userID = loginUserDatum.getUserID();
                                 String password = loginUserDatum.getPassword();
-//                                String userType = loginUserDatum.getUserType();
+                                int userType = loginUserDatum.getUserType();
 
                                 SharedPreferences loginSharedPreference = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
                                 SharedPreferences.Editor sharedPreferenceEditor = loginSharedPreference.edit();
                                 sharedPreferenceEditor.putInt("UserId", userID);
                                 sharedPreferenceEditor.putString("Password", password);
+                                sharedPreferenceEditor.putInt("UserType", userType);
                                 sharedPreferenceEditor.commit();
 
                                 Intent i = new Intent(LoginActivity.this, HomeActivity.class);
