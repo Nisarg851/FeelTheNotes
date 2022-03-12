@@ -2,12 +2,10 @@ package com.example.feelthenote.Dialogs;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,14 +25,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
-import com.example.feelthenote.Activity.HomeActivity;
-import com.example.feelthenote.Activity.LoginActivity;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseOtherPackages;
 import com.example.feelthenote.Network.AddFeeDetailRequest;
 import com.example.feelthenote.Network.AddFeeDetailResponse;
-import com.example.feelthenote.Network.LoginRequest;
-import com.example.feelthenote.Network.LoginResponse;
 import com.example.feelthenote.Network.PromoCodeRequest;
 import com.example.feelthenote.Network.PromoCodeResponse;
 import com.example.feelthenote.R;
@@ -44,8 +38,12 @@ import com.example.feelthenote.Retrofit.ApiInterface;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 import retrofit2.Call;
@@ -54,7 +52,7 @@ import retrofit2.Response;
 
 public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
-    Context context;
+    Context context = null;
 
     ProgressDialog pg;
 
@@ -70,17 +68,24 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     private String teachMode, batch, discountType;
     int session, duration, fees, discount;
 
+    private LinearLayout llStartDateContainer;
+
     private ToggleButton rgPackageMode;
     private TextInputLayout spBatchSpinner, spPackages;
     private AutoCompleteTextView sptvBatchItems, sptvPackageItems;
     private EditText etPromoCode;
     private LinearLayout llOtherSubmitValue;
-    private TextView tvDiscountApplied, tvFeesOriginal, tvFeesToPay;
+    private TextView tvDiscountApplied, tvFeesOriginal, tvFeesToPay, tvStartDate;
 
     private Button btnCheckPromocode, btnAddFeeDetails;
+    Calendar newCalendar;
+
+    // Date Objects
+    DatePickerDialog StartTime;
 
     public PackageSubscriptionDialog(Integer Student_ID,String courseID, BigInteger studentMappingID,List<CourseOtherPackages> courseOtherPackages){
         if(courseOtherPackages!=null){
+            context = getContext();
             this.courseID = courseID;
             this.studentMappingID = studentMappingID;
             this.courseOtherPackages.addAll(courseOtherPackages);
@@ -98,7 +103,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         initiateControls(view);
         initiateListeners();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setView(view);
         return builder.create();
     }
@@ -106,6 +111,8 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     private void initiateControls(View view){
 
         pg = Common.showProgressDialog(this.getActivity());
+
+        llStartDateContainer = view.findViewById(R.id.llStartDateContainer);
 
         rgPackageMode = view.findViewById(R.id.rgPackageMode);
         sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
@@ -123,14 +130,32 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         tvDiscountApplied = view.findViewById(R.id.tvDiscountApplied);
         tvFeesOriginal = view.findViewById(R.id.tvFeesOriginal);
         tvFeesToPay = view.findViewById(R.id.tvFeesToPay);
+        tvStartDate = view.findViewById(R.id.tvStartDate);
+
+        tvStartDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
 
         btnAddFeeDetails = view.findViewById(R.id.btnAddFeeDetails);
+
+        //////////////////////////////////////  Calander Dialog and Date Configurations /////////////////////////////////////////////
+        Log.e("context", "before context is null: "+(context==null));
+        if(context==null)
+            context = getActivity();
+        Log.e("context", "after context is null: "+(context==null));
+        newCalendar = Calendar.getInstance();
+        StartTime = new DatePickerDialog(context, (view1, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            tvStartDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(newDate.getTime()));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     }
 
     @SuppressLint("NewApi")
     private void initiateListeners(){
         rgPackageMode.setOnClickListener(viewItem -> {
 
+            llStartDateContainer.setVisibility(View.GONE);
             spBatchSpinner.setVisibility(View.GONE);
             sptvBatchItems.setText(null);
             spPackages.setVisibility(View.GONE);
@@ -141,11 +166,12 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             batches = courseOtherPackages.stream()
                     .filter(courseOtherPackages1 -> courseOtherPackages1.getMode().equals(teachMode))
                     .map(CourseOtherPackages::getBatchStrength).distinct().collect(Collectors.toList());
-            ArrayAdapter batchSpinnerAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, batches);
+            ArrayAdapter batchSpinnerAdapter = new ArrayAdapter(context, R.layout.spinner_item_layout, batches);
             Log.e("Dbox", "batchSpinnerAdapter: "+batches.toString());
             sptvBatchItems.setAdapter(batchSpinnerAdapter);
 
             spBatchSpinner.setVisibility(View.VISIBLE);
+            llStartDateContainer.setVisibility(View.VISIBLE);
         });
 
         sptvBatchItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -160,10 +186,18 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                         .filter(courseOtherPackages1 -> (courseOtherPackages1.getMode().equals(teachMode)&&courseOtherPackages1.getBatchStrength().equals(batch) ))
                         .map( courseOtherPackagesTemp -> courseOtherPackagesTemp.getSessions()+" Sesssion in "+courseOtherPackagesTemp.getDuration()+" Days")
                         .collect(Collectors.toList());
-                ArrayAdapter packageSpinnerAdapter = new ArrayAdapter(requireContext(), R.layout.spinner_item_layout, packages);
+                ArrayAdapter packageSpinnerAdapter = new ArrayAdapter(context, R.layout.spinner_item_layout, packages);
                 sptvPackageItems.setAdapter(packageSpinnerAdapter);
                 Log.e("Dbox", "onItemClick: sptvPackageItems "+packages.toString());
                 spPackages.setVisibility(View.VISIBLE);
+            }
+        });
+
+        tvStartDate.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                StartTime.show();
+                return true;
             }
         });
 
@@ -198,8 +232,9 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             checkPromoCode(promoCode, packageId);
         });
 
-        btnAddFeeDetails.setOnClickListener(view -> {
 
+        btnAddFeeDetails.setOnClickListener(view -> {
+            addFeeDetail();
         });
     }
 
@@ -209,12 +244,15 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             Toast.makeText(context, "Network Error", Toast.LENGTH_LONG).show();
 
         }else {
-            int Student_ID = studentID;
+//            int Student_ID = studentID;
+            int Student_ID = 23;
             String Course_ID = this.courseID;
             String Package_ID = selectedPackage.getPackageID();
             String Promo_Code = promoCodeValidated;
-            String Start_Date = "";
+            String Start_Date = tvStartDate.getText().toString();
             BigInteger Student_Mapping_ID = this.studentMappingID;
+
+            Log.e("dialogValues", "Student_ID: "+Student_ID+" Course_ID: "+Course_ID+" Package_ID: "+Package_ID+" Promo_Code: "+Promo_Code+" StartDate: "+Start_Date+" Student_Mapping_ID: "+Student_Mapping_ID);
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
@@ -231,7 +269,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
                             } else {
                                 pg.dismiss();
-                                Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(context, "Something Went Wrong!1", Toast.LENGTH_SHORT).show();
                             }
                         } else {
                             pg.dismiss();
@@ -276,7 +314,6 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
     private void checkPromoCode(String promoCode, String packageID){
         pg.show();
-        context = this.getActivity().getApplicationContext();
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (!isConnected) {
             Toast.makeText(context, "No Internet Connection", Toast.LENGTH_LONG).show();

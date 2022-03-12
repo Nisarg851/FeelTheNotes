@@ -33,12 +33,12 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spBatchSpinner"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="212dp"
+        android:layout_height="60dp"
         android:layout_margin="10dp"
         android:hint="Select Batch"
         android:visibility="gone"
-        app:layout_constraintEnd_toEndOf="parent"
+        tools:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgPackageMode">
 
@@ -46,11 +46,44 @@
             android:id="@+id/sptvBatchItems"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="16dp"
             android:inputType="none"
-            android:textSize="16sp"/>
+            android:padding="16dp"
+            android:textSize="16sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:id="@+id/llStartDateContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintStart_toEndOf="@+id/spBatchSpinner"
+        app:layout_constraintTop_toTopOf="@+id/spBatchSpinner"
+        app:layout_constraintBottom_toBottomOf="@+id/spBatchSpinner"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start Date:"
+            android:textSize="16sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.274"/>
+
+        <TextView
+            android:id="@+id/tvStartDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="4dp"
+            android:text="00:00:0000"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="#20209C"/>
+
+    </LinearLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spPackages"
@@ -60,6 +93,7 @@
         android:layout_margin="10dp"
         android:hint="Select Package"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spBatchSpinner">
@@ -82,6 +116,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:orientation="vertical"
         android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintTop_toBottomOf="@+id/spPackages">
 
         <LinearLayout
