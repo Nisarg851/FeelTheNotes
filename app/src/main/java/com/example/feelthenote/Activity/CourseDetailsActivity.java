@@ -227,38 +227,63 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                     try {
                         if(response.isSuccessful()){
                             pg.dismiss();
-//                            Common.showSnack_Dark(llRootLayout, "Success..!!");
+                            // Course Date
                             CourseData courseData = response.body().getCourseData();
+
+                            // Course Details
                             CourseDetails courseDetails = courseData.getCourseDetails().get(0);
 
+                            // Course Faculty Details
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
 
+                            //Faculty Carousel
+                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
+                            cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
+
+                            // Course Latest Packages
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
                             CourseLatestPackages courseLatestPackage = null;
 
-                            if(courseLatestPackages!=null && courseLatestPackages.size()>0)
-                                courseLatestPackage = courseLatestPackages.get(0);
-                            else
-                                rvLatestPackageTitle.setVisibility(View.GONE);
+                            // Latest Package Configurations
+                            btnSubscribe.setClickable(true);
+                            if(courseLatestPackage==null){
+                                    btnSubscribe.setText("Subscribe");
+                                }else if(courseLatestPackage.getTransactionNo()==0){
+                                    btnSubscribe.setText("Under Approval");
+                                    btnSubscribe.setClickable(false);
+                                } else {
+                                    String expiryDate = courseLatestPackage.getExpiryDate();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                    Date courseExpiryDate = sdf.parse(expiryDate);
+                                    if(new Date().after(courseExpiryDate)){
+                                        btnSubscribe.setText("Renew");
+                                    }else{
+                                        btnSubscribe.setText("Early Renew");
+                                    }
+                                }
 
+                            // Latest Package Recycler
+                                LatestPackageAdapter latestPackageAdapter = new LatestPackageAdapter(CourseDetailsActivity.this,courseLatestPackages);
+                                latestPackageAdapter.SetOnItemClickListener(new ExploreCoursesAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        // View Details Dialog
+                                    }
+                                });
+                                rvLatestPackage.setAdapter(latestPackageAdapter);
+
+                                if(courseLatestPackages!=null && courseLatestPackages.size()>0)
+                                    courseLatestPackage = courseLatestPackages.get(0);
+                                else
+                                    rvLatestPackageTitle.setVisibility(View.GONE);
+
+                            // Course Other Packages
                             List<CourseOtherPackages> courseOtherPackages = courseData.getCourseOtherPackages();
 
-                            Course_ID = courseDetails.getCourseID();
-                            Student_Mapping_ID = new BigInteger(courseDetails.getStudentMappingID().toString());
-
-                            diaglogList = courseOtherPackages;
-
+                            // Setting Course Cover Image
                             String CourseID = courseDetails.getCourseID();
-                            String CourseName = courseDetails.getCourseName();
-
-                            collapsingToolbarLayout.setTitle(CourseName);
-
                             String courseCoverImageDateTime = courseDetails.getCoverImageDateTime();
-
-                            courseName = CourseName;
-
                             Log.i("CourseCoverImage", "Signature: "+CourseID+courseCoverImageDateTime);
-
                             ObjectKey coverImageObjectKey = new ObjectKey(CourseID+courseCoverImageDateTime);
 
                             String imageURL = BASE_URL + CourseID + courseCoverImageDateTime .replace(':','_')+ ".jpg";
@@ -269,41 +294,19 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                                     .signature(coverImageObjectKey)
                                     .transition(DrawableTransitionOptions.withCrossFade(700))
                                     .into(ivCourseCoverImage);
-//                           ivCourseCoverImage.setImageDrawable(bitmap2Drawable(StringToBitMap(courseDetails.getCoverImage())));
 
                             Log.e("CourseCoverImage", "onResponse: "+coverImageObjectKey.toString());
 
-                            //Faculty Carousel
-                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
-                            cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
+                            // Setting Global Variables
+                            Course_ID = courseDetails.getCourseID();
+                            Student_Mapping_ID = new BigInteger(courseDetails.getStudentMappingID().toString());
 
-                            btnSubscribe.setClickable(true);
+                            String CourseName = courseDetails.getCourseName();
+                            courseName = CourseName;
+                            collapsingToolbarLayout.setTitle(CourseName);
 
-                            // Latest Package Configurations
-                            if(courseLatestPackage==null){
-                                btnSubscribe.setText("Subscribe");
-                            }else if(courseLatestPackage.getTransactionNo()==0){
-                                btnSubscribe.setText("Under Approval");
-                                btnSubscribe.setClickable(false);
-                            } else {
-                                String expiryDate = courseLatestPackage.getExpiryDate();
-                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                Date courseExpiryDate = sdf.parse(expiryDate);
-                                if(new Date().after(courseExpiryDate)){
-                                    btnSubscribe.setText("Renew");
-                                }else{
-                                    btnSubscribe.setText("Early Renew");
-                                }
-                            }
-                            // Latest Package Recycler
-                            LatestPackageAdapter latestPackageAdapter = new LatestPackageAdapter(CourseDetailsActivity.this,courseLatestPackages);
-                            latestPackageAdapter.SetOnItemClickListener(new ExploreCoursesAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    // View Details Dialog
-                                }
-                            });
-                            rvLatestPackage.setAdapter(latestPackageAdapter);
+                            diaglogList = courseOtherPackages;
+
                         } else {
                             pg.dismiss();
                             Common.showSnack_Dark(llRootLayout, response.errorBody().string());

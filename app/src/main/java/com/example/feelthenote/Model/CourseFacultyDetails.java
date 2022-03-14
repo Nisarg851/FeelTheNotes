@@ -1,7 +1,5 @@
 package com.example.feelthenote.Model;
 
-import android.graphics.drawable.Drawable;
-
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -15,9 +13,9 @@ public class CourseFacultyDetails{
     @SerializedName("About")
     @Expose
     private String about;
-    @SerializedName("Image")
+    @SerializedName("Profile_Image_Date")
     @Expose
-    private String image;
+    private String facultyProfileImageDate;
 
     public Integer getFacultyID() {
         return facultyID;
@@ -43,12 +41,12 @@ public class CourseFacultyDetails{
         this.about = about;
     }
 
-    public String getImage() {
-        return image;
+    public String getFacultyProfileImageDate() {
+        return facultyProfileImageDate;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setFacultyProfileImageDate(String facultyProfileImageDate) {
+        this.facultyProfileImageDate = facultyProfileImageDate;
     }
 
 }

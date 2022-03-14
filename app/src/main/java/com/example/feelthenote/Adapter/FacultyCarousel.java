@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,37 +37,29 @@ public class FacultyCarousel extends CardSliderAdapter<FacultyCarousel.FacultyVi
 
     private Context context = null;
 
-    List<CourseFacultyDetails> faculties;
-    public FacultyCarousel(List<CourseFacultyDetails> faculties){ this.faculties = faculties;}
+    private String BASE_URL = "http://ftn.locuslogs.com/images/faculty_profile/";
+
+    private List<CourseFacultyDetails> faculties;
+
+    public FacultyCarousel(List<CourseFacultyDetails> faculties){
+        this.faculties = faculties;
+    }
 
     @Override
     public void bindVH(FacultyViewHolder facultyViewHolder, int position) {
         CourseFacultyDetails facultyCarouselItem = faculties.get(position);
+        Integer facultyID = facultyCarouselItem.getFacultyID();
         String facultyName = facultyCarouselItem.getName(),
-                facultyAbout = facultyCarouselItem.getAbout();
-        String facultyImageURL = "http://ftn.locuslogs.com/images/card/agtr.jpg";
-//        Drawable facultyImage = bitmap2Drawable(StringToBitMap(facultyCarouselItem.getImage()));
+                facultyAbout = facultyCarouselItem.getAbout(),
+                facultyProfileImageDate = facultyCarouselItem.getFacultyProfileImageDate();
+
+        String facultyImage = facultyID+facultyProfileImageDate.replace(':','_')+ ".jpg";
+
+        String facultyImageURL = BASE_URL+facultyImage;
+        Log.e("faculty", "Image URL"+facultyImageURL);
+
         facultyViewHolder.bindViewAndData(context, facultyName, facultyAbout, facultyImageURL);
     }
-
-//    public Bitmap StringToBitMap(String encodedString){
-//        try{
-//            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-//            return bitmap;
-//        }
-//        catch(Exception e){
-//            e.getMessage();
-//            return null;
-//        }
-//    }
-//
-//    public static Drawable bitmap2Drawable(Bitmap bitmap) {
-//        @SuppressWarnings("deprecation")
-//        BitmapDrawable bd = new BitmapDrawable(bitmap);
-//        Drawable d = (Drawable) bd;
-//        return d;
-//    }
 
     @NonNull
     @Override
@@ -96,7 +89,6 @@ public class FacultyCarousel extends CardSliderAdapter<FacultyCarousel.FacultyVi
         void bindViewAndData(Context context, String facultyName, String facultyAbout, String facultyImageURL){
             this.facultyName.setText(facultyName);
             this.facultyAbout.setText(facultyAbout);
-//            this.facultyImage.setImageDrawable(facultyImage);
 
             Glide.with(context)
                     .load(facultyImageURL)
