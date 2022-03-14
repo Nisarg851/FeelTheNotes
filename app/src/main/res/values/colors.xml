@@ -23,4 +23,8 @@
     <color name="colortext">#000000</color>
     <color name="Active">#00ff00</color>
     <color name="InActive">#ff0000</color>
+
+<!--    Promocode validation check-->
+    <color name="validPromoCode">#067006</color>
+    <color name="invalidPromoCode">#ff0000</color>
 </resources>

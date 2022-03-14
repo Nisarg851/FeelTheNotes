@@ -32,7 +32,8 @@
             android:text="My Courses"
             android:layout_gravity="center"
             android:textColor="@color/white"
-            android:textSize="35sp"/>
+            android:textSize="@dimen/main_heading"/>
+
     </LinearLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -52,7 +53,7 @@
                 android:layout_height="wrap_content"
                 android:text="Enrolled Courses"
                 android:layout_marginTop="30dp"
-                android:textSize="25dp"
+                android:textSize="@dimen/secondary_heading"
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"
                 android:textColor="@color/colorBlack"/>

@@ -54,6 +54,8 @@ import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import retrofit2.Call;
@@ -70,7 +72,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
     private LinearLayout llCourseContainer;
     private CoordinatorLayout llRootLayout;
-    private TextView tvShowMoreAbout, tvShowMoreDetails;
+    private TextView tvShowMoreAbout, tvShowMoreDetails, rvLatestPackageTitle;
 
     private RelativeLayout rlAboutCourse, rlCourseDetail;
     private boolean aboutCourseExpanded = false, courseDetailExpanded = false;
@@ -118,6 +120,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         rlCourseDetail = findViewById(R.id.rlCourseDetail);
 
         ivCourseCoverImage = findViewById(R.id.ivCourseCoverImage);
+
+        rvLatestPackageTitle = findViewById(R.id.rvLatestPackageTitle);
 
         rvLatestPackage = findViewById(R.id.rvLatestPackage);
 
@@ -227,8 +231,17 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 //                            Common.showSnack_Dark(llRootLayout, "Success..!!");
                             CourseData courseData = response.body().getCourseData();
                             CourseDetails courseDetails = courseData.getCourseDetails().get(0);
+
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
+
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
+                            CourseLatestPackages courseLatestPackage = null;
+
+                            if(courseLatestPackages!=null && courseLatestPackages.size()>0)
+                                courseLatestPackage = courseLatestPackages.get(0);
+                            else
+                                rvLatestPackageTitle.setVisibility(View.GONE);
+
                             List<CourseOtherPackages> courseOtherPackages = courseData.getCourseOtherPackages();
 
                             Course_ID = courseDetails.getCourseID();
@@ -262,6 +275,24 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
                             cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
 
+                            btnSubscribe.setClickable(true);
+
+                            // Latest Package Configurations
+                            if(courseLatestPackage==null){
+                                btnSubscribe.setText("Subscribe");
+                            }else if(courseLatestPackage.getTransactionNo()==0){
+                                btnSubscribe.setText("Under Approval");
+                                btnSubscribe.setClickable(false);
+                            } else {
+                                String expiryDate = courseLatestPackage.getExpiryDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                Date courseExpiryDate = sdf.parse(expiryDate);
+                                if(new Date().after(courseExpiryDate)){
+                                    btnSubscribe.setText("Renew");
+                                }else{
+                                    btnSubscribe.setText("Early Renew");
+                                }
+                            }
                             // Latest Package Recycler
                             LatestPackageAdapter latestPackageAdapter = new LatestPackageAdapter(CourseDetailsActivity.this,courseLatestPackages);
                             latestPackageAdapter.SetOnItemClickListener(new ExploreCoursesAdapter.OnItemClickListener() {

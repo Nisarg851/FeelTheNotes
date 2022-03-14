@@ -26,6 +26,7 @@
         android:layout_marginHorizontal="10dp"
         android:textOn="Online"
         android:textOff="Offline"
+        android:outlineAmbientShadowColor="#ff0000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView5"/>
@@ -128,10 +129,12 @@
                 android:id="@+id/etPromoCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1.5"
                 android:layout_margin="10dp"
                 android:layout_marginTop="12dp"
+                android:layout_weight="1.5"
+                android:backgroundTint="@color/colorBlack"
                 android:hint="Enter Promo Code"
+                android:textColor="@color/colorBlack"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spPackages" />
 
@@ -139,12 +142,12 @@
                 android:id="@+id/btnCheckPromocode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
                 android:layout_weight="0.5"
                 android:text="Check"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                android:layout_gravity="center_vertical"
-                app:backgroundTint="#00ff00"
+                app:backgroundTint="#A7A9AA"
                 app:layout_constraintBottom_toBottomOf="@+id/etPromoCode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.865"
@@ -157,28 +160,27 @@
             android:id="@+id/tvDiscountApplied"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:text=""
+            android:layout_gravity="start"
+            android:layout_marginLeft="12dp"
+            android:text="Discount"
             android:textSize="20dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/etPromoCode"
-            app:layout_constraintTop_toBottomOf="@+id/etPromoCode" />
+            android:visibility="gone"
+            tools:visibility="visible"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginVertical="5dp"
-            android:weightSum="3">
+            android:layout_marginLeft="12dp"
+            android:layout_marginVertical="5dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:text="Fees: "
                 android:textSize="20dp"
                 android:textAlignment="viewEnd"
-                android:textStyle="normal"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/etPromoCode"
                 app:layout_constraintTop_toBottomOf="@+id/tvDiscountApplied" />
 
@@ -186,6 +188,7 @@
                 android:id="@+id/tvFeesOriginal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                tools:text="0000"
                 android:textSize="20dp"
                 android:paddingRight="10dp"
                 android:textAlignment="viewStart"
@@ -197,10 +200,10 @@
                 android:id="@+id/tvFeesToPay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text=""
+                tools:text="0000"
                 android:textSize="20dp"
                 android:textAlignment="viewStart"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.804"
                 app:layout_constraintStart_toEndOf="@+id/tvFeesOriginal"
@@ -210,14 +213,14 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddFeeDetails"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="5dp"
             android:layout_gravity="center"
-            android:text="Subscribe"
+            android:text="Confirm and Pay"
             android:textColor="@color/black"
             android:textSize="16sp"
-            app:backgroundTint="#00ff00" />
+            app:backgroundTint="#3D93BA" />
 
     </LinearLayout>
 

@@ -8,6 +8,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -58,7 +60,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
     private CourseOtherPackages selectedPackage = null;
 
-    private String courseID, promoCodeValidated = null;
+    private String courseID, promoCodeValidated = "";
     private BigInteger studentMappingID;
     private Integer studentID = null;
     private ArrayList<CourseOtherPackages> courseOtherPackages = new ArrayList<CourseOtherPackages>();
@@ -226,6 +228,22 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             }
         });
 
+        etPromoCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) { }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                etPromoCode.setTextColor(getResources().getColor(R.color.colorBlack));
+                calculateDiscount(fees, 0, "Flat");
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                etPromoCode.setTextColor(getResources().getColor(R.color.colorBlack));
+            }
+        });
+
         btnCheckPromocode.setOnClickListener(view -> {
             String promoCode = etPromoCode.getText().toString();
             String packageId = selectedPackage.getPackageID();
@@ -249,6 +267,11 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             String Course_ID = this.courseID;
             String Package_ID = selectedPackage.getPackageID();
             String Promo_Code = promoCodeValidated;
+            if(!etPromoCode.getText().toString().equals(promoCodeValidated)){
+                etPromoCode.setTextColor(getResources().getColor(R.color.invalidPromoCode));
+                Toast.makeText(context, "Promocode has been changed, Please Validate again!", Toast.LENGTH_LONG);
+                return ;
+            }
             String Start_Date = tvStartDate.getText().toString();
             BigInteger Student_Mapping_ID = this.studentMappingID;
 
@@ -331,23 +354,42 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                             if(response.body().getStatusCode()==1){
                                 if(response.body().getStatus()==null){
                                     pg.dismiss();
+                                    promoCodeValidated = "";
+                                    calculateDiscount(fees, 0, "Flat");
+                                    etPromoCode.setTextColor(getResources().getColor(R.color.invalidPromoCode));
+                                    tvDiscountApplied.setText("Promocode INCORRECT");
+                                    tvDiscountApplied.setVisibility(View.VISIBLE);
                                     Toast.makeText(context, "Promocode INCORRECT", Toast.LENGTH_LONG).show();
                                 } else if(response.body().getStatus().equals("ACTIVE")) {
                                     pg.dismiss();
                                     promoCodeValidated = etPromoCode.getText().toString();
+
+                                    etPromoCode.setTextColor(getResources().getColor(R.color.validPromoCode));
+
                                     int discount = response.body().getDiscount();
                                     String discountType = response.body().getDiscountType();
 
                                     calculateDiscount(fees, discount, discountType);
-
                                     Toast.makeText(context, "Promocode Applied", Toast.LENGTH_LONG).show();
                                 } else if(response.body().getStatus().equals("INACTIVE")){
+                                    promoCodeValidated = "";
+                                    calculateDiscount(fees, 0, "Flat");
+                                    etPromoCode.setTextColor(getResources().getColor(R.color.invalidPromoCode));
+                                    tvDiscountApplied.setText("Promocode INACTIVE");
+                                    tvDiscountApplied.setVisibility(View.VISIBLE);
                                     Toast.makeText(context, "Promocode INACTIVE", Toast.LENGTH_LONG).show();
                                 } else if(response.body().getStatus().equals("EXPIRED")){
                                     pg.dismiss();
+                                    promoCodeValidated = "";
+                                    calculateDiscount(fees, 0, "Flat");
+                                    etPromoCode.setTextColor(getResources().getColor(R.color.invalidPromoCode));
+                                    tvDiscountApplied.setText("Promocode EXPIRED");
+                                    tvDiscountApplied.setVisibility(View.VISIBLE);
                                     Toast.makeText(context, "Promocode EXPIRED", Toast.LENGTH_LONG).show();
                                 }else {
                                     pg.dismiss();
+                                    promoCodeValidated = "";
+                                    calculateDiscount(fees, 0, "Flat");
                                     Toast.makeText(context, "Unexpected Error", Toast.LENGTH_LONG).show();
                                 }
                             }else{
