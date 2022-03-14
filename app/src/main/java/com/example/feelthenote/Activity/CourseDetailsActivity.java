@@ -84,7 +84,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
     private ProgressDialog pg;
 
-    private  String courseName="Course Name";
+    private  String courseName="";
 
     private List<CourseOtherPackages> diaglogList;
 
@@ -146,6 +146,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
             }
         });
 
+        collapsingToolbarLayout.setTitle(courseName);
+
         appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = false;
             int scrollRange = -1;
@@ -156,12 +158,9 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                     scrollRange = appBarLayout.getTotalScrollRange();
                 }
                 if (scrollRange + verticalOffset == 0) {
-                    //userDetailsSummaryContainer.setVisibility(View.INVISIBLE);
                     collapsingToolbarLayout.setTitle(courseName);
-                    //collapsingToolbarLayout.setCollapsedTitleTextAppearance(R.style.MyCollapsingTitleTextAppearance);
                     isShow = true;
                 } else if (isShow) {
-                    //userDetailsSummaryContainer.setVisibility(View.VISIBLE);
                     collapsingToolbarLayout.setTitle(" ");
                     isShow = false;
                 }
@@ -251,6 +250,9 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
                             String CourseID = courseDetails.getCourseID();
                             String CourseName = courseDetails.getCourseName();
+
+                            collapsingToolbarLayout.setTitle(CourseName);
+
                             String courseCoverImageDateTime = courseDetails.getCoverImageDateTime();
 
                             courseName = CourseName;
