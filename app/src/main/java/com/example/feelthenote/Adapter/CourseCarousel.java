@@ -17,6 +17,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.target.CustomTarget;
 import com.bumptech.glide.request.transition.Transition;
 import com.example.feelthenote.Model.CourseCarouselItem;
+import com.example.feelthenote.Model.StudentDashboardCourseCarousel;
 import com.example.feelthenote.R;
 import com.github.islamkhsh.CardSliderAdapter;
 
@@ -24,15 +25,15 @@ import java.util.ArrayList;
 
 public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseViewHolder> {
     private Context context = null;
-    private final ArrayList<CourseCarouselItem> cours;
+    private final ArrayList<StudentDashboardCourseCarousel> course;
 
-    public CourseCarousel(ArrayList<CourseCarouselItem> cours){
-        this.cours = cours;
+    public CourseCarousel(ArrayList<StudentDashboardCourseCarousel> course){
+        this.course = course;
     }
 
     @Override
     public int getItemCount(){
-        return cours.size();
+        return course.size();
     }
 
     @NonNull
@@ -45,22 +46,22 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
 
     @Override
     public void bindVH(@NonNull CourseViewHolder courseViewHolder, int position) {
-        CourseCarouselItem courseCarouselItem = cours.get(position);
-        int totalAllotedSessions = courseCarouselItem.getTotalAllotedSessions(),
-                attended = courseCarouselItem.getAttended(),
-                pending = courseCarouselItem.getPending(),
-                available = courseCarouselItem.getAvailable(),
-                expired = courseCarouselItem.getExpired(),
-                daysLeft = courseCarouselItem.getDaysLeft(),
-                extraHrs = courseCarouselItem.getExtraHrs();
-
-        String courseName = courseCarouselItem.getCourseName(),
-                courseCode = courseCarouselItem.getCourseCode();
-        String instructor = courseCarouselItem.getInstructor();
+        StudentDashboardCourseCarousel courseCarouselItem = course.get(position);
+//        int totalAllotedSessions = courseCarouselItem.getTotal(),
+//                attended = courseCarouselItem.getAttended(),
+//                pending = courseCarouselItem.getP(),
+//                available = courseCarouselItem.get(),
+//                expired = courseCarouselItem.getExpired(),
+//                daysLeft = courseCarouselItem.getDaysLeft(),
+//                extraHrs = courseCarouselItem.getExtraHrs();
+//
+//        String courseName = courseCarouselItem.getCourseName(),
+//                courseCode = courseCarouselItem.getCourseCode();
+//        String instructor = courseCarouselItem.getInstructor();
 
 //        Drawable courseImage = courseCarouselItem.getCourseImage();
         String courseImageURL = "http://ftn.locuslogs.com/images/card/agtr.jpg";
-        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs, courseName+" - "+courseCode, instructor, courseImageURL);
+//        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attended, pending, available, expired, daysLeft, extraHrs, courseName+" - "+courseCode, instructor, courseImageURL);
     }
 
     static class CourseViewHolder extends RecyclerView.ViewHolder {
@@ -72,12 +73,12 @@ public class CourseCarousel  extends CardSliderAdapter<CourseCarousel.CourseView
         public CourseViewHolder(View view){
             super(view);
             totalAllotedSessionsText = view.findViewById(R.id.totalAllotedSessions);
-            attendedText = view.findViewById(R.id.attended);
-            pendingText =  view.findViewById(R.id.pending);
-            availableText = view.findViewById(R.id.available);
-            expiredText = view.findViewById(R.id.expired);
-            daysLeftText = view.findViewById(R.id.daysLeft);
-            extraHrsText = view.findViewById(R.id.extraHrs);
+//            attendedText = view.findViewById(R.id.attended);
+//            pendingText =  view.findViewById(R.id.pending);
+//            availableText = view.findViewById(R.id.available);
+//            expiredText = view.findViewById(R.id.expired);
+//            daysLeftText = view.findViewById(R.id.daysLeft);
+//            extraHrsText = view.findViewById(R.id.extraHrs);
             courseText = view.findViewById(R.id.courseNameAndCode);
             instructorText = view.findViewById(R.id.instructor);
             courseCardBackgroundImage = view.findViewById(R.id.courseCard);

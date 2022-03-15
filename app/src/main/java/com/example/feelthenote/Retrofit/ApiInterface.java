@@ -8,6 +8,7 @@ import com.example.feelthenote.Network.CourseDetailsResponse;
 import com.example.feelthenote.Network.CourseDetailsRequest;
 import com.example.feelthenote.Network.GetCoursesRequest;
 import com.example.feelthenote.Network.GetCoursesResponse;
+import com.example.feelthenote.Network.GetStudentDashboardResponse;
 import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
 import com.example.feelthenote.Network.PromoCodeRequest;
@@ -36,4 +37,7 @@ public interface ApiInterface {
 
     @POST("api/FeelTheNote/AddFeeDetail")
     Call<AddFeeDetailResponse> addFeeDetail(@Body AddFeeDetailRequest addFeeDetailRequest);
+
+    @POST("/api/feelthenote/GetStudentDashboard")
+    Call<GetStudentDashboardResponse> getStudentDashboard(@Body int studentID);
 }

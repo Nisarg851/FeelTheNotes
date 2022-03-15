@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.feelthenote.Helper.Common;
@@ -34,7 +35,9 @@ public class MyCoursesActivity extends AppCompatActivity {
 
     LinearLayout llRootLayout;
     RecyclerView rvEnrolledCourses, rvExploreCourses;
-    ProgressDialog pg;
+    ImageView ivBack;
+    private ProgressDialog pg;
+
     private ExploreCoursesAdapter exploreCoursesAdapter;
     private MyCoursesAdapter myCoursesAdapter;
 
@@ -54,6 +57,13 @@ public class MyCoursesActivity extends AppCompatActivity {
         pg = Common.showProgressDialog(MyCoursesActivity.this);
         rvEnrolledCourses = findViewById(R.id.rvEnrolledCourses);
         rvExploreCourses = findViewById(R.id.rvExploreCourses);
+
+        ivBack = findViewById(R.id.ivBack);
+
+        ivBack.setOnClickListener(view -> {
+            Intent redirectToHome = new Intent(this, HomeActivity.class);
+            startActivity(redirectToHome);
+        });
         getAllCourses();
     }
 

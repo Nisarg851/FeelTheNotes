@@ -7,17 +7,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Base64;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -28,14 +22,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.GlideBuilder;
-import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.signature.ObjectKey;
 import com.example.feelthenote.Adapter.FacultyCarousel;
 import com.example.feelthenote.Dialogs.PackageSubscriptionDialog;
 import com.example.feelthenote.Helper.Common;
-import com.example.feelthenote.Helper.LimitCacheSizeGlide;
 import com.example.feelthenote.Model.CourseData;
 import com.example.feelthenote.Model.CourseDetails;
 import com.example.feelthenote.Model.CourseFacultyDetails;
@@ -237,7 +228,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
 
                             //Faculty Carousel
-                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.viewPager);
+                            CardSliderViewPager cardSliderViewPager = findViewById(R.id.vpStudentCourseCarousel);
                             cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
 
                             // Course Latest Packages

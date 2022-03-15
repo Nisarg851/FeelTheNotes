@@ -195,7 +195,7 @@
                 <com.github.islamkhsh.CardSliderViewPager
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/viewPager"
+                    android:id="@+id/vpStudentCourseCarousel"
                     android:layout_marginTop="10dp"
                     app:cardSlider_smallScaleFactor="0.9"
                     app:cardSlider_otherPagesWidth="0dp"
