@@ -19,17 +19,60 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ToggleButton
+    <RadioGroup
         android:id="@+id/rgPackageMode"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="10dp"
-        android:textOn="Online"
-        android:textOff="Offline"
-        android:outlineAmbientShadowColor="#ff0000"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/dialog_package_mode_outline"
+        android:checkedButton="@+id/offer"
+        android:orientation="horizontal"
+        android:backgroundTint="#3D93BA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5"/>
+        app:layout_constraintTop_toBottomOf="@+id/textView5">
+
+        <RadioButton
+            android:id="@+id/rbOnlineMode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:gravity="center"
+            android:checked="true"
+            android:text="Online" />
+
+        <RadioButton
+            android:id="@+id/rbOfflineMode"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginBottom="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/toggle_widget_background"
+            android:button="@null"
+            android:gravity="center"
+            android:text="Offline"
+            android:textColor="@color/black" />
+
+    </RadioGroup>
+
+<!--    <ToggleButton-->
+<!--        android:id="@+id/rgPackageMode"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginHorizontal="10dp"-->
+<!--        android:textOn="Online"-->
+<!--        android:textOff="Offline"-->
+<!--        android:outlineAmbientShadowColor="#ff0000"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/radioG"/>-->
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spBatchSpinner"

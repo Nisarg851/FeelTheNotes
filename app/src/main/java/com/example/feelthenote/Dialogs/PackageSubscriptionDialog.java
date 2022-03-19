@@ -19,6 +19,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
@@ -72,7 +74,9 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
 
     private LinearLayout llStartDateContainer;
 
-    private ToggleButton rgPackageMode;
+//    private ToggleButton rgPackageMode;
+    private RadioGroup rgPackageMode;
+    private RadioButton radioButton;
     private TextInputLayout spBatchSpinner, spPackages;
     private AutoCompleteTextView sptvBatchItems, sptvPackageItems;
     private EditText etPromoCode;
@@ -149,31 +153,37 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             newDate.set(year, monthOfYear, dayOfMonth);
             tvStartDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(newDate.getTime()));
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        StartTime.getDatePicker().setMinDate(new Date().getTime());
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     }
 
     @SuppressLint("NewApi")
     private void initiateListeners(){
-        rgPackageMode.setOnClickListener(viewItem -> {
 
-            llStartDateContainer.setVisibility(View.GONE);
-            spBatchSpinner.setVisibility(View.GONE);
-            sptvBatchItems.setText(null);
-            spPackages.setVisibility(View.GONE);
-            llOtherSubmitValue.setVisibility(View.GONE);
+        rgPackageMode.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int id) {
+                llStartDateContainer.setVisibility(View.GONE);
+                spBatchSpinner.setVisibility(View.GONE);
+                sptvBatchItems.setText(null);
+                spPackages.setVisibility(View.GONE);
+                llOtherSubmitValue.setVisibility(View.GONE);
 
-            teachMode = rgPackageMode.getText().toString();
+                radioButton = radioGroup.findViewById(id);
+                teachMode = radioButton.getText().toString();
 
-            batches = courseOtherPackages.stream()
-                    .filter(courseOtherPackages1 -> courseOtherPackages1.getMode().equals(teachMode))
-                    .map(CourseOtherPackages::getBatchStrength).distinct().collect(Collectors.toList());
-            ArrayAdapter batchSpinnerAdapter = new ArrayAdapter(context, R.layout.spinner_item_layout, batches);
-            Log.e("Dbox", "batchSpinnerAdapter: "+batches.toString());
-            sptvBatchItems.setAdapter(batchSpinnerAdapter);
+                batches = courseOtherPackages.stream()
+                        .filter(courseOtherPackages1 -> courseOtherPackages1.getMode().equals(teachMode))
+                        .map(CourseOtherPackages::getBatchStrength).distinct().collect(Collectors.toList());
+                ArrayAdapter batchSpinnerAdapter = new ArrayAdapter(context, R.layout.spinner_item_layout, batches);
+                Log.e("Dbox", "batchSpinnerAdapter: "+batches.toString());
+                sptvBatchItems.setAdapter(batchSpinnerAdapter);
 
-            spBatchSpinner.setVisibility(View.VISIBLE);
-            llStartDateContainer.setVisibility(View.VISIBLE);
+                spBatchSpinner.setVisibility(View.VISIBLE);
+                llStartDateContainer.setVisibility(View.VISIBLE);
+            }
         });
 
         sptvBatchItems.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -182,7 +192,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                 spPackages.setVisibility(View.GONE);
                 sptvPackageItems.setText(null);
                 llOtherSubmitValue.setVisibility(View.GONE);
-                teachMode = rgPackageMode.getText().toString();
+                teachMode = radioButton.getText().toString();
                 batch = sptvBatchItems.getText().toString();
                 packages = courseOtherPackages.stream()
                         .filter(courseOtherPackages1 -> (courseOtherPackages1.getMode().equals(teachMode)&&courseOtherPackages1.getBatchStrength().equals(batch) ))
