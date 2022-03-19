@@ -44,7 +44,8 @@
             android:button="@null"
             android:gravity="center"
             android:checked="true"
-            android:text="Online" />
+            android:text="Online"
+            android:textStyle="bold"/>
 
         <RadioButton
             android:id="@+id/rbOfflineMode"
@@ -92,7 +93,8 @@
             android:layout_height="match_parent"
             android:inputType="none"
             android:padding="16dp"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -148,7 +150,8 @@
             android:layout_height="match_parent"
             android:padding="16dp"
             android:inputType="none"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textStyle="bold"/>
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,7 +193,7 @@
                 android:text="Check"
                 android:textColor="@color/black"
                 android:textSize="12sp"
-                app:backgroundTint="#A7A9AA"
+                app:backgroundTint="#3D93BA"
                 app:layout_constraintBottom_toBottomOf="@+id/etPromoCode"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.865"

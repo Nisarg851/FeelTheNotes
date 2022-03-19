@@ -38,6 +38,6 @@ public interface ApiInterface {
     @POST("api/FeelTheNote/AddFeeDetail")
     Call<AddFeeDetailResponse> addFeeDetail(@Body AddFeeDetailRequest addFeeDetailRequest);
 
-    @POST("/api/feelthenote/GetStudentDashboard")
-    Call<GetStudentDashboardResponse> getStudentDashboard(@Body int studentID);
+    @POST("api/FeelTheNote/GetStudentDashboard")
+    Call<GetStudentDashboardResponse> getStudentDashboard(@Body Integer studentID);
 }

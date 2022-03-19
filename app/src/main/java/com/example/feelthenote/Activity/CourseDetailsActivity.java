@@ -24,7 +24,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.signature.ObjectKey;
-import com.example.feelthenote.Adapter.FacultyCarousel;
+import com.example.feelthenote.Adapter.FacultyCarouselAdapter;
 import com.example.feelthenote.Dialogs.PackageSubscriptionDialog;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseData;
@@ -63,7 +63,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
     private LinearLayout llCourseContainer;
     private CoordinatorLayout llRootLayout;
-    private TextView tvShowMoreAbout, tvShowMoreDetails, rvLatestPackageTitle;
+    private TextView tvShowMoreAbout, tvShowMoreDetails, rvLatestPackageTitle, tvAboutDescription, tvDetailDescription;
 
     private RelativeLayout rlAboutCourse, rlCourseDetail;
     private boolean aboutCourseExpanded = false, courseDetailExpanded = false;
@@ -105,7 +105,9 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         pg = Common.showProgressDialog(CourseDetailsActivity.this);
 
         tvShowMoreAbout = findViewById(R.id.tvShowMoreAbout);
+        tvAboutDescription = findViewById(R.id.tvAboutDescription);
         tvShowMoreDetails = findViewById(R.id.tvShowMoreDetails);
+        tvDetailDescription = findViewById(R.id.tvDetailDescription);
 
         rlAboutCourse = findViewById(R.id.rlAboutCourse);
         rlCourseDetail = findViewById(R.id.rlCourseDetail);
@@ -223,35 +225,37 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
                             // Course Details
                             CourseDetails courseDetails = courseData.getCourseDetails().get(0);
+                            tvAboutDescription.setText(courseDetails.getAbout());
+                            tvDetailDescription.setText(courseDetails.getDetail());
 
                             // Course Faculty Details
                             List<CourseFacultyDetails> courseFacultyDetails = courseData.getCourseFacultyDetails();
 
                             //Faculty Carousel
                             CardSliderViewPager cardSliderViewPager = findViewById(R.id.vpStudentCourseCarousel);
-                            cardSliderViewPager.setAdapter(new FacultyCarousel(courseFacultyDetails));
+                            cardSliderViewPager.setAdapter(new FacultyCarouselAdapter(courseFacultyDetails));
 
                             // Course Latest Packages
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
-                            CourseLatestPackages courseLatestPackage = null;
+                            CourseLatestPackages courseLatestPackage = (courseLatestPackages.size()==0) ? null : courseLatestPackages.get(courseLatestPackages.size()-1);
 
                             // Latest Package Configurations
                             btnSubscribe.setClickable(true);
                             if(courseLatestPackage==null){
                                     btnSubscribe.setText("Subscribe");
-                                }else if(courseLatestPackage.getTransactionNo()==0){
-                                    btnSubscribe.setText("Under Approval");
-                                    btnSubscribe.setClickable(false);
-                                } else {
-                                    String expiryDate = courseLatestPackage.getExpiryDate();
-                                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                                    Date courseExpiryDate = sdf.parse(expiryDate);
-                                    if(new Date().after(courseExpiryDate)){
-                                        btnSubscribe.setText("Renew");
-                                    }else{
-                                        btnSubscribe.setText("Early Renew");
-                                    }
+                            }else if(courseLatestPackage.getTransactionNo()==0){
+                                btnSubscribe.setText("Under Approval");
+                                btnSubscribe.setClickable(false);
+                            } else {
+                                String expiryDate = courseLatestPackage.getExpiryDate();
+                                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                                Date courseExpiryDate = sdf.parse(expiryDate);
+                                if(new Date().after(courseExpiryDate)){
+                                    btnSubscribe.setText("Renew");
+                                }else{
+                                    btnSubscribe.setText("Early Renew");
                                 }
+                            }
 
                             // Latest Package Recycler
                                 LatestPackageAdapter latestPackageAdapter = new LatestPackageAdapter(CourseDetailsActivity.this,courseLatestPackages);
@@ -277,7 +281,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             Log.i("CourseCoverImage", "Signature: "+CourseID+courseCoverImageDateTime);
                             ObjectKey coverImageObjectKey = new ObjectKey(CourseID+courseCoverImageDateTime);
 
-                            String imageURL = BASE_URL + CourseID + courseCoverImageDateTime .replace(':','_')+ ".jpg";
+                            String imageURL = BASE_URL + CourseID + courseCoverImageDateTime.replace(':','_')+ ".jpg";
 
                             Log.e("imageurl", "url: "+imageURL);
                             Glide.with(context)
@@ -327,24 +331,5 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
             });
         }
     }
-
-//    public Bitmap StringToBitMap(String encodedString){
-//        try{
-//            byte [] encodeByte = Base64.decode(encodedString,Base64.DEFAULT);
-//            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-//            return bitmap;
-//        }
-//        catch(Exception e){
-//            e.getMessage();
-//            return null;
-//        }
-//    }
-//
-//    public static Drawable bitmap2Drawable(Bitmap bitmap) {
-//        @SuppressWarnings("deprecation")
-//        BitmapDrawable bd = new BitmapDrawable(bitmap);
-//        Drawable d = (Drawable) bd;
-//        return d;
-//    }
 
 }

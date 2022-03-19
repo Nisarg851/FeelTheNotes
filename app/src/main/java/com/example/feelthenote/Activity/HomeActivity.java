@@ -9,13 +9,13 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.feelthenote.Adapter.CourseCarousel;
+import com.example.feelthenote.Adapter.CourseCarouselAdapter;
 import com.example.feelthenote.Helper.Common;
-import com.example.feelthenote.Model.CourseCarouselItem;
 import com.example.feelthenote.Model.StudentDashboardCourseCarousel;
 import com.example.feelthenote.Model.StudentDashboardData;
 import com.example.feelthenote.Model.StudentDashboardInfo;
@@ -27,7 +27,6 @@ import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 import com.github.islamkhsh.CardSliderViewPager;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -120,7 +119,6 @@ public class HomeActivity extends AppCompatActivity {
             Call<GetStudentDashboardResponse> getStudentDashboardResponseCall = apiInterface.getStudentDashboard(23);
 
             getStudentDashboardResponseCall.enqueue(new Callback<GetStudentDashboardResponse>() {
-
                 @Override
                 public void onResponse(Call<GetStudentDashboardResponse> call, Response<GetStudentDashboardResponse> response) {
                     try{
@@ -128,11 +126,6 @@ public class HomeActivity extends AppCompatActivity {
                             if(response.body().getStatusCode() == 1) {
                                 pg.dismiss();
                                 Common.showSnack_Light(llRootLayout,"Success..!!");
-
-                            } else {
-                                pg.dismiss();
-                                Common.showSnack_Light(llRootLayout,"Something went wrong!");
-
                                 StudentDashboardData studentDashboardData = response.body().getStudentDashboardData();
 
                                 // Student Info
@@ -141,9 +134,9 @@ public class HomeActivity extends AppCompatActivity {
                                         studentEmailID = studentDashboardInfo.getEmail(),
                                         studentProfileImage = studentDashboardInfo.getProfileImageDate();
 
-                                Glide.with(context)
-                                        .load("Set Base URL HERE"+studentProfileImage)
-                                        .into(ivStudentProfileImage);
+//                                Glide.with(context)
+//                                        .load("Set Base URL HERE"+studentProfileImage)
+//                                        .into(ivStudentProfileImage);
 
                                 tvStudentName.setText(studentName);
                                 tvStudentEmailID.setText(studentEmailID);
@@ -162,14 +155,21 @@ public class HomeActivity extends AppCompatActivity {
 
                                 // Student Course Carousel
                                 List<StudentDashboardCourseCarousel> studentDashboardCourseCarouselList = studentDashboardData.getStudentDashboardCourseCarousel();
+                                CourseCarouselAdapter courseCarouselAdapter = new CourseCarouselAdapter(studentDashboardCourseCarouselList);
+                                vpStudentCourseCarousel.setAdapter(courseCarouselAdapter);
+                            } else {
+                                pg.dismiss();
+                                Common.showSnack_Light(llRootLayout,"Something went wrong!");
                             }
                         } else {
                             pg.dismiss();
                             Common.showSnack_Light(llRootLayout, response.errorBody().string());
+                            Log.e("error", "1 "+response.code());
                         }
                     } catch (Exception ex) {
                         pg.dismiss();
                         Common.showSnack_Light(llRootLayout, ex.getMessage());
+                        Log.e("error", "2");
                     }
                 }
 

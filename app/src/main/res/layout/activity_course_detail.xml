@@ -120,7 +120,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="19dp"
-                        android:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Availab"
+                        tools:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Availab"
                         android:textColor="@color/colorBlack"
                         android:textSize="@dimen/normal_text_size"
                         android:layout_marginTop="40dp" />
@@ -159,7 +159,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:paddingLeft="19dp"
-                        android:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Available"
+                        tools:text="Description not Available Description not Available Description not Available Description not Available Description not Available Description not Available"
                         android:textColor="@color/colorBlack"
                         android:textSize="20dp"
                         android:layout_marginTop="40dp"/>

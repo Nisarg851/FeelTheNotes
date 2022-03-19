@@ -34,7 +34,7 @@
                 android:textSize="20sp" />
 
             <TextView
-                android:id="@+id/totalAllotedSessions"
+                android:id="@+id/tvTotalAllotedSessions"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -83,6 +83,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
+                        android:id="@+id/tvAttendedSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4"
@@ -132,6 +133,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
+                        android:id="@+id/tvBookedSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4"
@@ -190,6 +192,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
+                        android:id="@+id/tvAvailableSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4"
@@ -239,6 +242,7 @@
                     app:cardCornerRadius="10dp">
 
                     <TextView
+                        android:id="@+id/tvMissedSessions"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="4"

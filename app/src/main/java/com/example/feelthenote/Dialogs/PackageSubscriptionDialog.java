@@ -7,6 +7,7 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -121,6 +122,8 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
         llStartDateContainer = view.findViewById(R.id.llStartDateContainer);
 
         rgPackageMode = view.findViewById(R.id.rgPackageMode);
+        radioButton = rgPackageMode.findViewById(R.id.rbOnlineMode);
+
         sptvBatchItems = view.findViewById(R.id.sptvBatchItems);
         sptvPackageItems = view.findViewById(R.id.sptvPackageItems);
 
@@ -154,7 +157,11 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             tvStartDate.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(newDate.getTime()));
         }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
 
-        StartTime.getDatePicker().setMinDate(new Date().getTime());
+        Date date = newCalendar.getTime();
+        StartTime.getDatePicker().setMinDate(date.getTime());
+        newCalendar.add(Calendar.MONTH,3);
+        date = newCalendar.getTime();
+        StartTime.getDatePicker().setMaxDate(date.getTime());
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     }
@@ -171,8 +178,12 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                 spPackages.setVisibility(View.GONE);
                 llOtherSubmitValue.setVisibility(View.GONE);
 
+                radioButton.setTypeface(radioButton.getTypeface(), Typeface.ITALIC);
+                radioButton.setTextSize(14);
                 radioButton = radioGroup.findViewById(id);
                 teachMode = radioButton.getText().toString();
+                radioButton.setTypeface(radioButton.getTypeface(), Typeface.BOLD);
+                radioButton.setTextSize(18);
 
                 batches = courseOtherPackages.stream()
                         .filter(courseOtherPackages1 -> courseOtherPackages1.getMode().equals(teachMode))
