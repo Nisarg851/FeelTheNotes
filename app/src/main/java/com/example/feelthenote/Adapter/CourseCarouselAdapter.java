@@ -2,6 +2,7 @@ package com.example.feelthenote.Adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,12 +55,13 @@ public class CourseCarouselAdapter extends CardSliderAdapter<CourseCarouselAdapt
         String imageName = courseCarouselItem.getCardImage();
 
         String courseName = courseCarouselItem.getCourseName(),
-                courseCode = courseCarouselItem.getCourseID();
+                courseId = courseCarouselItem.getCourseID();
 //        String instructor = courseCarouselItem.getInstructor();
 
 //        Drawable courseImage = courseCarouselItem.getCourseImage();
-        String courseImageURL = "http://ftn.locuslogs.com/images/card/"+imageName;
-        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attendedSessions, availableSessions, bookedSessions, missedSessions, courseName, courseCode, courseImageURL);
+        String courseImageURL = "http://ftn.locuslogs.com/images/card/"+courseId+imageName.replace(':','_')+ ".jpg";
+        Log.e("image", "bindVH: "+courseImageURL);
+        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attendedSessions, availableSessions, bookedSessions, missedSessions, courseName, courseId, courseImageURL);
     }
 
     static class CourseViewHolder extends RecyclerView.ViewHolder {

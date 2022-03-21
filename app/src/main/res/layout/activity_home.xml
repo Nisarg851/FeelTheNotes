@@ -154,7 +154,7 @@
                                 android:id="@+id/tvUpcomingSessionTitle"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Upcoming Session - AGTR003"
+                                android:text="Upcoming Session"
                                 android:textSize="23dp"
                                 android:textColor="@color/colorBlack"
                                 android:textStyle="italic"

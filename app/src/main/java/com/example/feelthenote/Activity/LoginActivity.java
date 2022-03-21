@@ -37,6 +37,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     Button btnSignIn;
     TextView registrationLink;
     ProgressDialog pg;
+    boolean alreadyLoggedIn = false;
+    private SharedPreferences loginSharedPreference;
+    private SharedPreferences.Editor sharedPreferenceEditor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +47,24 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         setContentView(R.layout.activity_login);
 
         initializeControls();
+        verifyLoginStatus();
+    }
+
+    void verifyLoginStatus(){
+        SharedPreferences sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+        String contact = sp.getString("Contact",null);
+        String password = sp.getString("Password",null);
+
+        alreadyLoggedIn = ((contact!=null) && (password!=null));
+
+        if (alreadyLoggedIn) {
+            loginUser(alreadyLoggedIn, contact, password);
+        }
     }
 
     void initializeControls(){
+        loginSharedPreference = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+        sharedPreferenceEditor = loginSharedPreference.edit();
         llRootLayout = findViewById(R.id.llRootLayout);
 
         pg = Common.showProgressDialog(LoginActivity.this);
@@ -67,8 +85,13 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnSignIn:
-                loginUser();
-                pg.show();
+
+                String mobileNumber = etMobileNumber.getText().toString();
+                String password = etPassword.getText().toString();
+                boolean rememberMe = cbRememberMe.isChecked();
+
+                loginUser(alreadyLoggedIn, mobileNumber,password);
+
                 break;
             case R.id.registrationLink:
                 Intent redirectToRegistration = new Intent(LoginActivity.this, RegistrationActivity.class);
@@ -96,7 +119,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
         }
     }
 
-    void loginUser(){
+    void loginUser(boolean alreadyLoggedIn, String spUserContact, String spUserPassword){
         boolean isConnected = ConnectivityReceiver.isConnected();
         if (!isConnected) {
             AlertDialog.Builder builder =
@@ -106,20 +129,18 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             builder.setPositiveButton(getResources().getString(R.string.NetworkErrorBtnTxt), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    loginUser();
+                    loginUser(alreadyLoggedIn, spUserContact, spUserPassword);
 
                 }
             });
             builder.setCancelable(false);
             builder.show();
-        }else {
-            String mobileNumber = etMobileNumber.getText().toString();
-            String password = etPassword.getText().toString();
-            boolean rememberMe = cbRememberMe.isChecked();
+        } else {
 
+            pg.show();
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            Call<LoginResponse> loginResponseCall = apiInterface.loginUser(new LoginRequest(mobileNumber, password));
+            Call<LoginResponse> loginResponseCall = apiInterface.loginUser(new LoginRequest(spUserContact, spUserPassword));
 
             loginResponseCall.enqueue(new Callback<LoginResponse>() {
 
@@ -135,11 +156,12 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
 
                                 int userID = loginUserDatum.getUserID();
                                 String password = loginUserDatum.getPassword();
+                                String contact = loginUserDatum.getContact1();
                                 int userType = loginUserDatum.getUserType();
 
-                                SharedPreferences loginSharedPreference = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
-                                SharedPreferences.Editor sharedPreferenceEditor = loginSharedPreference.edit();
+
                                 sharedPreferenceEditor.putInt("UserId", userID);
+                                sharedPreferenceEditor.putString("Contact", contact);
                                 sharedPreferenceEditor.putString("Password", password);
                                 sharedPreferenceEditor.putInt("UserType", userType);
                                 sharedPreferenceEditor.commit();
@@ -152,6 +174,9 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                                 switch (response.body().getMessage()) {
                                     case "1":
                                         Common.showSnack_Dark(llRootLayout, "Invalid Credentials");
+                                        if(alreadyLoggedIn) {
+                                           sharedPreferenceEditor.clear().commit();
+                                        }
                                         break;
                                     case "Z":
                                         Common.showSnack_Dark(llRootLayout, "Something went wrong..!!");
@@ -181,7 +206,7 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
                     builder.setPositiveButton(getResources().getString(R.string.NetworkErrorBtnTxt), new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            loginUser();
+                            loginUser(alreadyLoggedIn, spUserContact, spUserPassword);
                         }
                     });
                     builder.setCancelable(false);

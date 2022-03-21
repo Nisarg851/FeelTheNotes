@@ -23,14 +23,15 @@
         <activity android:name=".Activity.SessionDataActivity" />
         <activity android:name=".Activity.CalenderActivity" />
         <activity android:name=".Activity.HomeActivity" >
+        </activity>
+        <activity android:name=".Dashboard" />
+        <activity android:name=".Activity.RegistrationActivity" />
+        <activity android:name=".Activity.LoginActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Dashboard" />
-        <activity android:name=".Activity.RegistrationActivity" />
-        <activity android:name=".Activity.LoginActivity" />
         <activity android:name=".Activity.MainActivity" />
 
         <meta-data

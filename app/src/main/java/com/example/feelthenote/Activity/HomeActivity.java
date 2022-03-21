@@ -20,6 +20,7 @@ import com.example.feelthenote.Model.StudentDashboardCourseCarousel;
 import com.example.feelthenote.Model.StudentDashboardData;
 import com.example.feelthenote.Model.StudentDashboardInfo;
 import com.example.feelthenote.Model.StudentDashboardUpcomingSession;
+import com.example.feelthenote.Network.GetCoursesRequest;
 import com.example.feelthenote.Network.GetStudentDashboardResponse;
 import com.example.feelthenote.R;
 import com.example.feelthenote.Receiver.ConnectivityReceiver;
@@ -116,7 +117,7 @@ public class HomeActivity extends AppCompatActivity {
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            Call<GetStudentDashboardResponse> getStudentDashboardResponseCall = apiInterface.getStudentDashboard(23);
+            Call<GetStudentDashboardResponse> getStudentDashboardResponseCall = apiInterface.getStudentDashboard(new GetCoursesRequest(23));
 
             getStudentDashboardResponseCall.enqueue(new Callback<GetStudentDashboardResponse>() {
                 @Override
@@ -143,7 +144,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                 // Student Upcoming Session
                                 StudentDashboardUpcomingSession studentDashboardUpcomingSession = studentDashboardData.getStudentDashboardUpcomingSession().get(0);
-                                String upcomingSessionTitle = studentDashboardUpcomingSession.getCourseID(),
+                                String upcomingSessionTitle = "Upcoming Session - "+studentDashboardUpcomingSession.getCourseID(),
                                         courseName = studentDashboardUpcomingSession.getCourseName(),
                                         tutorName = "Tutor Name",
                                         upcomingSessionDateAndTime = studentDashboardUpcomingSession.getDate();

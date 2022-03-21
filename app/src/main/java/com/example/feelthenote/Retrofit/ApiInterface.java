@@ -39,5 +39,5 @@ public interface ApiInterface {
     Call<AddFeeDetailResponse> addFeeDetail(@Body AddFeeDetailRequest addFeeDetailRequest);
 
     @POST("api/FeelTheNote/GetStudentDashboard")
-    Call<GetStudentDashboardResponse> getStudentDashboard(@Body Integer studentID);
+    Call<GetStudentDashboardResponse> getStudentDashboard(@Body GetCoursesRequest getCoursesRequest);
 }
