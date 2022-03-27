@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -28,6 +29,7 @@ import com.example.feelthenote.Receiver.ConnectivityReceiver;
 import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 import com.github.islamkhsh.CardSliderViewPager;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -39,7 +41,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class HomeActivity extends AppCompatActivity {
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener{
 
     DrawerLayout llRootLayout;
 
@@ -60,6 +62,8 @@ public class HomeActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private int userID;
 
+    MaterialButton navBtnHome, navBtnExplore, navBtnSessions , navBtnSettings, navBtnCalander;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,10 +71,6 @@ public class HomeActivity extends AppCompatActivity {
 
         // Temp Image new activity redirect
         notificationMenuToggleButton = findViewById(R.id.notificationMenuToggleButton);
-        notificationMenuToggleButton.setOnClickListener(view -> {
-            Intent readirectToMyCourses = new Intent(this, MyCoursesActivity.class);
-            startActivity(readirectToMyCourses);
-        });
 
         initializeControls();
 
@@ -94,9 +94,42 @@ public class HomeActivity extends AppCompatActivity {
         tvUpcomingSessionDateAndTime = findViewById(R.id.tvUpcomingSessionDateAndTime);
         tvUpcomingSessionDuration = findViewById(R.id.tvUpcomingSessionDuration);
 
+        navBtnHome = findViewById(R.id.navBtnHome);
+        navBtnCalander = findViewById(R.id.navBtnCalander);
+        navBtnSessions = findViewById(R.id.navBtnSessions);
+        navBtnExplore = findViewById(R.id.navBtnExplore);
+        navBtnSettings = findViewById(R.id.navBtnSettings);
+
         userID = sp.getInt("UserId",0);
         // Student's Course Carousel
         vpStudentCourseCarousel = findViewById(R.id.vpStudentCourseCarousel);
+
+        navBtnHome.setOnClickListener(this);
+        navBtnCalander.setOnClickListener(this);
+        navBtnSessions.setOnClickListener(this);
+        navBtnExplore.setOnClickListener(this);
+        navBtnSettings.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent redirectTo = null;
+        switch (view.getId()){
+            case R.id.navBtnCalander:
+                redirectTo = new Intent(HomeActivity.this, CalenderActivity.class);
+                break;
+            case R.id.navBtnSessions:
+                redirectTo = new Intent(HomeActivity.this, SessionDataActivity.class);
+                break;
+            case R.id.navBtnExplore:
+                redirectTo = new Intent(HomeActivity.this, MyCoursesActivity.class);
+                break;
+            case R.id.navBtnSettings:
+                redirectTo = new Intent(HomeActivity.this, SettingsActivity.class);
+                break;
+        }
+        if(redirectTo!=null)
+            startActivity(redirectTo);
     }
 
     private void setDashboardData(){
@@ -127,7 +160,7 @@ public class HomeActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             if(response.body().getStatusCode() == 1) {
                                 pg.dismiss();
-                                Common.showSnack_Light(llRootLayout,"Success..!!");
+//                                Common.showSnack_Light(llRootLayout,"Success..!!");
                                 StudentDashboardData studentDashboardData = response.body().getStudentDashboardData();
 
                                 // Student Info

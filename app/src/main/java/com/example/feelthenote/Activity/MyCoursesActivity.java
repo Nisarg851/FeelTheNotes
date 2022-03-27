@@ -100,7 +100,7 @@ public class MyCoursesActivity extends AppCompatActivity {
                     try {
                         if(response.isSuccessful()){
                             pg.dismiss();
-                            Common.showSnack_Dark(llRootLayout, "Success..!!");
+//                            Common.showSnack_Dark(llRootLayout, "Success..!!");
                             // My Courses recycler
                             List<GetMyCoursesDatum> getMyCoursesDatumList = response.body().getCourses().getMyCoursesDatumList();
                             myCoursesAdapter = new MyCoursesAdapter(getMyCoursesDatumList);

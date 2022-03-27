@@ -1,10 +1,10 @@
 <resources>
     <string name="app_name">FeelTheNote</string>
 
-<!--    Share Preferences-->
+    <!--    Share Preferences-->
     <string name="LoginSharedPreference">LoginSharedPreference</string>
 
-<!--    Error messages-->
+    <!--    Error messages-->
     <string name="NetworkErrorMsg">Check Your Internet Connection..!!</string>
     <string name="NetworkErrorTitle">Network Error</string>
     <string name="NetworkErrorBtnTxt">Try Again</string>
@@ -20,5 +20,7 @@
         <item>Six Months</item>
         <item>One Year</item>
     </string-array>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
