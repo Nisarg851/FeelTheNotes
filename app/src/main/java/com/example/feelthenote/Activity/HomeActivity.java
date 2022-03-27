@@ -8,6 +8,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
@@ -28,6 +29,9 @@ import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 import com.github.islamkhsh.CardSliderViewPager;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,10 +46,9 @@ public class HomeActivity extends AppCompatActivity {
     ProgressDialog pg;
 
     Context context = this;
-
     // Student Info Components
     CircleImageView ivStudentProfileImage;
-    TextView tvStudentName, tvStudentEmailID;
+    TextView tvStudentName, tvStudentEmailID, tvUpcomingSessionDuration;
 
     // Student Upcoming Session Components
     TextView tvUpcomingSessionTitle, tvCourseName, tvTutorName, tvUpcomingSessionDateAndTime;
@@ -54,18 +57,13 @@ public class HomeActivity extends AppCompatActivity {
     CardSliderViewPager vpStudentCourseCarousel;
 
     ImageView notificationMenuToggleButton;
+    private SharedPreferences sp;
+    private int userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-//        ArrayList<CourseCarouselItem> course = new ArrayList<CourseCarouselItem>();
-//        // add items to arraylist
-//        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
-//        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
-//        course.add(new CourseCarouselItem(10,10,10,10,10,10,10,"Acoustic Guitar","AGTR", "Shubham Acharya", "http://ftn.locuslogs.com/images/card/agtr.jpg"));
-//        vpStudentCourseCarousel.setAdapter(new CourseCarousel(course));
 
         // Temp Image new activity redirect
         notificationMenuToggleButton = findViewById(R.id.notificationMenuToggleButton);
@@ -82,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
     private void initializeControls(){
         llRootLayout = findViewById(R.id.llRootLayout);
         pg = Common.showProgressDialog(HomeActivity.this);
+        sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
 
         // Student Info Controls
         ivStudentProfileImage = findViewById(R.id.ivStudentProfileImage);
@@ -93,7 +92,9 @@ public class HomeActivity extends AppCompatActivity {
         tvCourseName = findViewById(R.id.tvCourseName);
         tvTutorName = findViewById(R.id.tvTutorName);
         tvUpcomingSessionDateAndTime = findViewById(R.id.tvUpcomingSessionDateAndTime);
+        tvUpcomingSessionDuration = findViewById(R.id.tvUpcomingSessionDuration);
 
+        userID = sp.getInt("UserId",0);
         // Student's Course Carousel
         vpStudentCourseCarousel = findViewById(R.id.vpStudentCourseCarousel);
     }
@@ -117,7 +118,7 @@ public class HomeActivity extends AppCompatActivity {
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            Call<GetStudentDashboardResponse> getStudentDashboardResponseCall = apiInterface.getStudentDashboard(new GetCoursesRequest(23));
+            Call<GetStudentDashboardResponse> getStudentDashboardResponseCall = apiInterface.getStudentDashboard(new GetCoursesRequest(userID));
 
             getStudentDashboardResponseCall.enqueue(new Callback<GetStudentDashboardResponse>() {
                 @Override
@@ -135,9 +136,14 @@ public class HomeActivity extends AppCompatActivity {
                                         studentEmailID = studentDashboardInfo.getEmail(),
                                         studentProfileImage = studentDashboardInfo.getProfileImageDate();
 
-//                                Glide.with(context)
-//                                        .load("Set Base URL HERE"+studentProfileImage)
-//                                        .into(ivStudentProfileImage);
+                                String imageURL = "http://ftn.locuslogs.com/images/student_profile/"+userID+studentProfileImage.replace(':','_')+ ".jpg";
+
+                                Log.e("url", "onResponse: "+imageURL);
+
+                                Glide.with(context)
+                                        .load(imageURL)
+                                        .placeholder(R.drawable.default_user_image)
+                                        .into(ivStudentProfileImage);
 
                                 tvStudentName.setText(studentName);
                                 tvStudentEmailID.setText(studentEmailID);
@@ -146,13 +152,19 @@ public class HomeActivity extends AppCompatActivity {
                                 StudentDashboardUpcomingSession studentDashboardUpcomingSession = studentDashboardData.getStudentDashboardUpcomingSession().get(0);
                                 String upcomingSessionTitle = "Upcoming Session - "+studentDashboardUpcomingSession.getCourseID(),
                                         courseName = studentDashboardUpcomingSession.getCourseName(),
-                                        tutorName = "Tutor Name",
-                                        upcomingSessionDateAndTime = studentDashboardUpcomingSession.getDate();
+                                        tutorName = "Instructor: "+studentDashboardUpcomingSession.getInstructorName(),
+                                        date = studentDashboardUpcomingSession.getDate().split("T")[0],
+                                        time = studentDashboardUpcomingSession.getTime();
+
+                                int duration = studentDashboardUpcomingSession.getDuration();
+
+                                String newDateTimeString = setProperDateTimeFormat(date, time);
 
                                 tvUpcomingSessionTitle.setText(upcomingSessionTitle);
                                 tvCourseName.setText(courseName);
                                 tvTutorName.setText(tutorName);
-                                tvUpcomingSessionDateAndTime.setText(upcomingSessionDateAndTime);
+                                tvUpcomingSessionDateAndTime.setText(newDateTimeString);
+                                tvUpcomingSessionDuration.setText(duration+" min");
 
                                 // Student Course Carousel
                                 List<StudentDashboardCourseCarousel> studentDashboardCourseCarouselList = studentDashboardData.getStudentDashboardCourseCarousel();
@@ -192,6 +204,21 @@ public class HomeActivity extends AppCompatActivity {
                     builder.show();
                 }
             });
+        }
+    }
+
+    private String setProperDateTimeFormat(String date, String time) {
+        Log.e("DT", "setProperDateTimeFormat: date: "+date+" time: "+time);
+        String inputString = date + " " + time;
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("EEE, dd MMMM, HH:mm aa");
+        String fullDateTime = inputString;
+        try {
+            fullDateTime = outputFormat.format(inputFormat.parse(inputString));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }finally {
+            return fullDateTime;
         }
     }
 }

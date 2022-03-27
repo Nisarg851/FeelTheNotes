@@ -46,6 +46,9 @@ public class StudentDashboardCourseCarousel {
     @SerializedName("Is_Active")
     @Expose
     private Boolean isActive;
+    @SerializedName("Course_Instructor")
+    @Expose
+    private String courseInstructor;
 
     public Integer getTotal() {
         return total;
@@ -157,6 +160,14 @@ public class StudentDashboardCourseCarousel {
 
     public void setIsActive(Boolean isActive) {
         this.isActive = isActive;
+    }
+
+    public String getCourseInstructor() {
+        return courseInstructor;
+    }
+
+    public void setCourseInstructor(String courseInstructor) {
+        this.courseInstructor = courseInstructor;
     }
 
 }

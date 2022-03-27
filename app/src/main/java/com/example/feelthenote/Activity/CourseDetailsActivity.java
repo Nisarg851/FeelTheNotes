@@ -11,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -55,6 +56,8 @@ import retrofit2.Response;
 
 public class CourseDetailsActivity extends AppCompatActivity implements View.OnClickListener{
     private Context context = null;
+
+    private SharedPreferences sp;
 
     private String BASE_URL = "http://ftn.locuslogs.com/images/cover/";
 
@@ -120,7 +123,8 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
         btnSubscribe = findViewById(R.id.btnSubscribe);
 
-        Student_ID = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE).getInt("UserID", -1);
+        sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+        Student_ID = sp.getInt("UserId",0);
 
         tvShowMoreAbout.setOnClickListener(this);
         tvShowMoreDetails.setOnClickListener(this);
@@ -212,7 +216,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            Call<CourseDetailsResponse> courseDetailsResponse = apiInterface.getCourseDetail(new CourseDetailsRequest(23,course_ID));
+            Call<CourseDetailsResponse> courseDetailsResponse = apiInterface.getCourseDetail(new CourseDetailsRequest(Student_ID,course_ID));
 
             courseDetailsResponse.enqueue(new Callback<CourseDetailsResponse>() {
                 @Override
@@ -237,6 +241,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
                             // Course Latest Packages
                             List<CourseLatestPackages> courseLatestPackages = courseData.getCourseLatestPackages();
+                            Log.e("CourseLatestPackages", "CourseLatestPackages size: "+courseLatestPackages+" Student_Id: "+Student_ID);
                             CourseLatestPackages courseLatestPackage = (courseLatestPackages.size()==0) ? null : courseLatestPackages.get(courseLatestPackages.size()-1);
 
                             // Latest Package Configurations

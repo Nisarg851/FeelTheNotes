@@ -50,18 +50,18 @@ public class CourseCarouselAdapter extends CardSliderAdapter<CourseCarouselAdapt
         int totalAllotedSessions = courseCarouselItem.getTotal(),
                 attendedSessions = courseCarouselItem.getAttended(),
                 availableSessions = courseCarouselItem.getRegular() + courseCarouselItem.getCarried() + courseCarouselItem.getExtra(),
-                bookedSessions = courseCarouselItem.getExpired(),
+                bookedSessions = courseCarouselItem.getBooked(),
                 missedSessions = courseCarouselItem.getCancelled() + courseCarouselItem.getMissed() + courseCarouselItem.getExpired();
         String imageName = courseCarouselItem.getCardImage();
 
         String courseName = courseCarouselItem.getCourseName(),
                 courseId = courseCarouselItem.getCourseID();
-//        String instructor = courseCarouselItem.getInstructor();
+        String instructor = courseCarouselItem.getCourseInstructor();
 
 //        Drawable courseImage = courseCarouselItem.getCourseImage();
         String courseImageURL = "http://ftn.locuslogs.com/images/card/"+courseId+imageName.replace(':','_')+ ".jpg";
         Log.e("image", "bindVH: "+courseImageURL);
-        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attendedSessions, availableSessions, bookedSessions, missedSessions, courseName, courseId, courseImageURL);
+        courseViewHolder.bindViewAndData(context, totalAllotedSessions, attendedSessions, availableSessions, bookedSessions, missedSessions, courseName, courseId, courseImageURL, instructor);
     }
 
     static class CourseViewHolder extends RecyclerView.ViewHolder {
@@ -83,15 +83,16 @@ public class CourseCarouselAdapter extends CardSliderAdapter<CourseCarouselAdapt
             courseCardBackgroundImage = view.findViewById(R.id.courseCard);
         }
 
-        void bindViewAndData(Context context, int totalAllotedSessions, int attendedSessions, int availableSessions, int bookedSessions, int missedSessions, String courseName, String courseCode, String courseImageURL){
+        void bindViewAndData(Context context, int totalAllotedSessions, int attendedSessions, int availableSessions, int bookedSessions, int missedSessions, String courseName, String courseCode, String courseImageURL, String instructor){
             tvTotalAllotedSessions.setText(String.valueOf(totalAllotedSessions));
             tvAttendedSessions.setText(String.valueOf(attendedSessions));
             tvAvailableSessions.setText(String.valueOf(availableSessions));
             tvBookedSessions.setText(String.valueOf(bookedSessions));
+            Log.e("booked", "bindViewAndData: "+bookedSessions);
             tvMissedSessions.setText(String.valueOf(missedSessions));
 
             courseText.setText(courseName +" - "+ courseCode);
-//            instructorText.setText(String.valueOf(instructor));
+            instructorText.setText(instructor);
 
             Glide.with(context)
                     .load(courseImageURL)

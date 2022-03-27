@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class MyCoursesActivity extends AppCompatActivity {
 
     private ExploreCoursesAdapter exploreCoursesAdapter;
     private MyCoursesAdapter myCoursesAdapter;
+    private SharedPreferences sp;
+    private int userID;
 
     //Recycler View
 //    ArrayList<GetMyCoursesDatum> courses;
@@ -57,6 +60,9 @@ public class MyCoursesActivity extends AppCompatActivity {
         pg = Common.showProgressDialog(MyCoursesActivity.this);
         rvEnrolledCourses = findViewById(R.id.rvEnrolledCourses);
         rvExploreCourses = findViewById(R.id.rvExploreCourses);
+        sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+
+        userID = sp.getInt("UserId",0);
 
         ivBack = findViewById(R.id.ivBack);
 
@@ -86,7 +92,7 @@ public class MyCoursesActivity extends AppCompatActivity {
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            Call<GetCoursesResponse> getCoursesResponseCall = apiInterface.getCourses(new GetCoursesRequest(23));
+            Call<GetCoursesResponse> getCoursesResponseCall = apiInterface.getCourses(new GetCoursesRequest(userID));
 
             getCoursesResponseCall.enqueue(new Callback<GetCoursesResponse>() {
                 @Override

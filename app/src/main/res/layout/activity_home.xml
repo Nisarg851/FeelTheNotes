@@ -173,7 +173,7 @@
                                         android:id="@+id/tvCourseName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Electronic Keyboard"
+                                        android:text="No Session Found"
                                         android:textSize="25dp"
                                         android:textStyle="bold"
                                         android:textColor="@color/black"
@@ -184,23 +184,44 @@
                                         android:id="@+id/tvTutorName"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:text="Tutor : Shubham Acharya"
+                                        android:text="Instructor : "
                                         android:textSize="20dp"
                                         android:textColor="@color/black"
                                         android:paddingLeft="19dp"/>
 
-                                    <TextView
-                                        android:id="@+id/tvUpcomingSessionDateAndTime"
+                                    <RelativeLayout
                                         android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:text="Tommorow,  23rd Jan  15:00 - 10:00 AM"
-                                        android:textSize="18dp"
-                                        android:textColor="@color/black"
-                                        android:textAlignment="center"
-                                        android:paddingTop="5dp"
-                                        android:paddingBottom="5dp"
-                                        android:gravity="center_horizontal"
-                                        android:background="@color/colorWhite"/>
+                                        android:layout_height="wrap_content">
+
+                                        <TextView
+                                            android:id="@+id/tvUpcomingSessionDateAndTime"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            tools:text="Date and Time"
+                                            android:textSize="18dp"
+                                            android:textColor="#0000ff"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingLeft="19dp"
+                                            android:background="@color/colorWhite"/>
+
+                                        <TextView
+                                            android:id="@+id/tvUpcomingSessionDuration"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            tools:text="60 Min"
+                                            android:textSize="18dp"
+                                            android:textColor="#FF6E40"
+                                            android:textStyle="bold"
+                                            android:layout_alignParentEnd="true"
+                                            android:layout_marginRight="20dp"
+                                            android:paddingTop="5dp"
+                                            android:paddingBottom="5dp"
+                                            android:paddingLeft="19dp"
+                                            android:background="@color/colorWhite"/>
+
+                                    </RelativeLayout>
+
                                 </LinearLayout>
                             </androidx.cardview.widget.CardView>
                         </LinearLayout>
@@ -247,6 +268,7 @@
                             android:layout_height="150dp"
                             android:background="@drawable/agtr"
                             android:orientation="vertical">
+
                             <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -272,6 +294,68 @@
                 </LinearLayout>
             </RelativeLayout>
         </ScrollView>
+
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true"
+            android:background="@color/colorPrimary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/home_page_icon"
+                    app:iconPadding="0dp"
+                    app:iconGravity="textTop"
+                    android:text="Home"
+                    android:background="#00000000"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/calander_icon"
+                    app:iconPadding="0dp"
+                    app:iconGravity="textTop"
+                    android:text="Calander"
+                    android:background="#00000000"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/session_icon"
+                    app:iconPadding="1dp"
+                    app:iconGravity="textTop"
+                    android:text="Sessions"
+                    android:background="#00000000"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/explore_icon"
+                    app:iconPadding="0dp"
+                    app:iconGravity="textTop"
+                    android:text="Explore"
+                    android:background="#00000000"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    app:icon="@drawable/settings_icon"
+                    app:iconPadding="0dp"
+                    app:iconGravity="textTop"
+                    android:text="Settings"
+                    android:background="#00000000"/>
+
+            </LinearLayout>
+
+        </HorizontalScrollView>
+
     </RelativeLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

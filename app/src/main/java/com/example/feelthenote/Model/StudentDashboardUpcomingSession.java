@@ -4,6 +4,9 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class StudentDashboardUpcomingSession {
+    @SerializedName("Time")
+    @Expose
+    private String time;
     @SerializedName("Date")
     @Expose
     private String date;
@@ -16,6 +19,9 @@ public class StudentDashboardUpcomingSession {
     @SerializedName("Course_Name")
     @Expose
     private String courseName;
+    @SerializedName("Instructor")
+    @Expose
+    private String instructorName;
 
     public String getDate() {
         return date;
@@ -48,4 +54,12 @@ public class StudentDashboardUpcomingSession {
     public void setCourseName(String courseName) {
         this.courseName = courseName;
     }
+
+    public String getInstructorName() { return instructorName; }
+
+    public void setInstructorName(String instructorName) { this.instructorName = instructorName; }
+
+    public String getTime() { return time; }
+
+    public void setTime(String time) { this.time = time; }
 }
