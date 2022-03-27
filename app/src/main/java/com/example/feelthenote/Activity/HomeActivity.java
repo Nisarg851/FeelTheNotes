@@ -68,12 +68,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
-        // Temp Image new activity redirect
-        notificationMenuToggleButton = findViewById(R.id.notificationMenuToggleButton);
-
         initializeControls();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
         setDashboardData();
     }
 
@@ -81,6 +81,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         llRootLayout = findViewById(R.id.llRootLayout);
         pg = Common.showProgressDialog(HomeActivity.this);
         sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+
+        notificationMenuToggleButton = findViewById(R.id.notificationMenuToggleButton);
 
         // Student Info Controls
         ivStudentProfileImage = findViewById(R.id.ivStudentProfileImage);

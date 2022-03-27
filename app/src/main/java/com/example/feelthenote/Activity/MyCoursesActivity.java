@@ -44,9 +44,6 @@ public class MyCoursesActivity extends AppCompatActivity {
     private SharedPreferences sp;
     private int userID;
 
-    //Recycler View
-//    ArrayList<GetMyCoursesDatum> courses;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +67,11 @@ public class MyCoursesActivity extends AppCompatActivity {
             Intent redirectToHome = new Intent(this, HomeActivity.class);
             startActivity(redirectToHome);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         getAllCourses();
     }
 

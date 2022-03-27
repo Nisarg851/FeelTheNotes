@@ -78,7 +78,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
 
     private ProgressDialog pg;
 
-    private  String courseName="";
+    private  String courseName="", course_ID;
 
     private List<CourseOtherPackages> diaglogList;
 
@@ -92,11 +92,18 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         setContentView(R.layout.activity_course_detail);
 
         Intent recievedIntent = getIntent();
-        String course_ID = recievedIntent.getStringExtra("Course_ID");
+         this.course_ID = recievedIntent.getStringExtra("Course_ID");
 
         initializeControls();
         initializeAppBarAndToolBarConfigs();
-        getCourseDetails(course_ID);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+        Student_ID = sp.getInt("UserId",0);
+        getCourseDetails(this.course_ID);
     }
 
     private void initializeControls(){
@@ -122,9 +129,6 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
         rvLatestPackage = findViewById(R.id.rvLatestPackage);
 
         btnSubscribe = findViewById(R.id.btnSubscribe);
-
-        sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
-        Student_ID = sp.getInt("UserId",0);
 
         tvShowMoreAbout.setOnClickListener(this);
         tvShowMoreDetails.setOnClickListener(this);
