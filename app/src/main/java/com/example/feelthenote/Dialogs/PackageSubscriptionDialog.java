@@ -296,7 +296,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             String Start_Date = tvStartDate.getText().toString();
             BigInteger Student_Mapping_ID = this.studentMappingID;
 
-            Log.e("dialogValues", "Student_ID: "+Student_ID+" Course_ID: "+Course_ID+" Package_ID: "+Package_ID+" Promo_Code: "+Promo_Code+" StartDate: "+Start_Date+" Student_Mapping_ID: "+Student_Mapping_ID);
+//            Log.e("dialogValues", "Student_ID: "+Student_ID+" Course_ID: "+Course_ID+" Package_ID: "+Package_ID+" Promo_Code: "+Promo_Code+" StartDate: "+Start_Date+" Student_Mapping_ID: "+Student_Mapping_ID);
 
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 

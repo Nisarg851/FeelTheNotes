@@ -63,18 +63,6 @@
 
     </RadioGroup>
 
-<!--    <ToggleButton-->
-<!--        android:id="@+id/rgPackageMode"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginHorizontal="10dp"-->
-<!--        android:textOn="Online"-->
-<!--        android:textOff="Offline"-->
-<!--        android:outlineAmbientShadowColor="#ff0000"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/radioG"/>-->
-
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spBatchSpinner"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"

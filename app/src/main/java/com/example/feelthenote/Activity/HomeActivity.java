@@ -1,6 +1,7 @@
 package com.example.feelthenote.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
@@ -58,6 +59,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     // Student's Course Carousel
     CardSliderViewPager vpStudentCourseCarousel;
 
+    CardView cvNoSubscribedCourseContainer;
+
     ImageView notificationMenuToggleButton;
     private SharedPreferences sp;
     private int userID;
@@ -96,6 +99,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         tvUpcomingSessionDateAndTime = findViewById(R.id.tvUpcomingSessionDateAndTime);
         tvUpcomingSessionDuration = findViewById(R.id.tvUpcomingSessionDuration);
 
+        cvNoSubscribedCourseContainer = findViewById(R.id.cvNoSubscribedCourseContainer);
+
         navBtnHome = findViewById(R.id.navBtnHome);
         navBtnCalander = findViewById(R.id.navBtnCalander);
         navBtnSessions = findViewById(R.id.navBtnSessions);
@@ -106,6 +111,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Student's Course Carousel
         vpStudentCourseCarousel = findViewById(R.id.vpStudentCourseCarousel);
 
+        cvNoSubscribedCourseContainer.setOnClickListener(this);
         navBtnHome.setOnClickListener(this);
         navBtnCalander.setOnClickListener(this);
         navBtnSessions.setOnClickListener(this);
@@ -124,14 +130,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 redirectTo = new Intent(HomeActivity.this, SessionDataActivity.class);
                 break;
             case R.id.navBtnExplore:
+            case R.id.cvNoSubscribedCourseContainer:
                 redirectTo = new Intent(HomeActivity.this, MyCoursesActivity.class);
                 break;
             case R.id.navBtnSettings:
                 redirectTo = new Intent(HomeActivity.this, SettingsActivity.class);
                 break;
         }
-        if(redirectTo!=null)
+        if(redirectTo!=null) {
             startActivity(redirectTo);
+        }
     }
 
     private void setDashboardData(){
@@ -166,45 +174,57 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                 StudentDashboardData studentDashboardData = response.body().getStudentDashboardData();
 
                                 // Student Info
-                                StudentDashboardInfo studentDashboardInfo = studentDashboardData.getStudentDashboardInfo().get(0);
-                                String studentName = studentDashboardInfo.getName(),
-                                        studentEmailID = studentDashboardInfo.getEmail(),
-                                        studentProfileImage = studentDashboardInfo.getProfileImageDate();
+                                List<StudentDashboardInfo> studentDashboardInfoList = studentDashboardData.getStudentDashboardInfo();
+                                if(studentDashboardInfoList!=null && studentDashboardInfoList.size()>0) {
+                                    StudentDashboardInfo studentDashboardInfo = studentDashboardInfoList.get(0);
+                                    String studentName = studentDashboardInfo.getName(),
+                                            studentEmailID = studentDashboardInfo.getEmail(),
+                                            studentProfileImage = studentDashboardInfo.getProfileImageDate();
 
-                                String imageURL = "http://ftn.locuslogs.com/images/student_profile/"+userID+studentProfileImage.replace(':','_')+ ".jpg";
+                                    String imageURL = "http://ftn.locuslogs.com/images/student_profile/" + userID + studentProfileImage.replace(':', '_') + ".jpg";
 
-                                Log.e("url", "onResponse: "+imageURL);
+                                    Log.e("url", "onResponse: " + imageURL);
 
-                                Glide.with(context)
-                                        .load(imageURL)
-                                        .placeholder(R.drawable.default_user_image)
-                                        .into(ivStudentProfileImage);
+                                    Glide.with(context)
+                                            .load(imageURL)
+                                            .placeholder(R.drawable.default_user_image)
+                                            .into(ivStudentProfileImage);
 
-                                tvStudentName.setText(studentName);
-                                tvStudentEmailID.setText(studentEmailID);
+                                    tvStudentName.setText(studentName);
+                                    tvStudentEmailID.setText(studentEmailID);
+                                }
 
                                 // Student Upcoming Session
-                                StudentDashboardUpcomingSession studentDashboardUpcomingSession = studentDashboardData.getStudentDashboardUpcomingSession().get(0);
-                                String upcomingSessionTitle = "Upcoming Session - "+studentDashboardUpcomingSession.getCourseID(),
-                                        courseName = studentDashboardUpcomingSession.getCourseName(),
-                                        tutorName = "Instructor: "+studentDashboardUpcomingSession.getInstructorName(),
-                                        date = studentDashboardUpcomingSession.getDate().split("T")[0],
-                                        time = studentDashboardUpcomingSession.getTime();
+                                List<StudentDashboardUpcomingSession> studentDashboardUpcomingSessionList = studentDashboardData.getStudentDashboardUpcomingSession();
+                                if(studentDashboardUpcomingSessionList!=null && studentDashboardUpcomingSessionList.size()>0) {
+                                    StudentDashboardUpcomingSession studentDashboardUpcomingSession = studentDashboardUpcomingSessionList.get(0);
+                                    String upcomingSessionTitle = "Upcoming Session - " + studentDashboardUpcomingSession.getCourseID(),
+                                            courseName = studentDashboardUpcomingSession.getCourseName(),
+                                            tutorName = "Instructor: " + studentDashboardUpcomingSession.getInstructorName(),
+                                            date = studentDashboardUpcomingSession.getDate().split("T")[0],
+                                            time = studentDashboardUpcomingSession.getTime();
 
-                                int duration = studentDashboardUpcomingSession.getDuration();
+                                    int duration = studentDashboardUpcomingSession.getDuration();
 
-                                String newDateTimeString = setProperDateTimeFormat(date, time);
+                                    String newDateTimeString = setProperDateTimeFormat(date, time);
 
-                                tvUpcomingSessionTitle.setText(upcomingSessionTitle);
-                                tvCourseName.setText(courseName);
-                                tvTutorName.setText(tutorName);
-                                tvUpcomingSessionDateAndTime.setText(newDateTimeString);
-                                tvUpcomingSessionDuration.setText(duration+" min");
+                                    tvUpcomingSessionTitle.setText(upcomingSessionTitle);
+                                    tvCourseName.setText(courseName);
+                                    tvTutorName.setText(tutorName);
+                                    tvUpcomingSessionDateAndTime.setText(newDateTimeString);
+                                    tvUpcomingSessionDuration.setText(duration + " min");
+                                }
 
                                 // Student Course Carousel
                                 List<StudentDashboardCourseCarousel> studentDashboardCourseCarouselList = studentDashboardData.getStudentDashboardCourseCarousel();
-                                CourseCarouselAdapter courseCarouselAdapter = new CourseCarouselAdapter(studentDashboardCourseCarouselList);
-                                vpStudentCourseCarousel.setAdapter(courseCarouselAdapter);
+                                Log.e("ccsize", "onResponse: Carousel datesize: "+studentDashboardCourseCarouselList.size());
+                                if(studentDashboardCourseCarouselList.size()==0)
+                                    cvNoSubscribedCourseContainer.setVisibility(View.VISIBLE);
+                                else {
+                                    cvNoSubscribedCourseContainer.setVisibility(View.GONE);
+                                    CourseCarouselAdapter courseCarouselAdapter = new CourseCarouselAdapter(studentDashboardCourseCarouselList);
+                                    vpStudentCourseCarousel.setAdapter(courseCarouselAdapter);
+                                }
                             } else {
                                 pg.dismiss();
                                 Common.showSnack_Light(llRootLayout,"Something went wrong!");

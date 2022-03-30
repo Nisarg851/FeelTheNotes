@@ -113,8 +113,8 @@
         </RelativeLayout>
 
         <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp">
 
             <EditText
@@ -124,8 +124,7 @@
                 android:hint="eg: 8 May 2000"
                 android:textColor="@color/black"
                 android:layout_marginTop="10dp"
-                android:importantForAutofill="no"
-                android:inputType="date"
+                android:focusable="false"
                 android:background="@drawable/edit_text">
             </EditText>
 
@@ -369,6 +368,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Sign up"
+                    android:backgroundTint="#3D93BA"
                     android:layout_weight="1"/>
 
             </LinearLayout>

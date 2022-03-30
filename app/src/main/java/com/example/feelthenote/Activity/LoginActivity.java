@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity implements ConnectivityRece
             case R.id.registrationLink:
                 Intent redirectToRegistration = new Intent(LoginActivity.this, RegistrationActivity.class);
                 startActivity(redirectToRegistration);
-                finish();
             default:
                 break;
         }

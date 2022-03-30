@@ -3,10 +3,13 @@ package com.example.feelthenote.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -24,11 +27,18 @@ import com.example.feelthenote.Receiver.ConnectivityReceiver;
 import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegistrationActivity extends AppCompatActivity implements ConnectivityReceiver.ConnectivityReceiverListener, View.OnClickListener {
+
+    Context context = null;
 
     private ImageView ivBack;
     private LinearLayout llRootLayout;
@@ -38,6 +48,10 @@ public class RegistrationActivity extends AppCompatActivity implements Connectiv
     private Button btnSignUp;
 
     private ProgressDialog pg;
+    private Calendar newCalendar;
+    private DatePickerDialog StartTime;
+
+    // Calender Controls
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +63,8 @@ public class RegistrationActivity extends AppCompatActivity implements Connectiv
     }
 
     private void initializeControls() {
+        context = this;
+
         llRootLayout = findViewById(R.id.llRootLayout);
 
         pg = Common.showProgressDialog(RegistrationActivity.this);
@@ -71,7 +87,10 @@ public class RegistrationActivity extends AppCompatActivity implements Connectiv
 
         btnSignUp = findViewById(R.id.btnSignUp);
 
+        setCalanderControls();
+
         ivBack.setOnClickListener(this);
+        etDOB.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);
     }
 
@@ -98,6 +117,9 @@ public class RegistrationActivity extends AppCompatActivity implements Connectiv
             case R.id.ivBack :
                 onBackPressed();
                 break;
+            case R.id.etDOB:
+                StartTime.show();
+                break;
             case R.id.btnSignUp :
                 registration();
                 pg.show();
@@ -105,6 +127,25 @@ public class RegistrationActivity extends AppCompatActivity implements Connectiv
             default:
                 break;
         }
+    }
+
+    private void setCalanderControls() {
+        if(context==null)
+            context = this;
+        newCalendar = Calendar.getInstance();
+        StartTime = new DatePickerDialog(context, (view1, year, monthOfYear, dayOfMonth) -> {
+            Calendar newDate = Calendar.getInstance();
+            newDate.set(year, monthOfYear, dayOfMonth);
+            etDOB.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(newDate.getTime()));
+        }, newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+
+        etDOB.setText(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date()));
+
+//        Date date = newCalendar.getTime();
+//        StartTime.getDatePicker().setMinDate(date.getTime());
+//        newCalendar.add(Calendar.MONTH,3);
+//        date = newCalendar.getTime();
+//        StartTime.getDatePicker().setMaxDate(date.getTime());
     }
 
     private void registration() {

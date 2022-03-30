@@ -1,6 +1,7 @@
 package com.example.feelthenote.Activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
@@ -9,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -39,6 +41,8 @@ public class MyCoursesActivity extends AppCompatActivity {
     ImageView ivBack;
     private ProgressDialog pg;
 
+    CardView cvNoSubscribedCourseContainer;
+
     private ExploreCoursesAdapter exploreCoursesAdapter;
     private MyCoursesAdapter myCoursesAdapter;
     private SharedPreferences sp;
@@ -56,6 +60,7 @@ public class MyCoursesActivity extends AppCompatActivity {
         llRootLayout = findViewById(R.id.llRootLayout);
         pg = Common.showProgressDialog(MyCoursesActivity.this);
         rvEnrolledCourses = findViewById(R.id.rvEnrolledCourses);
+        cvNoSubscribedCourseContainer = findViewById(R.id.cvNoSubscribedCourseContainer);
         rvExploreCourses = findViewById(R.id.rvExploreCourses);
         sp = getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
 
@@ -64,8 +69,7 @@ public class MyCoursesActivity extends AppCompatActivity {
         ivBack = findViewById(R.id.ivBack);
 
         ivBack.setOnClickListener(view -> {
-            Intent redirectToHome = new Intent(this, HomeActivity.class);
-            startActivity(redirectToHome);
+            onBackPressed();
         });
     }
 
@@ -105,16 +109,25 @@ public class MyCoursesActivity extends AppCompatActivity {
 //                            Common.showSnack_Dark(llRootLayout, "Success..!!");
                             // My Courses recycler
                             List<GetMyCoursesDatum> getMyCoursesDatumList = response.body().getCourses().getMyCoursesDatumList();
-                            myCoursesAdapter = new MyCoursesAdapter(getMyCoursesDatumList);
-                            myCoursesAdapter.SetOnItemClickListener(new MyCoursesAdapter.OnItemClickListener() {
-                                @Override
-                                public void onItemClick(View view, int position) {
-                                    Intent redirectToCourseDetail = new Intent(MyCoursesActivity.this, CourseDetailsActivity.class);
-                                    redirectToCourseDetail.putExtra("Course_ID", getMyCoursesDatumList.get(position).getCourseID());
-                                    startActivity(redirectToCourseDetail);
-                                }
-                            });
-                            rvEnrolledCourses.setAdapter(myCoursesAdapter);
+
+                            if(getMyCoursesDatumList.size()==0){
+                                Log.e("size", "onResponse: myCourses size: "+getMyCoursesDatumList.size());
+                                cvNoSubscribedCourseContainer.setVisibility(View.VISIBLE);
+                                rvEnrolledCourses.setVisibility(View.GONE);
+                            }else {
+                                cvNoSubscribedCourseContainer.setVisibility(View.GONE);
+                                rvEnrolledCourses.setVisibility(View.VISIBLE);
+                                myCoursesAdapter = new MyCoursesAdapter(getMyCoursesDatumList);
+                                myCoursesAdapter.SetOnItemClickListener(new MyCoursesAdapter.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(View view, int position) {
+                                        Intent redirectToCourseDetail = new Intent(MyCoursesActivity.this, CourseDetailsActivity.class);
+                                        redirectToCourseDetail.putExtra("Course_ID", getMyCoursesDatumList.get(position).getCourseID());
+                                        startActivity(redirectToCourseDetail);
+                                    }
+                                });
+                                rvEnrolledCourses.setAdapter(myCoursesAdapter);
+                            }
 
                             //Explore Courses recycler
                             List<GetExploreCoursesDatum> getExploreCoursesDatumList = response.body().getCourses().getExploreCoursesDatumList();
