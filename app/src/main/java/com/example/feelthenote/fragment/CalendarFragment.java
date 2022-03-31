@@ -17,24 +17,25 @@ import com.example.feelthenote.RecyclerViewAdapter.WeekDayAndDateListAdapter;
 import com.example.feelthenote.RecyclerViewAdapter.WeeklySlotsAdapter;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class CalendarFragment extends Fragment {
 
     RecyclerView rvWeekDaysContainer, rvWeeklySlots;
 
-    int weekNumber, daysInMonth;
+    Date weekStartDate;
 
-    public CalendarFragment(int weekNumber, int daysInMonth){
-        this.weekNumber = weekNumber;
-        this.daysInMonth = daysInMonth;
+    public CalendarFragment(Date weekStartDate){
+        this.weekStartDate = weekStartDate;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar, container, false);
         initilizeControls(view);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            initilizeDayRecyclerView(container);
+            initilizeDayRecyclerView();
         }
 
         ArrayList<String> weeklySlotData = getWeekSlotsData();
@@ -43,30 +44,25 @@ public class CalendarFragment extends Fragment {
         return view;
     }
 
-
-    private void initilizeWeeklySlotRecyclerView(ArrayList<String> weeklySlotData) {
-        WeeklySlotsAdapter weeklySlotsAdapter = new WeeklySlotsAdapter(weeklySlotData);
-        rvWeeklySlots.setAdapter(weeklySlotsAdapter);
-    }
-
     private void initilizeControls(View view) {
         rvWeekDaysContainer = view.findViewById(R.id.rvWeekDaysContainer);
         rvWeeklySlots = view.findViewById(R.id.rvWeeklySlots);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void initilizeDayRecyclerView(ViewGroup container) {
+    private void initilizeDayRecyclerView() {
         // Set Horizontal LinearLayout
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         rvWeekDaysContainer.setLayoutManager(layoutManager);
 
-        // Set Divider in Recycler View
-//        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(container.getContext(), DividerItemDecoration.HORIZONTAL);
-//        rvWeekDaysContainer.addItemDecoration(dividerItemDecoration);
-
         // Set Adapter
-        WeekDayAndDateListAdapter weekDayAndDateListAdapter = new WeekDayAndDateListAdapter(this.weekNumber, this.daysInMonth);
+        WeekDayAndDateListAdapter weekDayAndDateListAdapter = new WeekDayAndDateListAdapter(weekStartDate);
         rvWeekDaysContainer.setAdapter(weekDayAndDateListAdapter);
+    }
+
+    private void initilizeWeeklySlotRecyclerView(ArrayList<String> weeklySlotData) {
+        WeeklySlotsAdapter weeklySlotsAdapter = new WeeklySlotsAdapter(weeklySlotData);
+        rvWeeklySlots.setAdapter(weeklySlotsAdapter);
     }
 
     private ArrayList<String> getWeekSlotsData(){

@@ -15,6 +15,9 @@ public class StudentDashboardData {
     @SerializedName("Table2")
     @Expose
     private List<StudentDashboardCourseCarousel> studentDashboardCourseCarouselList = null;
+    @SerializedName("Table3")
+    @Expose
+    private List<Advertise> advertise = null;
 
     public List<StudentDashboardInfo> getStudentDashboardInfo() {
         return studentDashboardInfoList;
@@ -38,5 +41,13 @@ public class StudentDashboardData {
 
     public void setStudentDashboardCourseCarousel(List<StudentDashboardCourseCarousel> studentDashboardCourseCarouselList) {
         this.studentDashboardCourseCarouselList = studentDashboardCourseCarouselList;
+    }
+
+    public List<Advertise> getAdvertise() {
+        return advertise;
+    }
+
+    public void setAdvertise(List<Advertise> advertise) {
+        this.advertise = advertise;
     }
 }

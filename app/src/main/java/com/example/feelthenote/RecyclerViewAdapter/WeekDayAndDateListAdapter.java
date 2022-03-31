@@ -9,17 +9,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.feelthenote.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class WeekDayAndDateListAdapter extends RecyclerView.Adapter<WeekDayAndDateListAdapter.ViewHolder> {
 
     ViewGroup parent = null;
     String[] Days = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
 
-    int weekNumber, daysInMonth;
+    Date weekStartDate;
+    SimpleDateFormat sdf;
+    Calendar calendar;
 
-    public WeekDayAndDateListAdapter(int weekNumber, int daysInMonth) {
-        this.weekNumber = weekNumber;
-        this.daysInMonth = daysInMonth;
+    public WeekDayAndDateListAdapter(Date weekStartDate) {
+        this.weekStartDate = weekStartDate;
+        sdf = new SimpleDateFormat("dd");
+        calendar = Calendar.getInstance();
     }
 
     @Override
@@ -39,7 +46,10 @@ public class WeekDayAndDateListAdapter extends RecyclerView.Adapter<WeekDayAndDa
             holder.itemView.findViewById(R.id.vBottomLine).setVisibility(View.GONE);
         }else{
             ((TextView)holder.itemView.findViewById(R.id.tvDay)).setText(Days[position-1]);
-            ((TextView)holder.itemView.findViewById(R.id.tvDate)).setText(String.valueOf(position+(7*(weekNumber-1))));
+            calendar.setTime(weekStartDate);
+            calendar.add(Calendar.DATE, position-1);
+            String date = sdf.format(calendar.getTime());
+            ((TextView)holder.itemView.findViewById(R.id.tvDate)).setText(date);
         }
     }
 

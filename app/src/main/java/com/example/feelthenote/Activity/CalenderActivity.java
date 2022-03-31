@@ -11,11 +11,15 @@ import com.example.feelthenote.R;
 import com.example.feelthenote.fragment.CalendarFragment;
 import com.google.android.material.button.MaterialButton;
 
+import java.util.Calendar;
+import java.util.Date;
+
 public class CalenderActivity extends AppCompatActivity implements View.OnClickListener{
 
     MaterialButton btnCalanderPrevWeek, btnCalanderNextWeek;
     FragmentManager fragmentManager;
-    int WeekCount = 1;
+    Date weekStartDate;
+    Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,11 +29,12 @@ public class CalenderActivity extends AppCompatActivity implements View.OnClickL
         btnCalanderNextWeek = findViewById(R.id.btnCalanderNextWeek);
         btnCalanderPrevWeek = findViewById(R.id.btnCalanderPrevWeek);
 
+        // start with current week's start date i.e Date on Monday
+        weekStartDate = new Date();
+        calendar = Calendar.getInstance();
+
         fragmentManager = getSupportFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        CalendarFragment fragment = new CalendarFragment(WeekCount, 31);
-        fragmentTransaction.add(R.id.fcFragmentContainer, fragment);
-        fragmentTransaction.commit();
+        setCalanderFragment(weekStartDate);
 
         btnCalanderNextWeek.setOnClickListener(this);
         btnCalanderPrevWeek.setOnClickListener(this);
@@ -40,34 +45,25 @@ public class CalenderActivity extends AppCompatActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.btnCalanderPrevWeek:
-                WeekCount = WeekCount<=1 ? 1 : WeekCount-1;
-                btnCalanderNextWeek.setVisibility(View.VISIBLE);
-                if(WeekCount==1){
-                    btnCalanderPrevWeek.setVisibility(View.GONE);
-                    break;
-                }
-                btnCalanderPrevWeek.setVisibility(View.VISIBLE);
-                changeWeek(WeekCount);
+                calendar.setTime(weekStartDate);
+                calendar.add(Calendar.DATE, -7);
+                weekStartDate = calendar.getTime();
+                setCalanderFragment(weekStartDate);
                 break;
 
             case R.id.btnCalanderNextWeek:
-                WeekCount = WeekCount>=4 ? 4 : WeekCount+1;
-                btnCalanderPrevWeek.setVisibility(View.VISIBLE);
-                if(WeekCount==4){
-                    btnCalanderNextWeek.setVisibility(View.GONE);
-                    break;
-                }
-                btnCalanderNextWeek.setVisibility(View.VISIBLE);
-                changeWeek(WeekCount);
+                calendar.setTime(weekStartDate);
+                calendar.add(Calendar.DATE, 7);
+                weekStartDate = calendar.getTime();
+                setCalanderFragment(weekStartDate);
                 break;
         }
     }
 
-    private void changeWeek(int WeekCount){
+    private void setCalanderFragment(Date startDateOfWeek) {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-        CalendarFragment fragment = new CalendarFragment(WeekCount, 31);
-        fragmentTransaction.replace(R.id.fcFragmentContainer, fragment);
+        CalendarFragment fragment = new CalendarFragment(startDateOfWeek);
+        fragmentTransaction.add(R.id.fcFragmentContainer, fragment);
         fragmentTransaction.commit();
     }
-
 }
