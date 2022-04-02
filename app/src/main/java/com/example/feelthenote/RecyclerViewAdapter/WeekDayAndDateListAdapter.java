@@ -1,5 +1,6 @@
 package com.example.feelthenote.RecyclerViewAdapter;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,15 @@ public class WeekDayAndDateListAdapter extends RecyclerView.Adapter<WeekDayAndDa
     String[] Days = {"Mon","Tue","Wed","Thu","Fri","Sat","Sun"};
 
     Date weekStartDate;
+    String dateToday;
     SimpleDateFormat sdf;
     Calendar calendar;
 
     public WeekDayAndDateListAdapter(Date weekStartDate) {
         this.weekStartDate = weekStartDate;
-        sdf = new SimpleDateFormat("dd");
+        sdf = new SimpleDateFormat("dd/MM");
         calendar = Calendar.getInstance();
+        dateToday = sdf.format(calendar.getTime());
     }
 
     @Override
@@ -41,15 +44,15 @@ public class WeekDayAndDateListAdapter extends RecyclerView.Adapter<WeekDayAndDa
         holder.itemView.getLayoutParams().width = (int) ((parent.getWidth())/8);
         holder.itemView.getLayoutParams().height = parent.getHeight();
         if(position==0){
-            ((TextView)holder.itemView.findViewById(R.id.tvDay)).setText("");
-            ((TextView)holder.itemView.findViewById(R.id.tvDate)).setText("");
             holder.itemView.findViewById(R.id.vBottomLine).setVisibility(View.GONE);
         }else{
             ((TextView)holder.itemView.findViewById(R.id.tvDay)).setText(Days[position-1]);
             calendar.setTime(weekStartDate);
             calendar.add(Calendar.DATE, position-1);
             String date = sdf.format(calendar.getTime());
-            ((TextView)holder.itemView.findViewById(R.id.tvDate)).setText(date);
+            holder.tvDate.setText(date.substring(0,2));
+            if(date.equals(dateToday))
+                holder.bottomLine.setBackgroundResource(R.color.colorAccent);
         }
     }
 
@@ -59,8 +62,12 @@ public class WeekDayAndDateListAdapter extends RecyclerView.Adapter<WeekDayAndDa
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
+        TextView tvDate;
+        View bottomLine;
         public ViewHolder(View itemView) {
             super(itemView);
+            tvDate = itemView.findViewById(R.id.tvDate);
+            bottomLine = itemView.findViewById(R.id.vBottomLine);
         }
     }
 }

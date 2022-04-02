@@ -28,7 +28,7 @@ public class DayTimeSlotAdapter extends RecyclerView.Adapter<DayTimeSlotAdapter.
 
     @Override
     public int getItemCount() {
-        return 11;
+        return 24;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{

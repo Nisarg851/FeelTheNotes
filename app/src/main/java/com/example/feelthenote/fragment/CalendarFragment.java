@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.feelthenote.R;
 import com.example.feelthenote.RecyclerViewAdapter.WeekDayAndDateListAdapter;
@@ -24,6 +25,10 @@ public class CalendarFragment extends Fragment {
     RecyclerView rvWeekDaysContainer, rvWeeklySlots;
 
     Date weekStartDate;
+    private int daysInWeek = 7;
+    private int slotsInADay = 48;
+    int timeSlotCol = 1;
+    private int totalSlots = (daysInWeek+timeSlotCol)*slotsInADay;
 
     public CalendarFragment(Date weekStartDate){
         this.weekStartDate = weekStartDate;
@@ -62,21 +67,34 @@ public class CalendarFragment extends Fragment {
 
     private void initilizeWeeklySlotRecyclerView(ArrayList<String> weeklySlotData) {
         WeeklySlotsAdapter weeklySlotsAdapter = new WeeklySlotsAdapter(weeklySlotData);
+        weeklySlotsAdapter.setWeekDaySlotClickListeners(new WeeklySlotsAdapter.WeekDaySlotClickListeners() {
+            @Override
+            public void cellClicker(WeeklySlotsAdapter.ViewHolderForWeekDaySlot viewHolder, int position, int[] daySlots) {
+                if(position>=(totalSlots-daysInWeek))
+                    return;
+                if(daySlots[position] == 0){
+                    daySlots[position] = 1;
+                    daySlots[position+8] = 1;
+                }else{
+                    daySlots[position] = 0;
+                    daySlots[position+8] = 0;
+                }
+                weeklySlotsAdapter.onBindViewHolder(viewHolder, position);
+                WeeklySlotsAdapter.ViewHolderForWeekDaySlot viewHolderBelow = (WeeklySlotsAdapter.ViewHolderForWeekDaySlot) rvWeeklySlots.findViewHolderForAdapterPosition(position+8);
+                weeklySlotsAdapter.onBindViewHolder(viewHolderBelow, position+8);
+//                Toast.makeText(getContext(), "Clicked Cell no. "+position, Toast.LENGTH_SHORT).show();
+            }
+        });
         rvWeeklySlots.setAdapter(weeklySlotsAdapter);
     }
 
     private ArrayList<String> getWeekSlotsData(){
         ArrayList<String> data = new ArrayList<String>();
 
-        int daysInWeek = 7;
-        int timeSlotCol = 1;
-        int slotsInADay = 24;
-
-        for(int slot=1; slot<=((daysInWeek+timeSlotCol)*slotsInADay); slot++){
+        for(int slot=1; slot<=totalSlots; slot++){
             data.add("");
         }
 
         return data;
     }
-
 }

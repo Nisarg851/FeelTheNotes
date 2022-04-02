@@ -3,7 +3,6 @@ package com.example.feelthenote.Activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -20,7 +19,6 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.feelthenote.Adapter.CourseCarouselAdapter;
 import com.example.feelthenote.Helper.Common;
-import com.example.feelthenote.Model.Advertise;
 import com.example.feelthenote.Model.StudentDashboardCourseCarousel;
 import com.example.feelthenote.Model.StudentDashboardData;
 import com.example.feelthenote.Model.StudentDashboardInfo;
@@ -29,7 +27,6 @@ import com.example.feelthenote.Network.GetCoursesRequest;
 import com.example.feelthenote.Network.GetStudentDashboardResponse;
 import com.example.feelthenote.R;
 import com.example.feelthenote.Receiver.ConnectivityReceiver;
-import com.example.feelthenote.RecyclerViewAdapter.AdvertisementAdapter;
 import com.example.feelthenote.Retrofit.ApiClient;
 import com.example.feelthenote.Retrofit.ApiInterface;
 import com.github.islamkhsh.CardSliderViewPager;
@@ -52,7 +49,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     ProgressDialog pg;
 
     Context context = this;
-
     // Student Info Components
     CircleImageView ivStudentProfileImage;
     TextView tvStudentName, tvStudentEmailID, tvUpcomingSessionDuration;
@@ -62,9 +58,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
     // Student's Course Carousel
     CardSliderViewPager vpStudentCourseCarousel;
-
-    // Advertisement RecyclerView
-    RecyclerView rvAdvertisement;
 
     CardView cvNoSubscribedCourseContainer;
 
@@ -108,8 +101,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         cvNoSubscribedCourseContainer = findViewById(R.id.cvNoSubscribedCourseContainer);
 
-        rvAdvertisement = findViewById(R.id.rvAdvertisement);
-
         navBtnHome = findViewById(R.id.navBtnHome);
         navBtnCalander = findViewById(R.id.navBtnCalander);
         navBtnSessions = findViewById(R.id.navBtnSessions);
@@ -120,6 +111,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         // Student's Course Carousel
         vpStudentCourseCarousel = findViewById(R.id.vpStudentCourseCarousel);
 
+        ivStudentProfileImage.setOnClickListener(this);
         cvNoSubscribedCourseContainer.setOnClickListener(this);
         navBtnHome.setOnClickListener(this);
         navBtnCalander.setOnClickListener(this);
@@ -132,6 +124,9 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         Intent redirectTo = null;
         switch (view.getId()){
+            case R.id.ivStudentProfileImage:
+                redirectTo = new Intent(HomeActivity.this, ProfileActivity.class);
+                break;
             case R.id.navBtnCalander:
                 redirectTo = new Intent(HomeActivity.this, CalenderActivity.class);
                 break;
@@ -234,13 +229,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                     CourseCarouselAdapter courseCarouselAdapter = new CourseCarouselAdapter(studentDashboardCourseCarouselList);
                                     vpStudentCourseCarousel.setAdapter(courseCarouselAdapter);
                                 }
-
-                                // Advertisement Recycler
-                                List<Advertise> advertiseList = studentDashboardData.getAdvertise();
-                                Log.e("adlist", "onResponse: "+advertiseList.size()+" "+advertiseList.get(0).getAdvertiseImage());
-                                AdvertisementAdapter advertisementAdapter = new AdvertisementAdapter(advertiseList);
-                                rvAdvertisement.setAdapter(advertisementAdapter);
-
                             } else {
                                 pg.dismiss();
                                 Common.showSnack_Light(llRootLayout,"Something went wrong!");

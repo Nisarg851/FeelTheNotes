@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black"
+    android:weightSum="2">
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ivGallary"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:backgroundTint="#00000000"
+        app:icon="@drawable/gallary_icon"
+        app:iconGravity="textTop"
+        app:iconSize="50dp"
+        android:text="Gallary"
+        android:textColor="@color/white"
+        android:textSize="18dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ivCamera"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:backgroundTint="#00000000"
+        app:icon="@drawable/camera_icon"
+        app:iconGravity="textTop"
+        app:iconSize="50dp"
+        android:text="Camera"
+        android:textColor="@color/colorWhite"
+        android:textSize="18dp"/>
+
+</LinearLayout>

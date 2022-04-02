@@ -5,7 +5,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" android:required="true" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
@@ -18,12 +18,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.FeelTheNote"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activity.SettingsActivity"></activity>
+        <activity android:name=".Activity.ProfileActivity"></activity>
+        <activity android:name=".Activity.SettingsActivity" />
         <activity android:name=".Activity.CourseDetailsActivity" />
         <activity android:name=".Activity.MyCoursesActivity" />
         <activity android:name=".Activity.SessionDataActivity" />
         <activity android:name=".Activity.CalenderActivity" />
-        <activity android:name=".Activity.HomeActivity"></activity>
+        <activity android:name=".Activity.HomeActivity" />
         <activity android:name=".Activity.RegistrationActivity" />
         <activity android:name=".Activity.LoginActivity">
             <intent-filter>

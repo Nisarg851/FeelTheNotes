@@ -50,7 +50,9 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginBottom="70dp">
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -66,7 +68,7 @@
                         android:id="@+id/ivStudentProfileImage"
                         android:layout_width="100dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/student"
+                        android:src="@drawable/default_user_image"
                         android:layout_weight="0.5"
                         android:layout_gravity="center_vertical"
                         app:civ_border_width="2dp"
@@ -284,51 +286,45 @@
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rvAdvertisement"
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/course2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+                        app:cardCornerRadius="15dp"
+                        app:strokeColor="@color/black"
+                        app:strokeWidth="1dp"
+                        android:layout_marginTop="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"
+                        android:layout_gravity="center_horizontal">
 
-<!--                    <androidx.cardview.widget.CardView-->
-<!--                        android:id="@+id/course2"-->
-<!--                        android:layout_width="match_parent"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        app:cardCornerRadius="15dp"-->
-<!--                        app:strokeColor="@color/black"-->
-<!--                        app:strokeWidth="1dp"-->
-<!--                        android:layout_marginTop="20dp"-->
-<!--                        android:layout_marginRight="20dp"-->
-<!--                        android:layout_marginLeft="20dp"-->
-<!--                        android:layout_gravity="center_horizontal">-->
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="150dp"
+                            android:background="@drawable/agtr"
+                            android:orientation="vertical">
 
-<!--                        <LinearLayout-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="150dp"-->
-<!--                            android:background="@drawable/agtr"-->
-<!--                            android:orientation="vertical">-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="ADs"
+                                android:textSize="25dp"
+                                android:textStyle="bold"
+                                android:textColor="@color/colorWhite"
+                                android:paddingTop="10dp"
+                                android:paddingLeft="20dp"/>
 
-<!--                            <TextView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="ADs"-->
-<!--                                android:textSize="25dp"-->
-<!--                                android:textStyle="bold"-->
-<!--                                android:textColor="@color/colorWhite"-->
-<!--                                android:paddingTop="10dp"-->
-<!--                                android:paddingLeft="20dp"/>-->
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Shubham Acharya"
+                                android:textSize="20dp"
+                                android:textColor="@color/colorWhite"
+                                android:paddingLeft="19dp" />
 
-<!--                            <TextView-->
-<!--                                android:layout_width="match_parent"-->
-<!--                                android:layout_height="wrap_content"-->
-<!--                                android:text="Shubham Acharya"-->
-<!--                                android:textSize="20dp"-->
-<!--                                android:textColor="@color/colorWhite"-->
-<!--                                android:paddingLeft="19dp" />-->
+                        </LinearLayout>
 
-<!--                        </LinearLayout>-->
-
-<!--                    </androidx.cardview.widget.CardView>-->
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
             </RelativeLayout>

@@ -30,7 +30,7 @@
             android:layout_weight="1"
             android:text="Nisarg Mahyavanshi"
             android:textColor="@color/colorBlack"
-            android:textSize="23dp"
+            android:textSize="23sp"
             android:gravity="bottom"/>
 
         <TextView
@@ -39,7 +39,7 @@
             android:layout_weight="1"
             android:text="nisargmahyavanshi@gmail.com"
             android:textColor="@color/colorBlack"
-            android:textSize="15dp"
+            android:textSize="15sp"
             android:gravity="top"/>
 
     </LinearLayout>

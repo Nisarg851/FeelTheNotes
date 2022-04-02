@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="Sun"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="20"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="20sp"
         android:gravity="center"/>
@@ -31,7 +31,7 @@
     <View
         android:id="@+id/vBottomLine"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1.5dp"
         android:layout_marginHorizontal="2dp"
         android:background="@color/black"/>
 

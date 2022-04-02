@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="10dp"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/textView5"
@@ -14,7 +14,7 @@
         android:layout_margin="10dp"
         android:text="Choose Package"
         android:textColor="@color/black"
-        android:textSize="30dp"
+        android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -66,14 +66,15 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/spBatchSpinner"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-        android:layout_width="212dp"
+        android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_margin="10dp"
         android:hint="Select Batch"
         android:visibility="gone"
-        tools:visibility="visible"
+        app:layout_constraintEnd_toStartOf="@+id/llStartDateContainer"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rgPackageMode">
+        app:layout_constraintTop_toBottomOf="@+id/rgPackageMode"
+        tools:visibility="visible">
 
         <AutoCompleteTextView
             android:id="@+id/sptvBatchItems"
@@ -82,7 +83,7 @@
             android:inputType="none"
             android:padding="16dp"
             android:textSize="16sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -92,11 +93,10 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintStart_toEndOf="@+id/spBatchSpinner"
-        app:layout_constraintTop_toTopOf="@+id/spBatchSpinner"
         app:layout_constraintBottom_toBottomOf="@+id/spBatchSpinner"
-        app:layout_constraintEnd_toEndOf="parent">
+        app:layout_constraintEnd_toEndOf="@+id/rgPackageMode"
+        app:layout_constraintTop_toTopOf="@+id/spBatchSpinner"
+        tools:visibility="visible">
 
         <TextView
             android:layout_width="wrap_content"
@@ -104,7 +104,7 @@
             android:text="Start Date:"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.274"/>
+            app:layout_constraintHorizontal_bias="0.274" />
 
         <TextView
             android:id="@+id/tvStartDate"
@@ -113,9 +113,9 @@
             android:layout_marginTop="2dp"
             android:layout_marginBottom="4dp"
             android:text="00:00:0000"
+            android:textColor="#20209C"
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:textColor="#20209C"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -197,7 +197,7 @@
             android:layout_gravity="start"
             android:layout_marginLeft="12dp"
             android:text="Discount"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:visibility="gone"
             tools:visibility="visible"/>
 
@@ -212,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fees: "
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textAlignment="viewEnd"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/etPromoCode"
@@ -223,7 +223,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="0000"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:paddingRight="10dp"
                 android:textAlignment="viewStart"
                 android:textStyle="normal"
@@ -235,7 +235,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:text="0000"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:textAlignment="viewStart"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
