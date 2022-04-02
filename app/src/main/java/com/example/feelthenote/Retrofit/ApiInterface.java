@@ -11,6 +11,8 @@ import com.example.feelthenote.Network.GetCoursesResponse;
 import com.example.feelthenote.Network.GetStudentDashboardResponse;
 import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
+import com.example.feelthenote.Network.ProfileImageChangeRequest;
+import com.example.feelthenote.Network.ProfileImageChangeResponse;
 import com.example.feelthenote.Network.PromoCodeRequest;
 import com.example.feelthenote.Network.PromoCodeResponse;
 
@@ -40,4 +42,7 @@ public interface ApiInterface {
 
     @POST("api/FeelTheNote/GetStudentDashboard")
     Call<GetStudentDashboardResponse> getStudentDashboard(@Body GetCoursesRequest getCoursesRequest);
+
+    @POST("api/FeelTheNote/AddImage")
+    Call<ProfileImageChangeResponse> changeProfileImage(@Body ProfileImageChangeRequest profileImageChangeRequest);
 }

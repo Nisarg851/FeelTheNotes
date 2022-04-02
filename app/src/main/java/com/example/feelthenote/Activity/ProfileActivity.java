@@ -18,6 +18,8 @@ import android.widget.Toast;
 import com.example.feelthenote.Dialogs.ProfileImageChangeDialog;
 import com.example.feelthenote.R;
 
+import java.io.ByteArrayOutputStream;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
