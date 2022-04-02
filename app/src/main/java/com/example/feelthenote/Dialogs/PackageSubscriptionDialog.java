@@ -6,6 +6,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -30,6 +31,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
+import com.example.feelthenote.Activity.CourseDetailsActivity;
+import com.example.feelthenote.Activity.MyCoursesActivity;
 import com.example.feelthenote.Helper.Common;
 import com.example.feelthenote.Model.CourseOtherPackages;
 import com.example.feelthenote.Network.AddFeeDetailRequest;
@@ -56,6 +59,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PackageSubscriptionDialog extends AppCompatDialogFragment {
+
+    PackageSubscriptionDialog packageSubscriptionDialog;
 
     Context context = null;
 
@@ -91,6 +96,7 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
     DatePickerDialog StartTime;
 
     public PackageSubscriptionDialog(Integer Student_ID,String courseID, BigInteger studentMappingID,List<CourseOtherPackages> courseOtherPackages){
+        packageSubscriptionDialog = this;
         if(courseOtherPackages!=null){
             context = getContext();
             this.courseID = courseID;
@@ -283,8 +289,8 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
             Toast.makeText(context, "Network Error", Toast.LENGTH_LONG).show();
 
         }else {
-//            int Student_ID = studentID;
-            int Student_ID = 23;
+            int Student_ID = studentID;
+//            int Student_ID = 23;
             String Course_ID = this.courseID;
             String Package_ID = selectedPackage.getPackageID();
             String Promo_Code = promoCodeValidated;
@@ -311,6 +317,8 @@ public class PackageSubscriptionDialog extends AppCompatDialogFragment {
                             if(response.body().getStatusCode() == 1) {
                                 pg.dismiss();
                                 Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
+                                Intent refreshParentActivity = new Intent(context, MyCoursesActivity.class);
+                                startActivity(refreshParentActivity);
                             } else {
                                 pg.dismiss();
                                 Toast.makeText(context, "Something Went Wrong!1", Toast.LENGTH_SHORT).show();
