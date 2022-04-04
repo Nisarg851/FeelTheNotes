@@ -5,12 +5,14 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -38,11 +40,15 @@ import com.google.android.material.button.MaterialButton;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.content.Context.MODE_PRIVATE;
 
 public class ProfileImageChangeDialog extends AppCompatDialogFragment implements View.OnClickListener{
 
@@ -52,11 +58,14 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
     MaterialButton ivGallary, ivCamera;
     ActivityResultLauncher<Intent> gallaryIntentResultLauncher, cameraIntentResultLauncher;
     ProfileImageChangeDialog profileImageChangeDialog;
+    SharedPreferences sp;
+    int studentId;
+    private Bitmap image;
 
-    public ProfileImageChangeDialog(CircleImageView ivProfileImage){
+    public ProfileImageChangeDialog(CircleImageView ivProfileImage, Context context){
         this.ivProfileImage = ivProfileImage;
         profileImageChangeDialog = this;
-        context = getContext();
+        this.context = context;
 //        pg = Common.showProgressDialog(context);
     }
 
@@ -74,12 +83,21 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
         return builder.create();
     }
 
+    @Override
+    public void onDismiss(@NonNull DialogInterface dialog) {
+        super.onDismiss(dialog);
+        changeProfileImage(image);
+    }
+
     private void setControls(View view) {
         ivGallary = view.findViewById(R.id.ivGallary);
         ivCamera = view.findViewById(R.id.ivCamera);
 
         ivGallary.setOnClickListener(this);
         ivCamera.setOnClickListener(this);
+
+        sp = getActivity().getSharedPreferences(getResources().getString(R.string.LoginSharedPreference), MODE_PRIVATE);
+        studentId = sp.getInt("UserId",0);
     }
 
     @Override
@@ -104,9 +122,10 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
                             Uri imageUri = (Uri)result.getData().getData();
                             Toast.makeText(getContext(),"Profile Image Changed",Toast.LENGTH_LONG).show();
                             try {
-                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
+                                 image = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), imageUri);
                                 ivProfileImage.setImageURI(imageUri);
-//                                changeProfileImage(bitmap);
+                                profileImageChangeDialog.dismiss();
+                                //changeProfileImage(bitmap);
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
@@ -124,8 +143,9 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Bundle dataBundle = result.getData().getExtras();
-                            Bitmap image = (Bitmap) dataBundle.get("data");
+                            image = (Bitmap) dataBundle.get("data");
                             ivProfileImage.setImageBitmap(image);
+                            profileImageChangeDialog.dismiss();
 //                            changeProfileImage(image);
                         }else{
                             Toast.makeText(getContext(),"An Error Occured",Toast.LENGTH_LONG).show();
@@ -141,12 +161,19 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
         }else {
             byte[] encodedImage = getByteArrayImage(image);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-            Call<ProfileImageChangeResponse> profileImageChangeResponseCall = apiInterface.changeProfileImage(new ProfileImageChangeRequest("student_profile", encodedImage));
+
+            String Image_Date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
+            String image_name = "student_profile\\"+studentId+(Image_Date.replace(' ','T').replace(':','_'))+".jpg";
+            String Image_ID = "student";
+            Call<ProfileImageChangeResponse> profileImageChangeResponseCall = apiInterface.changeProfileImage(new ProfileImageChangeRequest(image_name, Image_Date, Image_ID, encodedImage, studentId));
             Toast.makeText(context, "Request send", Toast.LENGTH_SHORT).show();
+            Log.e("imageDate", "ImageName: "+image_name+" Image_Date: "+Image_Date+" ObjectID: "+studentId+" ImageID: "+Image_ID);
             profileImageChangeResponseCall.enqueue(new Callback<ProfileImageChangeResponse>() {
+
                 @Override
                 public void onResponse(Call<ProfileImageChangeResponse> call, Response<ProfileImageChangeResponse> response) {
                     try{
+
                         if (response.isSuccessful()) {
                             if(response.body().getStatusCode() == 1) {
 //                                pg.dismiss();
@@ -158,6 +185,8 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
                             }
                         } else {
 //                            pg.dismiss();
+
+                            Log.e("ERRR1", response.errorBody().string());
                             Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
                         }
                     } catch (Exception ex) {
@@ -169,6 +198,7 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
                 @Override
                 public void onFailure(Call<ProfileImageChangeResponse> call, Throwable t) {
 //                    pg.dismiss();
+                    Log.e("ERRR1", "ERRR1");
                     Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
                 }
             });
