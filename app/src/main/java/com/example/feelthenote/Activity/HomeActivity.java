@@ -193,7 +193,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                                             studentEmailID = studentDashboardInfo.getEmail(),
                                             studentProfileImage = studentDashboardInfo.getProfileImageDate();
 
-                                    String imageURL = "http://ftn.locuslogs.com/images/student_profile/" + userID + studentProfileImage.replace(':', '_') + ".jpg";
+                                    String imageURL = "http://ftn.locuslogs.com/images/student_profile/" + studentProfileImage + ".jpg";
 
                                     Log.e("url", "onResponse: " + imageURL);
 

@@ -49,7 +49,7 @@ public class ExploreCoursesAdapter extends RecyclerView.Adapter<ExploreCoursesAd
         holder.courseName.setText(course.getCourseName());
         holder.courseID.setText(course.getCourseID());
         holder.cvSubscription.setVisibility(View.GONE);
-        String imageURL = BASE_URL + course.getCourseID() + course.getCardImage() .replace(':','_')+ ".jpg";
+        String imageURL = BASE_URL + course.getCardImage() + ".jpg";
 
 //        holder.courseContainer.setBackground(bitmap2Drawable(StringToBitMap(course.getCardImage())));
         Glide.with(context)

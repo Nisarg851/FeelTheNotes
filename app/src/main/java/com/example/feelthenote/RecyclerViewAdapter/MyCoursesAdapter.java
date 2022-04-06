@@ -61,7 +61,7 @@ public class MyCoursesAdapter extends RecyclerView.Adapter<MyCoursesAdapter.MyCo
         holder.courseSubscriptionStatus.setText(course.getSubscription());
         holder.cvSubscription.setStrokeColor(ContextCompat.getColor(context, color));
 
-        String imageURL = BASE_URL + course.getCourseID() + course.getCardImage() .replace(':','_')+ ".jpg";
+        String imageURL = BASE_URL + course.getCardImage()+ ".jpg";
 
         Glide.with(context)
                 .load(imageURL)

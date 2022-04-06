@@ -39,7 +39,7 @@ public class FacultyCarouselAdapter extends CardSliderAdapter<FacultyCarouselAda
                 facultyAbout = facultyCarouselItem.getAbout(),
                 facultyProfileImageDate = facultyCarouselItem.getFacultyProfileImageDate();
 
-        String facultyImage = facultyID+facultyProfileImageDate.replace(':','_')+ ".jpg";
+        String facultyImage = facultyProfileImageDate + ".jpg";
 
         String facultyImageURL = BASE_URL+facultyImage;
         Log.e("faculty", "Image URL"+facultyImageURL);

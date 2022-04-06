@@ -162,8 +162,8 @@ public class ProfileImageChangeDialog extends AppCompatDialogFragment implements
             byte[] encodedImage = getByteArrayImage(image);
             ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-            String Image_Date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date());
-            String image_name = "student_profile\\"+studentId+(Image_Date.replace(' ','T').replace(':','_'))+".jpg";
+            String Image_Date = studentId+"_"+(new SimpleDateFormat("yyyyMMMddHHmmss").format(new Date()));
+            String image_name = "student_profile\\"+Image_Date+".jpg";
             String Image_ID = "student";
             Call<ProfileImageChangeResponse> profileImageChangeResponseCall = apiInterface.changeProfileImage(new ProfileImageChangeRequest(image_name, Image_Date, Image_ID, encodedImage, studentId));
             Toast.makeText(context, "Request send", Toast.LENGTH_SHORT).show();

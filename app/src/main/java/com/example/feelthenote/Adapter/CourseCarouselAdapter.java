@@ -59,7 +59,7 @@ public class CourseCarouselAdapter extends CardSliderAdapter<CourseCarouselAdapt
         String instructor = courseCarouselItem.getCourseInstructor();
 
 //        Drawable courseImage = courseCarouselItem.getCourseImage();
-        String courseImageURL = "http://ftn.locuslogs.com/images/card/"+courseId+imageName.replace(':','_')+ ".jpg";
+        String courseImageURL = "http://ftn.locuslogs.com/images/card/"+imageName+ ".jpg";
         Log.e("image", "bindVH: "+courseImageURL);
         courseViewHolder.bindViewAndData(context, totalAllotedSessions, attendedSessions, availableSessions, bookedSessions, missedSessions, courseName, courseId, courseImageURL, instructor);
     }

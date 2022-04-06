@@ -38,11 +38,10 @@ public class AdvertisementAdapter extends RecyclerView.Adapter<AdvertisementAdap
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Log.e("adImage", "ad onBind");
-        String imageURL = "http://ftn.locuslogs.com/images/advertisement/ad" + advertiseList.get(position).getAdvertiseImage().replace(':', '_') + ".jpg";
+        String imageURL = "http://ftn.locuslogs.com/images/advertisement/" + advertiseList.get(position).getAdvertiseImage() + ".jpg";
         Log.e("adImage", "Ad Card Image: " + imageURL);
         Glide.with(parent.getContext())
                 .load(imageURL)
-                .placeholder(R.drawable.default_user_image)
                 .into(holder.vAdvertisementCardImage);
     }
 

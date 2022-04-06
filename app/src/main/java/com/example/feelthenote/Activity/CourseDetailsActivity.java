@@ -290,7 +290,7 @@ public class CourseDetailsActivity extends AppCompatActivity implements View.OnC
                             Log.i("CourseCoverImage", "Signature: "+CourseID+courseCoverImageDateTime);
                             ObjectKey coverImageObjectKey = new ObjectKey(CourseID+courseCoverImageDateTime);
 
-                            String imageURL = BASE_URL + CourseID + courseCoverImageDateTime.replace(':','_')+ ".jpg";
+                            String imageURL = BASE_URL + courseCoverImageDateTime + ".jpg";
 
                             Log.e("imageurl", "url: "+imageURL);
                             Glide.with(context)
