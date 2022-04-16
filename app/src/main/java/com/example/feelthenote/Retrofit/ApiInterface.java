@@ -8,6 +8,8 @@ import com.example.feelthenote.Network.CourseDetailsResponse;
 import com.example.feelthenote.Network.CourseDetailsRequest;
 import com.example.feelthenote.Network.GetCoursesRequest;
 import com.example.feelthenote.Network.GetCoursesResponse;
+import com.example.feelthenote.Network.GetStudentCalenderRequest;
+import com.example.feelthenote.Network.GetStudentCalenderResponse;
 import com.example.feelthenote.Network.GetStudentDashboardResponse;
 import com.example.feelthenote.Network.LoginRequest;
 import com.example.feelthenote.Network.LoginResponse;
@@ -45,4 +47,7 @@ public interface ApiInterface {
 
     @POST("api/FeelTheNote/AddImage")
     Call<ProfileImageChangeResponse> changeProfileImage(@Body ProfileImageChangeRequest profileImageChangeRequest);
+
+    @POST("api/FeelTheNote/GetStudentCalender")
+    Call<GetStudentCalenderResponse> getStudentCalender(@Body GetStudentCalenderRequest getStudentCalenderRequest);
 }

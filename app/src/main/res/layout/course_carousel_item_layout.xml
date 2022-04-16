@@ -8,7 +8,6 @@
     android:padding="10dp"
     android:orientation="vertical">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/course1"
         android:layout_width="match_parent"

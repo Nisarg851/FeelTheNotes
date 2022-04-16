@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.feelthenote.Model.SessionData;
 import com.example.feelthenote.R;
 import com.example.feelthenote.fragment.CalendarFragment;
 
@@ -18,18 +19,19 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class WeeklySlotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>{
-    ArrayList<String> weeklySlotsData;
+    List<SessionData> weeklySlotsData;
     WeeklySlotsAdapter.WeekDaySlotClickListeners weekDaySlotClickListeners;
 
     String startTime = "00:00 am";
-    String[] Time = new String[385];
-    int[] DaySlots = null;
+//    String[] Time = new String[385];
+    int[] DaySlots;
 
-    public WeeklySlotsAdapter(ArrayList<String> weeklySlotsData) {
+    public WeeklySlotsAdapter(List<SessionData> weeklySlotsData) {
         this.weeklySlotsData = weeklySlotsData;
-        Arrays.fill(Time, "");
+//        Arrays.fill(Time, "");
         DaySlots = new int[weeklySlotsData.size()];
         Arrays.fill(DaySlots, 0);
     }
@@ -54,9 +56,10 @@ public class WeeklySlotsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         if(holder instanceof ViewHolderForDayTimeSlot){
-            if(Time[position].isEmpty())
-                Time[position] = startTime;
-            ((ViewHolderForDayTimeSlot)holder).tvTimeSlot.setText(Time[position]);
+//            if(Time[position].isEmpty())
+//                Time[position] = startTime;
+//            ((ViewHolderForDayTimeSlot)holder).tvTimeSlot.setText(Time[position]);
+            ((ViewHolderForDayTimeSlot)holder).tvTimeSlot.setText(startTime);
             try {
                 startTime = addMinutes(startTime,30);
             } catch (ParseException e) {

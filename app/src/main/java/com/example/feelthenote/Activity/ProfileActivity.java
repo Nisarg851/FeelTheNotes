@@ -15,7 +15,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.feelthenote.Dialogs.ProfileImageChangeDialog;
@@ -36,78 +40,47 @@ import retrofit2.Response;
 public class ProfileActivity extends AppCompatActivity implements View.OnClickListener{
 
     CircleImageView ivProfileImage;
-    Context context;
+    TextView tvUserName, tvUserEmail, tvUserNumber, tvUserDOB, tvUserJoiningDate, tvUserAddress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-        ivProfileImage = findViewById(R.id.ivProfileImage);
-        ivProfileImage.setOnClickListener(this);
-        context = getApplicationContext();
+        initializeControls();
     }
 
     @Override
     public void onClick(View view) {
-        ProfileImageChangeDialog profileImageChangeDialog = new ProfileImageChangeDialog(ivProfileImage, ProfileActivity.this);
-
-
-//        profileImageChangeDialog.onDismiss(new DialogInterface() {
-//            @Override
-//            public void cancel() {
-//
-//            }
-//
-//            @Override
-//            public void dismiss() {
-//                boolean isConnected = ConnectivityReceiver.isConnected();
-//                if (!isConnected) {
-//                    Toast.makeText(context, "Network Error", Toast.LENGTH_LONG).show();
-//                }else {
-//                    Bitmap image = ((BitmapDrawable)ivProfileImage.getDrawable()).getBitmap();
-//                    byte[] encodedImage = getByteArrayImage(image);
-//                    ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
-//                    Call<ProfileImageChangeResponse> profileImageChangeResponseCall = apiInterface.changeProfileImage(new ProfileImageChangeRequest("student_profile", encodedImage));
-//                    Toast.makeText(context, "Request send", Toast.LENGTH_SHORT).show();
-//                    profileImageChangeResponseCall.enqueue(new Callback<ProfileImageChangeResponse>() {
-//                        @Override
-//                        public void onResponse(Call<ProfileImageChangeResponse> call, Response<ProfileImageChangeResponse> response) {
-//                            try{
-//                                if (response.isSuccessful()) {
-//                                    if(response.body().getStatusCode() == 1) {
-////                                pg.dismiss();
-//                                        Toast.makeText(context, "Success", Toast.LENGTH_SHORT).show();
-//                                        profileImageChangeDialog.dismiss();
-//                                    } else {
-////                                pg.dismiss();
-//                                        Toast.makeText(context, "Something Went Wrong!1", Toast.LENGTH_SHORT).show();
-//                                    }
-//                                } else {
-////                            pg.dismiss();
-//                                    Toast.makeText(context, "Something Went Wrong!", Toast.LENGTH_SHORT).show();
-//                                }
-//                            } catch (Exception ex) {
-////                        pg.dismiss();
-//                                Toast.makeText(context, "An Unexpected Error Occured", Toast.LENGTH_SHORT).show();
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void onFailure(Call<ProfileImageChangeResponse> call, Throwable t) {
-////                    pg.dismiss();
-//                            Toast.makeText(context, "Network Error", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//                }
-//            }
-//        });
-        profileImageChangeDialog.show(getSupportFragmentManager(), "Profile Image Change Dialog");
+        switch (view.getId()){
+            case R.id.ivProfileImage:
+                ProfileImageChangeDialog profileImageChangeDialog = new ProfileImageChangeDialog(ivProfileImage, ProfileActivity.this);
+                profileImageChangeDialog.show(getSupportFragmentManager(), "Profile Image Change Dialog");
+                break;
+        }
     }
 
-    private byte[] getByteArrayImage(Bitmap bmp){
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        return baos.toByteArray();
+    private void initializeControls(){
+        ivProfileImage = findViewById(R.id.ivProfileImage);
+
+        tvUserName = findViewById(R.id.tvUserName);
+        tvUserEmail = findViewById(R.id.tvUserEmail);
+        tvUserNumber = findViewById(R.id.tvUserNumber);
+        tvUserDOB = findViewById(R.id.tvUserDOB);
+        tvUserJoiningDate = findViewById(R.id.tvUserJoiningDate);
+        tvUserAddress = findViewById(R.id.tvUserAddress);
+
+        ivProfileImage.setOnClickListener(this);
     }
+
+    private void saveChanges(){
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadDate();
+    }
+
+    private void loadDate(){}
 
 }
